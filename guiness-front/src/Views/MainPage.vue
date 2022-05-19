@@ -33,7 +33,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .mainpage {
   width: 100%;
   box-sizing: border-box;

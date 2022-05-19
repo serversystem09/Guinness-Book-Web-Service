@@ -27,6 +27,10 @@ export default new VueRouter({
       component: () => import("@/Views/SignupPage.vue"),
     },
     {
+      path: "/postadd",
+      component: () => import("@/Views/PostAddPage.vue"),
+    },
+    {
       // 없는 페이지 처리
       path: "*",
       component: () => import("@/Views/NotFoundPage.vue"),
