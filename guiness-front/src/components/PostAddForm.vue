@@ -1,5 +1,5 @@
 <template>
-  <div class="contents">
+  <div class="container">
     <form class="form" @submit.prevent="submitForm">
       <div class="input__wrapper">
         <label for="title">제목</label>

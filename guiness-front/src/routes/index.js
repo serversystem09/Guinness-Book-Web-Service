@@ -26,9 +26,14 @@ export default new VueRouter({
       path: "/signup",
       component: () => import("@/Views/SignupPage.vue"),
     },
+    // 게시글 작성
     {
       path: "/postadd",
       component: () => import("@/Views/PostAddPage.vue"),
+    },
+    {
+      path: "/findinfo",
+      component: () => import("@/Views/FindInfoPage.vue"),
     },
     {
       // 없는 페이지 처리
