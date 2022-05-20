@@ -1,49 +1,70 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>파핏</title>
-  <link rel="stylesheet" >
-</head>
-<body width="100%" height="100%">
-  <nav>
-    <p>파핏</p>
-    <ul class="floating_bar_menu">
-      <li><a href="..." class="floating_bar_item">로그인</a></li>
-      <li><a href="..." class="floating_bar_item">회원가입</a></li>
-      <li><a href="..." class="floating_bar_item">문의</a></li>
-    </ul>
+<html lang = kr >
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>pop:it</title>
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+          crossorigin="anonymous"
+        />
+      </head>
 
-  </nav>
+<header class="p-3 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">기네스 카테고리</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">총 기네스 순위</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">문의</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+        </ul>
+
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <input type="search" class="form-control form-control-dark text-white bg-dark" placeholder="Search..." aria-label="Search">
+        </form>
+
+        <div class="text-end">
+          <button type="button" class="btn btn-outline-light me-2">로그인</button>
+          <button type="button" class="btn btn-warning">회원가입</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <body class="text-center" data-new-gr-c-s-check-loaded="14.1016.0" data-gr-ext-installed="" >
   
-  <hr>
-  <h1>로그인</h1>
+    <main class="form-signin w-100 m-auto">
+      <form style = "width: 50%; position: absolute; left: 25%; margin-top: 10%;">
+        <img class="mb-4" src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        <h1 class="h3 mb-3 fw-normal">로그인</h1>
+    
+        <div class="form-floating">
+          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+          <label for="floatingInput">아이디</label>
+        </div>
+        <div class="form-floating">
+          <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+          <label for="floatingPassword">비밀번호</label>
+        </div>
+    
+        <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
+        <br><br>
+        <button class="w-100 btn btn-lg btn-primary">회원가입</button>
 
-  <form>
-    <div>
-      <input class="form" type="text" placeholder="ID" name="user_id">
-    </div>
-
-    <div>
-      <input class="form" type="password" placeholder="PW" name="user_pwd">
-    </div>
-
-    <div class="more">
-      <a href="" id=sign_up>회원가입</a>
-      <br>      
-      <a href="" id=find_pw>ID / 비밀번호 찾기</a>
-    </div>
-
-    <div>
-      <input class="button" type="submit" value="로그인">
-    </div>
+      </form>
+    </main>
+    
+    
+        
       
-   </form> 
-
-  <footer>
-    <div class="footer"></div>
-  </footer>
-  
-</body>
+    
+    </body>
 </html>
