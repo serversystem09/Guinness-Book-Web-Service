@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>파핏</title>
+  <link rel="stylesheet">
+</head>
+
+<body width="100%" height="100%">
+  <nav>
+    <div class="floating_bar"> 파핏</div>
+    <ul class="fake_btn">
+      <div></div>
+      <div></div>
+      <div></div>
+    </ul>
+
+    <ul class="floating_bar_menu">
+      <li><a href="..." class="floating_bar_item">로그인</a></li>
+      <li><a href="..." class="floating_bar_item">회원가입</a></li>
+      <li><a href="..." class="floating_bar_item">문의</a></li>
+    </ul>
+
+  </nav>
+
+  <div id ="content">
+    <!--회원가입 글자-->
+   <div>
+       <p class="signIn"> 회원가입</p>
+   </div>
+
+   <!--구분 가로선-->
+   <hr>
+
+   <!--기입란-->
+   <table class="tg">
+    <tbody>
+      <tr><!--아이디 기입-->
+        <td class="tg-my85">아이디</td>
+        <td class="tg-73oq"><input type = "text" name = "id" size = "30"><span style="color:gray; font-size:16px;"></span><br></td>
+        <td class><button>중복확인</button></td>
+      </tr>
+
+      <tr><!--비밀번호 기입-->
+        <td class="tg-my85">비밀번호</td>
+        <td class="tg-73oq"><input type = "password" name = "password" size = "30"></td>
+        <td class="tg-73oq"></td>
+      </tr>
+
+      <tr><!--비밀번호 확인-->
+        <td class="tg-my85">비밀번호 확인</td>
+        <td class="tg-73oq"><input type = "password" name = "passwordCheck" size = "30" onInput="isSame()"></td>
+        <td class="tg-73oq"></td>
+      </tr>
+      <tr><!--비밀번호 두 개 일치 확인-->
+        <td></td>
+        <td><span id="same"></span></td>
+      </tr>
+
+      <tr><!--닉네임 기입-->
+        <td class="tg-my85">닉네임</td>
+        <td class="tg-73oq"><input type = "text" name = "nickName" size = "30"><br></td>
+        <td class><button>중복확인</button></td>
+      </tr>
+
+      <tr><!--이메일 기입-->
+        <td class="tg-my85">이메일</td>
+        <td class="tg-73oq"><input type = "text" name = "email" size = "30"><br></td>
+        <td class><button>중복확인</button></td>
+      </tr>
+
+      <tr><!--휴대폰번호 기입-->
+        <td class="tg-my85">휴대폰번호</td>
+        <td class="tg-73oq"><input type = "text" name = "phoneNumber" size = "30"><br></td>
+        <td class></td>
+      </tr>
+
+      <tr><!--생년월일-->
+        <td class="tg-my85">생년월일</td>
+        <td class="tg-73oq"><input type = "text" name = "birth" size = "30"><br></td>
+        <td class></td>
+      </tr>
+
+    </tbody>
+    </table>
+
+   <div style="text-align:center;">
+       <input id = "signUp" type = "submit" value = "회원가입 하기" >
+   </div>
+   </div>
+
+  <footer>
+    <div class="footer"></div>
+  </footer>
+<script>
+  function isSame(){
+    var pwd = document.querySelectorAll("input")[2].value;
+    var pwdck = document.querySelectorAll("input")[3].value;
+    var sameTest = document.querySelector("#same");
+    sameTest.innerHTML=' ';
+    if(pwd !== '' && pwdck !== '') {
+      if(pwd==pwdck) {
+        sameTest.innerHTML='비밀번호가 일치합니다.';
+        sameTest.style.color='blue';
+      }
+      else {
+        sameTest.innerHTML='비밀번호가 일치하지 않습니다.';
+        sameTest.style.color='red';
+      }
+    }
+  }
+</script>
+</body>
