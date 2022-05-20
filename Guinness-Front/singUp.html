@@ -1,114 +1,94 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>파핏</title>
-  <link rel="stylesheet">
-</head>
+<html lang = kr >
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>pop:it</title>
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+          crossorigin="anonymous"
+        />
+      </head>
 
-<body width="100%" height="100%">
-  <nav>
-    <div class="floating_bar"> 파핏</div>
-    <ul class="fake_btn">
-      <div></div>
-      <div></div>
-      <div></div>
-    </ul>
+      <header class="p-3 bg-dark text-white">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+              <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+    
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">기네스 카테고리</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">총 기네스 순위</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">문의</a></li>
+              <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+            </ul>
+    
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+              <input type="search" class="form-control form-control-dark text-white bg-dark" placeholder="Search..." aria-label="Search">
+            </form>
+    
+            <div class="text-end">
+              <button type="button" class="btn btn-warning">회원가입</button>
+            </div>
+          </div>
+        </div>
+      </header>
 
-    <ul class="floating_bar_menu">
-      <li><a href="..." class="floating_bar_item">로그인</a></li>
-      <li><a href="..." class="floating_bar_item">회원가입</a></li>
-      <li><a href="..." class="floating_bar_item">문의</a></li>
-    </ul>
+      <body class="text-center" data-new-gr-c-s-check-loaded="14.1016.0" data-gr-ext-installed="" >
+  
+        <main class="form-signin w-100 m-auto">
+          <form style = "width: 50%; position: absolute; left: 25%; margin-top: 10%;">
+            <img class="mb-4" src="/docs/5.2/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">회원가입</h1>
+        
+            <div class="form-floating">
+              <input type = "text" class="form-control" id="floatingInput" placeholder="아이디" width="80%">
+              <label for="floatingInput">아이디</label>
+              <button>중복확인</button>
+            </div>
+            <div class="form-floating">
+              <input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호">
+              <label for="floatingPassword">비밀번호</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호 재확인">
+                <label for="floatingPassword">비밀번호 재확인</label>
+              </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">닉네임</label>
+                <button>중복확인</button>
+              </div>
 
-  </nav>
+              <div class="form-floating">
+                <input type="email" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">이메일</label>
+                <button>중복확인</button>
+              </div>
 
-  <div id ="content">
-    <!--회원가입 글자-->
-   <div>
-       <p class="signIn"> 회원가입</p>
-   </div>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">휴대폰번호</label>
+              </div>
 
-   <!--구분 가로선-->
-   <hr>
-
-   <!--기입란-->
-   <table class="tg">
-    <tbody>
-      <tr><!--아이디 기입-->
-        <td class="tg-my85">아이디</td>
-        <td class="tg-73oq"><input type = "text" name = "id" size = "30"><span style="color:gray; font-size:16px;"></span><br></td>
-        <td class><button>중복확인</button></td>
-      </tr>
-
-      <tr><!--비밀번호 기입-->
-        <td class="tg-my85">비밀번호</td>
-        <td class="tg-73oq"><input type = "password" name = "password" size = "30"></td>
-        <td class="tg-73oq"></td>
-      </tr>
-
-      <tr><!--비밀번호 확인-->
-        <td class="tg-my85">비밀번호 확인</td>
-        <td class="tg-73oq"><input type = "password" name = "passwordCheck" size = "30" onInput="isSame()"></td>
-        <td class="tg-73oq"></td>
-      </tr>
-      <tr><!--비밀번호 두 개 일치 확인-->
-        <td></td>
-        <td><span id="same"></span></td>
-      </tr>
-
-      <tr><!--닉네임 기입-->
-        <td class="tg-my85">닉네임</td>
-        <td class="tg-73oq"><input type = "text" name = "nickName" size = "30"><br></td>
-        <td class><button>중복확인</button></td>
-      </tr>
-
-      <tr><!--이메일 기입-->
-        <td class="tg-my85">이메일</td>
-        <td class="tg-73oq"><input type = "text" name = "email" size = "30"><br></td>
-        <td class><button>중복확인</button></td>
-      </tr>
-
-      <tr><!--휴대폰번호 기입-->
-        <td class="tg-my85">휴대폰번호</td>
-        <td class="tg-73oq"><input type = "text" name = "phoneNumber" size = "30"><br></td>
-        <td class></td>
-      </tr>
-
-      <tr><!--생년월일-->
-        <td class="tg-my85">생년월일</td>
-        <td class="tg-73oq"><input type = "text" name = "birth" size = "30"><br></td>
-        <td class></td>
-      </tr>
-
-    </tbody>
-    </table>
-
-   <div style="text-align:center;">
-       <input id = "signUp" type = "submit" value = "회원가입 하기" >
-   </div>
-   </div>
-
-  <footer>
-    <div class="footer"></div>
-  </footer>
-<script>
-  function isSame(){
-    var pwd = document.querySelectorAll("input")[2].value;
-    var pwdck = document.querySelectorAll("input")[3].value;
-    var sameTest = document.querySelector("#same");
-    sameTest.innerHTML=' ';
-    if(pwd !== '' && pwdck !== '') {
-      if(pwd==pwdck) {
-        sameTest.innerHTML='비밀번호가 일치합니다.';
-        sameTest.style.color='blue';
-      }
-      else {
-        sameTest.innerHTML='비밀번호가 일치하지 않습니다.';
-        sameTest.style.color='red';
-      }
-    }
-  }
-</script>
-</body>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">생년월일</label>
+              </div>
+        
+            <br><br>
+            <button class="w-100 btn btn-lg btn-primary">회원가입</button>
+    
+          </form>
+        </main>
+        
+        
+            
+          
+        
+        </body>
+</html>
