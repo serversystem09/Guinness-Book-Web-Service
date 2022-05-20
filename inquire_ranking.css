@@ -1,0 +1,38 @@
+#title { 
+    margin: 100px 70px;
+      font-size: 40px;
+      font-weight: bold;
+      color: rgb(33, 31, 31);
+      text-shadow: 1px 1px 1.2px rgb(204, 201, 201);
+      background-color: white;
+    }
+  
+  
+    
+    table.ranktable{
+      border-collapse: separate;
+      border-spacing: 1px;
+      margin: 100px 70px;
+      border-top: 3px solid #ccc;
+      line-height: 1.5;
+      text-align: left;
+    }
+  
+    table.ranktable th{
+      width: 120px;
+      padding: 30px;
+      font-weight: bold;
+      vertical-align: top;
+      border-bottom: 3px solid #ccc;
+    }
+  
+  
+    table.ranktable td{
+      width: 350px;
+      padding: 30px;
+      vertical-align: top;
+      border-bottom: 3px solid #ccc;
+    }
+  
+  
+  
