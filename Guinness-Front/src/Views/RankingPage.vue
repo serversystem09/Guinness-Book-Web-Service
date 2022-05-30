@@ -31,7 +31,7 @@
 export default {};
 </script>
 
-<style scoped>
+<style>
 .ranking {
   padding-top: 120px;
 }

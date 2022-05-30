@@ -1,20 +1,16 @@
 <template>
-  <div class="mainpage">
-    <div class="hot-contents">
-      <header><h1>HOT 게시글</h1></header>
-      <div class="card__wrapper">
-        <div v-for="item in items" :key="item.id" class="card">
-          <div class="card__img">이미지 자리</div>
-          <div class="card__content">
-            <div class="card__nickname">{{ content.nickname }}</div>
-            <div class="card__scrap">하트{{ content.scrap_cnt }}</div>
+  <div class="hot-contents">
+    <header><h1>HOT 게시글</h1></header>
+    <div class="card__wrapper">
+      <div v-for="content in contents" :key="content.id" class="card">
+        <div class="card__img">이미지 자리</div>
+        <div class="card__content">
+          <div class="card__nickname">{{ content.nickname }}</div>
+          <div class="card__scrap">
+            <i class="icon ion-md-heart" />{{ content.scrap_cnt }}
           </div>
         </div>
       </div>
-    </div>
-    <div class="hot-category">
-      <header><h1>인기 종목 순위</h1></header>
-      <div class="wrapper"></div>
     </div>
   </div>
 </template>
@@ -23,21 +19,22 @@
 export default {
   data() {
     return {
-      content: {
-        nickname: "닉네임",
-        scrap_cnt: "29",
-      },
-      items: { id: 3, country: 2, df: 3 },
+      contents: [
+        { id: 0, nickname: "도연", scrap_cnt: "29" },
+        { id: 1, nickname: "민영", scrap_cnt: "80" },
+        { id: 2, nickname: "수진", scrap_cnt: "124" },
+      ],
     };
   },
 };
 </script>
 
 <style>
+@import "@/assets/css/common.css";
 .mainpage {
   width: 100%;
   box-sizing: border-box;
-  padding: 100px 10%;
+  padding: 210px 10%;
   display: flex;
   flex-direction: column;
   gap: 100px;
@@ -54,7 +51,6 @@ header h1 {
   flex-wrap: wrap;
   justify-content: center;
   gap: 100px;
-  background-color: rgb(239, 239, 239);
   border-radius: 5px;
   padding: 30px 10px;
 }
@@ -68,6 +64,7 @@ header h1 {
   box-sizing: border-box;
   padding: 0 0 15px 0;
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.08);
+  z-index: 3;
 }
 
 .card__img {

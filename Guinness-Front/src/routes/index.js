@@ -52,6 +52,14 @@ export default new VueRouter({
       component: () => import("@/Views/CategoryBoard.vue"),
     },
     {
+      path: "/mypage",
+      component: () => import("@/Views/MyPage.vue"),
+    },
+    {
+      path: "/postview",
+      component: () => import("@/Views/PostView.vue"),
+    },
+    {
       // 없는 페이지 처리
       path: "*",
       component: () => import("@/Views/NotFoundPage.vue"),

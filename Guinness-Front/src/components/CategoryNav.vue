@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="categoryNav">
     <aside>
       <ul>
         <li>체육</li>
@@ -15,7 +15,27 @@
 </template>
 
 <script>
-export default {};
+export default {
+  isActive: [true, false, false, false, false, false, false],
+};
 </script>
 
-<style></style>
+<style>
+.categoryNav {
+  box-sizing: border-box;
+  padding: 50px 10px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.08);
+  height: 100vh;
+}
+
+ul {
+  list-style: none;
+  line-height: 40px;
+  padding: 0;
+}
+</style>
