@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     submitForm() {
-      this.$router.push("/");
+      this.$router.push("/mypage");
     },
   },
 };

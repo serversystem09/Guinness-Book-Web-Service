@@ -5,7 +5,9 @@
         <h5>개인정보 보호를 위해 비밀번호를 입력해주세요.</h5>
         <div class="input--btn">
           <input v-model="password" placeholder="비밀번호를 입력해주세요." />
-          <button @click="submitForm" class="btn findform_btn">확인</button>
+          <button type="button" @click="submitForm" class="btn findform_btn">
+            확인
+          </button>
         </div>
       </div>
     </form>
@@ -21,7 +23,6 @@ export default {
   },
   methods: {
     submitForm() {
-      this.router.$push("/");
       let step = 2;
       this.$emit("submitForm", step);
     },

@@ -3,11 +3,14 @@
     <div class="post-card__wrapper">
       <div class="post-card">
         <div class="post-card__img">이미지 자리</div>
-        <div class="post-card__contents">
-          <h2 class="text__title">{{ title }}</h2>
-          <div class="text__contents">{{ contents }}</div>
-          <div class="text__comments">{{ comments }}</div>
-          <div>sns</div>
+        <div>
+          <div class="post-card__contents">
+            <h2 class="text__title">{{ title }}</h2>
+            <div class="text__contents">{{ contents }}</div>
+            <div class="text__comments">{{ comments }}</div>
+            <div>sns</div>
+          </div>
+          <div class="comment-form"><input /><button>작성</button></div>
         </div>
       </div>
     </div>
@@ -47,10 +50,12 @@ export default {
 
 .post-card__contents {
   width: 500px;
+  height: 500px;
   border: 1px solid rgb(226, 225, 225);
   border-radius: 5px;
   box-sizing: 10px;
   padding: 20px;
+  margin-bottom: 10px;
 }
 
 h2 {
@@ -66,5 +71,25 @@ h2 {
 .text__comments {
   border-bottom: 1px solid rgb(226, 225, 225);
   height: 120px;
+}
+
+.comment-form {
+  width: 500px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+.comment-form > input {
+  width: 400px;
+  border: 1px solid rgb(226, 225, 225);
+  border-radius: 5px;
+  text-indent: 10px;
+}
+
+.comment-form > button {
+  width: 90px;
+  border-style: none;
+  border-radius: 5px;
+  background-color: rgb(255, 210, 98);
 }
 </style>

@@ -7,7 +7,7 @@
 
 <script>
 import PostListItem from "@/components/PostListItem.vue";
-import HotCategoryList from "../components/HotCategoryList.vue";
+import HotCategoryList from "@/components/HotCategoryList.vue";
 export default {
   components: { PostListItem, HotCategoryList },
 };

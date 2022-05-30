@@ -43,6 +43,7 @@ export default {
 
 header h1 {
   margin-bottom: 50px;
+  text-align: center;
 }
 
 /* Hot 게시글 */

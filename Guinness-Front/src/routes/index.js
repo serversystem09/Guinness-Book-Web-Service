@@ -45,7 +45,7 @@ export default new VueRouter({
     },
     {
       path: "/ranking",
-      component: () => import("@/Views/RankingPage.vue"),
+      component: () => import("@/Views/GuinnessRankPage.vue"),
     },
     {
       path: "/category",

@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <header>
+      <h1>게시글 작성</h1>
+    </header>
+
     <form class="form" @submit.prevent="submitForm">
       <div class="input__wrapper">
         <label for="title">제목</label>
@@ -17,6 +21,9 @@
             <select v-model="selected2">
               <option selected>소분류</option>
             </select>
+          </div>
+          <div>
+            <input />
           </div>
         </div>
       </div>
