@@ -1,0 +1,22 @@
+{
+  "name": "guinness-book-web-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serversystem09/Guinness-Book-Web-Service.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/serversystem09/Guinness-Book-Web-Service/issues"
+  },
+  "homepage": "https://github.com/serversystem09/Guinness-Book-Web-Service#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
