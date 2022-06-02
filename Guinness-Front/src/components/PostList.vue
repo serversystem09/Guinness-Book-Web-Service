@@ -18,7 +18,29 @@
 </template>
 
 <script>
+import { reactive } from "vue";
+import axios from "axios";
+
 export default {
+  setUp() {
+    const state = reactive({
+      data: [],
+    });
+
+    const add = () => {
+      state.data.push("추가된 메모 내용");
+    };
+
+    axios.get("http://localhost:3000/postlist").then((res) => {
+      console.log(res);
+    });
+    return { state, add };
+  },
+  created() {
+    axios.get("/api/postlist").then((res) => {
+      console.log(res);
+    });
+  },
   data() {
     return {
       title: "제목",
