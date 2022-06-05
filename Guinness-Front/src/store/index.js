@@ -12,22 +12,22 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    username: getUserFromCookie() || "",
+    userId: getUserFromCookie() || "",
     token: getAuthFromCookie() || "",
   },
   // computed와 유사
   getters: {
     isLogin(state) {
-      return state.username !== "";
+      return state.userId !== "";
     },
   },
   // state를 바꿈
   mutations: {
-    setUsername(state, username) {
-      state.username = username;
+    setUserId(state, userId) {
+      state.userId = userId;
     },
-    clearUsername(state) {
-      state.username = "";
+    clearUserId(state) {
+      state.userId = "";
     },
     setToken(state, token) {
       state.token = token;
@@ -41,9 +41,9 @@ export default new Vuex.Store({
       const { data } = await loginUser(userData);
       console.log(data.token);
       commit("setToken", data.token);
-      commit("setUsername", data.user.username);
+      commit("setUsername", data.user.userId);
       saveAuthToCookie(data.token);
-      saveUserToCookie(data.user.username);
+      saveUserToCookie(data.user.userId);
       return data;
     },
   },

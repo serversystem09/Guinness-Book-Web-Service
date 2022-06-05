@@ -11,11 +11,16 @@
         <router-link to="/ranking">총 기네스 순위</router-link>
       </div>
       <nav>
-        <template>
+        <template v-if="isUserLogin">
+          <span class="username">{{ $store.state.userId }}</span>
+          <a href="javascript:;" @click="logoutUser">로그아웃</a> |
+        </template>
+        <template v-else>
           <router-link to="/login">로그인</router-link> |
           <router-link to="/signup">회원가입</router-link> |
-          <router-link to="/csboard">문의하기</router-link>
         </template>
+
+        <router-link to="/csboard">문의하기</router-link>
       </nav>
     </header>
   </div>
@@ -24,6 +29,7 @@
 <script>
 import imgLogo from "@/assets/img-logo.jpg";
 import textLogo from "@/assets/text-logo.jpg";
+import { deleteCookie } from "@/utils/cookies";
 
 export default {
   data() {
@@ -33,6 +39,20 @@ export default {
       isActive1: "false",
       isActive2: "false",
     };
+  },
+  computed: {
+    isUserLogin() {
+      return this.$store.getters.isLogin;
+    },
+  },
+  methods: {
+    logoutUser() {
+      this.$store.commit("clearUserId");
+      this.$store.commit("clearToken");
+      deleteCookie("til_auth");
+      deleteCookie("til_user");
+      this.$router.push("/login");
+    },
   },
 };
 </script>

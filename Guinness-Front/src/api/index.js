@@ -3,9 +3,9 @@ import { setInterceptors } from "./common/interceptors";
 
 function createInstance() {
   const instance = axios.create({
-    baseURL: process.env.VUE_APP_API_URL,
+    baseURL: `/api/`,
   });
-  setInterceptors(instance);
+  return setInterceptors(instance);
 }
 
 // // 액시오스 초기화 함수
@@ -19,7 +19,7 @@ function createInstance() {
 // 파일 전송
 function createFileInstance(url) {
   const instance = axios.create({
-    baseURL: `${process.env.VUE_APP_API_URL}${url}`,
+    baseURL: `/api/${url}`,
     // 이걸 써줘야 formdata 형식 전송가능
     haeders: { "Content-Type": "multipart/form-data" },
   });
@@ -41,7 +41,12 @@ function uploadImage(image) {
 function createPost(postData) {
   return instance.post("addBoard", postData);
 }
-export { createInquiry, uploadImage, createPost };
+
+// 카테고리 게시판
+function fetchCategory() {
+  return instance.get("category");
+}
+export { createInquiry, uploadImage, createPost, fetchCategory };
 
 // CREATE - posts
 // POST - posts

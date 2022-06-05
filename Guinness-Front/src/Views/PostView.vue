@@ -1,13 +1,13 @@
 <template>
   <div class="post-view">
-    <PostList></PostList>
+    <PostItem></PostItem>
   </div>
 </template>
 
 <script>
-import PostList from "@/components/PostList.vue";
+import PostItem from "@/components/PostItem.vue";
 export default {
-  components: { PostList },
+  components: { PostItem },
 };
 </script>
 

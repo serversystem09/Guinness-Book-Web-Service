@@ -1,4 +1,4 @@
-import { store } from "@/store/index";
+import store from "@/store/index";
 
 export function setInterceptors(instance) {
   // Add a request interceptor
