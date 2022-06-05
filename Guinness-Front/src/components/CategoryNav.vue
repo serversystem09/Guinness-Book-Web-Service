@@ -10,7 +10,11 @@
         >
           {{ category[index].title }} <i class="fa fa-angle-down"></i>
           <ul class="subCategory" v-if="isActive[index] == true">
-            <li v-for="(j, index) in category[0].subCategory" :key="j.id">
+            <li
+              v-for="(j, index) in category[0].subCategory"
+              :key="j"
+              @click="showSubcategory(j)"
+            >
               {{ category[0].subCategory[index] }}
             </li>
           </ul>
@@ -21,10 +25,12 @@
 </template>
 
 <script>
+import { fetchCategory } from "@/api/index";
+
 export default {
   data: function () {
     return {
-      isActive: [false, false, false, false, false, false, false],
+      isActive: [true, true, true, true, true, true, true],
       category: [
         {
           title: "체육",
@@ -64,7 +70,18 @@ export default {
       this.isActive[i] = !this.isActive[i];
       console.log(this.isActive[i]);
       const category = this.category[i].title;
-      this.$emit("submitCategory", category);
+      const subcategory = this.category[i].subCategory;
+      this.$emit("submitCategory", category, subcategory);
+    },
+    // 카테고리 데이터 조회
+    async fetchCategory() {
+      try {
+        const { categoryData } = await fetchCategory();
+        this.category = categoryData;
+        console.log(this.category);
+      } catch (error) {
+        console.log(error.message);
+      }
     },
   },
 };

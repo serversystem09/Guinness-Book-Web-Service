@@ -1,6 +1,3 @@
-const category = require("./category");
-const user = require("./user");
-
 module.exports = (sequelize, Sequelize) => {
   class Event extends Sequelize.Model {
     //함수 입력하기
@@ -14,16 +11,8 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
       },
       eventName: {
-        type: Sequelize.varchar(20),
+        type: Sequelize.STRING(20),
         allowNull: false,
-        unique: true,
-      },
-      categoryNum: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: category,
-          key: "categoryNum",
-        },
       },
       userAmount: {
         type: Sequelize.INTEGER,
@@ -33,19 +22,7 @@ module.exports = (sequelize, Sequelize) => {
         },
       },
       content: {
-        type: Sequelize.varchar(10000),
-        allowNull: true,
-      },
-      createrID: {
-        type: Sequelize.varchar(20),
-        allowNull: false,
-        references: {
-          model: user,
-          key: "userID",
-        },
-      },
-      createDate: {
-        type: Sequelize.datetime(),
+        type: Sequelize.STRING,
         allowNull: true,
       },
     },
@@ -53,6 +30,7 @@ module.exports = (sequelize, Sequelize) => {
       sequelize,
       modelName: "event",
       timestamps: true,
+      paranoid:true,
     }
   );
   return Event;

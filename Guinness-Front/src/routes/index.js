@@ -56,7 +56,7 @@ export default new VueRouter({
       component: () => import("@/Views/MyPage.vue"),
     },
     {
-      path: "/postview",
+      path: "/:id/postview",
       component: () => import("@/Views/PostView.vue"),
     },
     {

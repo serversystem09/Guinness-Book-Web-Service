@@ -1,3 +1,5 @@
+const user = require("./user");
+
 module.exports = (sequelize, Sequelize) => {
   class Post extends Sequelize.Model {
     //함수 입력하기
@@ -10,45 +12,19 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
       },
       postTitle: {
-        type: Sequelize.varchar(40),
+        type: Sequelize.STRING(40),
         allowNull: false,
       },
       content: {
-        type: Sequelize.varchar(10000),
+        type: Sequelize.STRING,
         allowNull: false,
-      },
-      eventID: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: Event,
-          key: "eventID",
-        },
-      },
-      writerID: {
-        type: Sequelize.varchar(20),
-        references: {
-          model: User,
-          key: "userID",
-        },
-      },
-      likeNum: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        validate: {
-          min: 0
-        },
-      },
-      commentON: {
-        type: Sequelize.tinyint(1),
-      },
-      writeDate: {
-        type: Sequelize.datetime(),
       },
     },
     {
       sequelize,
       modelName: "post",
       timestamps: true,
+      paranoid:true,
     }
   );
   return Post;

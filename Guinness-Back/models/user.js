@@ -3,26 +3,26 @@ module.exports = (sequelize, Sequelize) => {
     static async findByPkAndUpdate(userID, params) {
       try {
         let user = await User.findByPk(userID);
-        if(user) {
+        if (user) {
           user = await User.update(params, {
-            where: {userID: userID}
+            where: { userID: userID }
           });
         }
         return user;
-      } catch(err) {
+      } catch (err) {
         console.log(err);
       }
     }
     static async findByPkAndRemove(userID) {
       try {
         let user = await User.findByPk(userID);
-        if(user) {
+        if (user) {
           user = await User.destroy({
-            where: {userID: userID}
+            where: { userID: userID }
           });
         }
         return user;
-      } catch(err) {
+      } catch (err) {
         console.log(err);
       }
     }
@@ -34,34 +34,30 @@ module.exports = (sequelize, Sequelize) => {
   User.init(
     {
       userID: {
-        type: Sequelize.varchar(20),
+        type: Sequelize.STRING(20),
         allowNull: false,
         unique: true,
         primaryKey: true,
       },
-      /*
       pw: {
-        type: Sequelize.STRING(100),
-        allowNull: false,
+        type: Sequelize.STRING(20),
       },
-      */
       nickName: {
-        type: Sequelize.varchar(20),
-        allowNull: false,
+        type: Sequelize.STRING(20),
       },
       phoneNumber: {
         type: Sequelize.INTEGER,
       },
       email: {
-        type: Sequelize.varchar(40),
+        type: Sequelize.STRING(40),
+        allowNull: false,
         unique: true,
       },
       ranking: {
-        type: Sequelize.varchar(10),
-        allowNull: false,
+        type: Sequelize.STRING(10),
       },
       birth: {
-        type: Sequelize.datetime(),
+        type: Sequelize.DATE,
       },
     },
     {
@@ -71,6 +67,7 @@ module.exports = (sequelize, Sequelize) => {
       sequelize,
       modelName: "user",
       timestamps: true,
+      paranoid:true,
     }
   );
   return User;
