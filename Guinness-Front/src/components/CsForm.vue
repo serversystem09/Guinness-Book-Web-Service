@@ -1,6 +1,6 @@
 <template>
   <div class="csboard">
-    <form>
+    <form @submit.prevent="submitForm">
       <h1>문의게시판</h1>
       <div class="typo--col">
         <label class="left">제목</label>
@@ -10,6 +10,7 @@
           id="subject"
           style="height: 30pt"
           class="form-control"
+          v-model="title"
         ></textarea>
       </div>
       <div class="typo--col" style="margin-bottom: 10px">
@@ -20,6 +21,7 @@
           id="body"
           class="form-control"
           rows="10"
+          v-model="content"
         ></textarea>
       </div>
       <div class="typo--col">
@@ -29,20 +31,60 @@
         /></label>
       </div>
 
-      <div id="submit">
-        <input
-          class="w-100 btn btn-lg btn-primary"
-          type="submit"
-          value="글쓰기"
-          onclick="return Validate()"
-        /><br />
-      </div>
+      <button
+        type="button"
+        class="btnInActive"
+        :class="{ btnPrimary: isValid }"
+        @click="submitForm"
+      >
+        글쓰기
+      </button>
+      <br />
     </form>
   </div>
 </template>
 
 <script>
-export default {};
+import { createInquiry } from "@/api/index";
+export default {
+  data() {
+    return {
+      title: "",
+      content: "",
+    };
+  },
+  computed: {
+    isValid() {
+      if (this.title && this.content) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
+  methods: {
+    async submitForm() {
+      try {
+        console.log("문의하기 폼 제출");
+        const data = {
+          title: this.title,
+          content: this.content,
+        };
+        const { inquiryData } = await createInquiry(data);
+        console.log(inquiryData);
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        this.initForm();
+        this.$router.push("/");
+      }
+    },
+    initForm() {
+      this.title = "";
+      this.content = "";
+    },
+  },
+};
 </script>
 
 <style scoped>

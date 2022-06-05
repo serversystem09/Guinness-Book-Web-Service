@@ -15,6 +15,13 @@
           <div id="select-1">
             <select v-model="selected1">
               <option selected>대분류</option>
+              <option value="1">체육</option>
+              <option value="1">음식</option>
+              <option value="1">춤</option>
+              <option value="1">노래</option>
+              <option value="1">공예</option>
+              <option value="1">사회 캠페인</option>
+              <option value="1">오락</option>
             </select>
           </div>
           <div id="select-2">

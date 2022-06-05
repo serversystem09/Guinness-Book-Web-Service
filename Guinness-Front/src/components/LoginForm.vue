@@ -1,13 +1,13 @@
 <template>
   <div class="container login-page">
-    <form>
+    <form @submit.prevent="submitForm">
       <h1>로그인</h1>
       <div class="form-floating">
         <input
-          type="email"
+          type="text"
           class="form-control"
           id="floatingInput"
-          placeholder="name@example.com"
+          v-model="userId"
         />
         <label for="floatingInput">아이디</label>
       </div>
@@ -16,33 +16,65 @@
           type="password"
           class="form-control"
           id="floatingPassword"
-          placeholder="Password"
+          v-model="userPw"
         />
         <label for="floatingPassword">비밀번호</label>
       </div>
       <br />
       <button
-        class="w-100 btn btn-lg btn-primary"
-        type="submit"
+        :disabled="!isValid"
+        type="button"
         @click="submitForm"
+        class="btnInActive"
+        :class="{ btnPrimary: isValid }"
       >
         로그인
       </button>
-      <button @click="toSignup" class="btn btn-lg btn-primary btn-signup">
-        회원가입
-      </button>
+      <button @click="toSignup" class="btnPrimary">회원가입</button>
     </form>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      userId: "",
+      userPw: "",
+    };
+  },
+  computed: {
+    isValid() {
+      if (this.userId && this.userPw) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
   methods: {
     toSignup() {
       this.$router.push("/signup");
     },
-    submitForm() {
-      console.log("로그인 폼 제출");
+    async submitForm() {
+      try {
+        const userData = {
+          userid: this.userId,
+          password: this.userPw,
+        };
+        await this.$store.dispatch("LOGIN", userData);
+        this.$router.push("/main");
+      } catch (error) {
+        console.log(error);
+        this.logMessage = error;
+      } finally {
+        this.initForm();
+        this.$router.push("/");
+      }
+    },
+    initForm() {
+      this.userId = "";
+      this.userPw = "";
     },
   },
 };
