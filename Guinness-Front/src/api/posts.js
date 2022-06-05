@@ -13,7 +13,7 @@ function fetchPost(postId) {
 
 // 학습 노트 데이터를 생성하는 API
 function createPost(postData) {
-  return posts.post("/", postData);
+  return posts.post("/addBoard", postData);
 }
 
 // 학습 노트 데이터를 삭제하는 API

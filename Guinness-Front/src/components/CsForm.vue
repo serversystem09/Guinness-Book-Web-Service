@@ -24,12 +24,25 @@
           v-model="content"
         ></textarea>
       </div>
-      <div class="typo--col">
+      <!-- <div class="typo--col">
         <label class="left">첨부파일</label>
         <label
-          ><input type="file" name="attachment" id="FileOpenInput"
+          ><input
+            type="file"
+            name="attachment"
+            id="FileOpenInput"
+            @change="onImageChange"
         /></label>
-      </div>
+        <v-img
+          v-for="(item, i) in uploadimageurl"
+          :key="i"
+          :src="item.url"
+          contain
+          height="150px"
+          width="200px"
+          style="border: 2px solid black; margin-left: 100px"
+        />
+      </div> -->
 
       <button
         type="button"
