@@ -1,11 +1,16 @@
+const Event = require("./event")(sequelize, Sequelize);
+const Comment = require("./comment")(sequelize, Sequelize);
+const User = require("./user")(sequelize, Sequelize);
+
 module.exports = (sequelize, Sequelize) => {
+      //commentOn삭제
   class Post extends Sequelize.Model {
-    //함수 입력하기
   }
   Post.init(
     {
       postNum: {
         type: Sequelize.INTEGER,
+        autoIncrement:true,
         allowNull: false,
         primaryKey: true,
       },
@@ -24,6 +29,11 @@ module.exports = (sequelize, Sequelize) => {
           key: "eventID",
         },
       },
+      photo: {
+        type: DataTypes.BLOB("long"),
+          // 우리는 프론트에서 보내준 이미지를 Blob 타입으로 변환하여 서버에 저장합니다.
+          allowNull: false
+        },
       writerID: {
         type: Sequelize.varchar(20),
         references: {
@@ -38,9 +48,6 @@ module.exports = (sequelize, Sequelize) => {
           min: 0
         },
       },
-      commentON: {
-        type: Sequelize.tinyint(1),
-      },
       writeDate: {
         type: Sequelize.datetime(),
       },
@@ -49,6 +56,7 @@ module.exports = (sequelize, Sequelize) => {
       sequelize,
       modelName: "post",
       timestamps: true,
+      paranoid:true,
     }
   );
   return Post;
