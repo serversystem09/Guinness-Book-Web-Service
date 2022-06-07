@@ -103,7 +103,10 @@ const create = async (req, res) => {
     const postNum = req.params.id;
     let user = req.session;
 
-    const post = await Post.findOne(where { id: postNum } )
+
+    
+    //수정함
+    const post = await Post.findByPkAndRemove( postNum )
     .then(post => {
       await Post.destroy({where:{id:postNum}})
       req.flash('success', 'complete remove post');
