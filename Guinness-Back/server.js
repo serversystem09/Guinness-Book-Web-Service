@@ -1,5 +1,40 @@
+/*작동하는 코드
 const express = require("express");
 const app = express();
+*/
+
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const indexRouter = require('./router.js');
+ 
+const app = express();
+ 
+app.use(express.json());
+app.use(express.static("public"));
+app.use(bodyParser.json());
+ 
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+ 
+app.use(cors());
+ 
+app.use('/api', indexRouter);
+ 
+// Handling Errors
+app.use((err, req, res, next) => {
+    // console.log(err);
+    err.statusCode = err.statusCode || 500;
+    err.message = err.message || "Internal Server Error";
+    res.status(err.statusCode).json({
+      message: err.message,
+    });
+});
+ 
+app.listen(3000,() => console.log('Server is running on port 3000'));
 
 // const layouts = require("express-ejs-layouts");
 // const router = require("./routers/index");
@@ -53,8 +88,12 @@ const app = express();
 //   next();
 // });
 // app.use("/", router);
+
+/* 사용되는 코드
 const port = 3000;
 const postlist = ["post1", "post2"];
+
+app.use(express.static("public"));
 
 app.get("/api/postlist", (req, res) => {
   res.send(postlist);
@@ -65,3 +104,4 @@ app.listen(port, () => {
     `The Express.js server hs started and is listening on port number: ${port}`
   );
 });
+*/
