@@ -8,7 +8,6 @@ const errorRoutes = require("./errorRoutes");
 const eventRoutes = require("./eventRoutes");
 const followRoutes = require("./followRoutes");
 const postRoutes = require("./postRoutes");
-const recommendRoutes = require("./recommendRoutes");
 
 router.use("/users", userRoutes);
 router.use("/apis", apiRoutes);
@@ -18,6 +17,5 @@ router.use("/errors", errorRoutes);
 router.use("/events", eventRoutes);
 router.use("/follows", followRoutes);
 router.use("/posts", postRoutes);
-router.use("/recommends", recommendRoutes);
 
 module.exports = router;
