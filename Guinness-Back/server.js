@@ -2,12 +2,11 @@ const port = 3000;
 const express = require("express");
 const app = express();
 const path = require("path");
-const layouts = require("express-ejs-layouts");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const expressSession = require("express-session");
 const connectFlash = require("connect-flash");
-const router = require("./routes/index");
+const router = require("./routers/index");
 
 app.set("port", process.env.PORT || "3000");
 
@@ -20,7 +19,6 @@ sequelize.sync()
   console.error('데이터베이스 연결 실패');
 });
 
-app.use(layouts);
 app.use(express.static("public"));
 app.use(express.urlencoded({extended: false,}));
 app.use(express.json());

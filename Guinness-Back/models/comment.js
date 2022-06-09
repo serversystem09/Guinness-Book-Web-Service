@@ -11,6 +11,7 @@ module.exports = (sequelize, Sequelize) => {
           },
           content: {
               type: Sequelize.STRING(400),
+              allowNull: false,
           },
       },
       {
