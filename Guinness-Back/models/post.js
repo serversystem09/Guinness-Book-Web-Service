@@ -19,18 +19,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      likeNum: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        validate: {
-          min: 0
-        },
-      },
-      photo: {
-        type: Sequelize.BLOB("long"),
-            // 우리는 프론트에서 보내준 이미지를 Blob 타입으로 변환하여 서버에 저장합니다.
-         allowNull: false
-       },
     },
     {
       sequelize,

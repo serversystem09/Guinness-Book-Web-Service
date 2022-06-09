@@ -1,5 +1,6 @@
 const { isLoggedIn } = require("./middlewares");
 const User = require("../models/user");
+const Follow = require("../models/follow");
 
 module.exports = {
 following: async (req, res, next) => {  /* 팔로잉 기능 */
