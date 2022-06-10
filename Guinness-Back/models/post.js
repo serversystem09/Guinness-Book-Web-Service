@@ -1,8 +1,8 @@
-const Event = require("./event")(sequelize, Sequelize);
-const Comment = require("./comment")(sequelize, Sequelize);
-const User = require("./user")(sequelize, Sequelize);
-
 module.exports = (sequelize, Sequelize) => {
+  const Event = require("./event")(sequelize, Sequelize);
+  const Comment = require("./comment")(sequelize, Sequelize);
+  const User = require("./user")(sequelize, Sequelize);
+
       //commentOn삭제
   class Post extends Sequelize.Model {
   }
@@ -15,11 +15,11 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
       },
       postTitle: {
-        type: Sequelize.varchar(40),
+        type: Sequelize.STRING(40),
         allowNull: false,
       },
       content: {
-        type: Sequelize.varchar(10000),
+        type: Sequelize.STRING(10000),
         allowNull: false,
       },
       eventID: {
@@ -29,13 +29,13 @@ module.exports = (sequelize, Sequelize) => {
           key: "eventID",
         },
       },
-      photo: {
-        type: DataTypes.BLOB("long"),
-          // 우리는 프론트에서 보내준 이미지를 Blob 타입으로 변환하여 서버에 저장합니다.
-          allowNull: false
-        },
+       photo: {
+         type: Sequelize.BLOB("long"),
+           // 우리는 프론트에서 보내준 이미지를 Blob 타입으로 변환하여 서버에 저장합니다.
+           allowNull: false
+         },
       writerID: {
-        type: Sequelize.varchar(20),
+        type: Sequelize.STRING(20),
         references: {
           model: User,
           key: "userID",
@@ -48,8 +48,10 @@ module.exports = (sequelize, Sequelize) => {
           min: 0
         },
       },
-      writeDate: {
-        type: Sequelize.datetime(),
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW"), //이렇게 수정!
       },
     },
     {

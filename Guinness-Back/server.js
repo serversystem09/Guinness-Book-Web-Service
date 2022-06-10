@@ -1,83 +1,62 @@
+const port = 3000;
 const express = require("express");
 const app = express();
-const layouts = require("express-ejs-layouts");
-const router = require("./routes/index");
-const methodOverride = require("method-override");
+const path = require("path");
 const passport = require("passport");
 const cookieParser = require("cookie-parser");
 const expressSession = require("express-session");
-const expressValidator = require("express-validator");
 const connectFlash = require("connect-flash");
-const User = require("./models/user");
-const session = require("express-session");
-const flash = require("connect-flash");
-//이미지 업로드용
-const multer = require("multer");
-const upload = multer({});
-app.post("/info", upload.single("file"), (req, res) => {
-  // req.file에 업로드한 파일 존재
-  console.log(req.file);
-});
+const router = require("./routers/index");
 
 app.set("port", process.env.PORT || "3000");
 
-
 const { sequelize } = require("./models");
-sequelize.sync()
-.then(() => {
-  console.log('데이터베이스 연결 성공');
-})
-.catch((err) => {
-  console.error('데이터베이스 연결 실패');
-});
+sequelize
+  .sync()
+  .then(() => {
+    console.log("데이터베이스 연결 성공");
+  })
+  .catch((err) => {
+    console.error("데이터베이스 연결 실패");
+  });
 
-app.use(layouts);
+
+//app.use(expressSession);
 app.use(express.static("public"));
-app.use(express.urlencoded({extended: false,}));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use(cookieParser(process.env.COOKIE_SECRET)); //요청에 동봉된 쿠키를 해석. 매개변수 : 클라이언트에서 수정 막음
-// app.use(
-//   session({
-//     //세션설정(for 로그인 등)
-//     resave: false,
-//     saveUninitialized: false,
-//     secret: process.env.COOKIE_SECRET,
-//     cookie: {
-//       httpOnly: true,
-//       secure: false,
-//     },
-//   })
-// );
+//app.use(cookieParser(process.env.COOKIE_SECRET)); //요청에 동봉된 쿠키를 해석. 매개변수 : 클라이언트에서 수정 막음
 
+app.use(expressSession({
+    //세션설정(for 로그인 등)
+    //secret: process.env.COOKIE_SECRET,
+    secret:"Cookie",
+    resave: false,
+    saveUninitialized: false,
+    name: "Cookie_name",
+    cookie: {
+      httpOnly: true,
+      secure: false,
+    }, 
+  })
+);
 app.use(connectFlash());
-router.use(flash());
-router.use.((req, res, next) =>{ 
-    res.locals.flashMessages = req.flash();
-    next();});
-
-
-
-
-
-
 
 app.use(passport.initialize());
 app.use(passport.session());
-// passport.use(User.createStrategy());
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
+//passport.use(User.createStrategy());
+//passport.serializeUser(User.serializeUser());
+//passport.deserializeUser(User.deserializeUser());
 
-// app.use((req, res, next) => {
-//   res.locals.loggedIn = req.isAuthenticated();
-//   res.locals.currentUser = req.user;
-//   res.locals.flashMessages = req.flash();
-//   next();
-// });
-// app.use("/", router);
+app.use((req, res, next) => {
+  res.locals.loggedIn = req.isAuthenticated();
+  res.locals.currentUser = req.user;
+  res.locals.flashMessages = req.flash();
+  next();
+});
+app.use("/", router);
 
 app.listen(port, () => {
-  console.log(
-    `The Express.js server hs started and is listening on port number: ${port}`
-  );
+  console.log(`Server is listening on port number: ${port}`);
 });

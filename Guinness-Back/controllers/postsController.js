@@ -1,3 +1,5 @@
+
+httpStatus = require("http-status-codes");
 const { prototype } = require('multer/lib/counter');
 const Connection = require('mysql/lib/Connection');
 const Comment = require('../models/comment');
@@ -14,25 +16,25 @@ getPostParams = body => {
         postTitle: body.postTitle,
         content: body.content,
         eventID: body.eventID,
-        photo: body.photo
+//        photo: body.photo
 //사용자에게 받는 게 아니라 사용자 아이디는 생성 전, postNum, date, like는 생성 후에 받는 것임. 
         // likeNum: body.likeNum,
         // writeDate: new Date(),
         // postNum: Date.now().toString(),
         // writerID: req.session.user.id
-    }
-}
+    };
+};
 
-
+//find({ where: {eventID: eventID}
 
 //대분류 하위의 게시글 목록 -> 각 대분류마다 id값이 있고, 대분류 항목을 누르면
 //event키의 값이 바뀌면서 다른 페이지들을 보여주게 됨. 
 //처음에 게시글 목록 항목 들어 가면 가장 처음에 있는 eventId가 가장 작은 것부터 보여주게끔.
-const list = async function(req, res){
+const list = async function(req, res, next) {
   const eventID = req.params.event;
-  const post = await Post.findAll({ where: {eventID: eventID} })
+  const post = await Post.findByPk({ where: {eventID: eventID}})
     .sort('-createdAt')
-    .exec(function(err, posts){
+    .catch(function(err, posts){
       if(error) {
         console.log(`Error fetching courses: ${error.message}`);
         return res.sendStatus(404);
@@ -45,6 +47,7 @@ const list = async function(req, res){
 //로그인 확인은 미들웨어 라우터가.
 //getupload
   const newPost = (req, res) => {
+    console.log(req.heaers);
     console.log("post 모듈 안에 있는 newPost 호출됨.");
       res.sendfile(path.join(__dirname, 'create'));
   };
@@ -58,7 +61,7 @@ const create = async (req, res) => {
     let writeDate = Date.now().toString();
 
     try{
-      let post = await Post.create(postParams, writerID, writeDate);
+      let post = await Post.create(postParams, writerID, createdAt);
       req.flash('success', `Add new post!`);
       res.locals.redirect = "/:eventId/posts/:id";
       res.locals.post = post;
@@ -79,7 +82,7 @@ const create = async (req, res) => {
     const eventID = req.params.event;
     const postNum = req.params.id;
     try{
-    let post = await Post.find(where :{id: postNum});
+    const post = await Post.findByPk( postNum );
     res.locals.post = post;
     next();
     }catch(error) {
@@ -93,7 +96,7 @@ const create = async (req, res) => {
   const showView = async(req, res) => {
     let eventID = req.params.event;
     const postNum = req.params.id;
-    res.render("post/show", {post: post})
+    res.render("posts/show", {post: post})
   };
 
 
@@ -108,19 +111,19 @@ const create = async (req, res) => {
     //수정함
     const post = await Post.findByPkAndRemove( postNum )
     .then(post => {
-      await Post.destroy({where:{id:postNum}})
+      post.destroy({where:{id:postNum}});
       req.flash('success', 'complete remove post');
-      res.locals.redirect = "/courses";
+      res.locals.redirect = "/posts/:id";
       return res.sendStatus(200);
     })
-    .catch(err=>
+    .catch(err=>{
       if (!post) {
         return res.sendStatus(404);
       }       
       if (Post.writerID !== User.userID) {
         return res.sendStatus(403);
       }
-      );
+    });
 //await Post.filter((Post) => Post.postNum !== postNum);
   };
 
@@ -134,7 +137,7 @@ const create = async (req, res) => {
       const user = req.session;
       try{
       const post = await Post.findByPk(postNum);
-      res.render("Posts/edit", {
+      res.render("posts/edit", {
         post: post
       });
     }catch(error){
