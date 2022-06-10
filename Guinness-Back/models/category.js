@@ -10,13 +10,14 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
       },
       categoryName: {
-        type: Sequelize.varchar(10),
+        type: Sequelize.STRING(10),
       },
     },
     {
       sequelize,
       modelName: "category",
       timestamps: true,
+      paranoid:true,
     }
   );
   return Category;

@@ -2,7 +2,8 @@ const router = require("express").Router();
 const categorysController = require("../controllers/categorysController");
 const { isLoggedIn } = require("../controllers/middlewares");
 
-router.get("", categorysController.index, categorysController.indexView);
+/*
+router.get("/", categorysController.index, categorysController.indexView);
 router.get("/new", categorysController.new);
 router.post(
   "/create",
@@ -21,5 +22,5 @@ router.delete(
   categorysController.delete,
   categorysController.redirectView
 );
-
+*/
 module.exports = router;

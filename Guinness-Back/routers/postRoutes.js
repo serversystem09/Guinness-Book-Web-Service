@@ -9,20 +9,16 @@ const { isLoggedIn } = require("../controllers/middlewares");
 //postSearch 삭제
 
 
-router.get("/", postsController.list);      //event의 루트에 들어 왔을 때의 라우터
-router.get("/:event", postsController.list);//event에 해당하는 값에 따라 페이지 달라짐
+//router.get("/", postsController.list);      //event의 루트에 들어 왔을 때의 라우터
+//router.get("/:event", postsController.list);//event에 해당하는 값에 따라 페이지 달라짐
 router.get("/new", isLoggedIn, postsController.newPost);
 router.post("/create", postsController.create);
 
-// //좋아요 기능
-// router.post("/:event/:id/like", postsController.create);
-// router.post("/:event/:id/likeNum", postsController.create);
-// //
 
-router.get("/:event/:id/edit", isLoggedIn, postsController.edit);
-router.put("/:event/:id/update", postsController.update);
-router.get("/:event/:id", postsController.show, postsController.showView);
-router.delete("/:event/:id/delete", isLoggedIn, postsController.deletePost);		
+router.get("/:id/edit", isLoggedIn, postsController.edit);
+router.put("/:id/update", postsController.update);
+router.get("/:id", postsController.show, postsController.showView);
+router.delete("/:id/delete", isLoggedIn, postsController.deletePost);		
 
 module.exports = router;
 
