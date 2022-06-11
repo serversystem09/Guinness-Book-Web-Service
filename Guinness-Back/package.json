@@ -1,15 +1,18 @@
 {
-  "name": "guinness-back",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "An app for competing with popping ideas",
-  "main": "server.js",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.1"
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5"
   }
 }

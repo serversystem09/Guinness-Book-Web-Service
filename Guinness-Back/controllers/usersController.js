@@ -1,4 +1,4 @@
-const { isLoggedIn } = require("./middlewares");
+/*const { isLoggedIn } = require("./middlewares");
 const User = require("../models/user");
 const  passport = require("passport");
  const getUserParams = body => {
@@ -162,8 +162,10 @@ module.exports = {
     res.locals.redirect = "/";
     next();
   },
-  
+  */
+ /*
 userSearch: async (req, res, next) => { /* 회원검색 */
+/*
   try {
     const exUser = await User.findAll({
       where: { id: { [Op.like]: "%" + req.query.id + "%" } },
@@ -184,3 +186,65 @@ userSearch: async (req, res, next) => { /* 회원검색 */
   }
 }
 };
+*/
+// Import function from Product Model
+import { getUsers, getUserById, insertUser, updateUserById, deleteUserById } from "../models/user.js";
+  
+// Get All Users
+export const showUsers = (req, res) => {
+    getUsers((err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
+  
+// Get certain User 
+export const showUserById = (req, res) => {
+    getUserById(req.params.id, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
+  
+// Create New User
+export const createUser = (req, res) => {
+    const data = req.body;
+    insertUser(data, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
+  
+// Update User
+export const updateUser = (req, res) => {
+    const data  = req.body;
+    const id    = req.params.id;
+    updateUserById(data, id, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
+  
+// Delete User
+export const deleteUser = (req, res) => {
+    const id = req.params.id;
+    deleteUserById(id, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}

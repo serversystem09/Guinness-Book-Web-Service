@@ -1,23 +1,26 @@
-const router = require("express").Router();
-const usersController = require("../controllers/usersController");
-const { isLoggedIn } = require("../controllers/middlewares");
-
-router.get("/", usersController.index, usersController.indexView);
-router.get("/new", usersController.new);
-router.post(
-  "/create",
-  usersController.validate,
-  usersController.create,
-  usersController.redirectView
-);
-router.get("/login", usersController.login);
-router.post("/login", usersController.authenticate);
-router.get("/logout", usersController.logout, usersController.redirectView);
-router.get("/:id/edit", usersController.edit);
-router.put("/:id/update", usersController.update, usersController.redirectView);
-router.get("/:id", usersController.show, usersController.showView);
-router.delete("/:id/delete", usersController.delete, usersController.redirectView);
-
-router.get("/users/id/search", isLoggedIn, usersController.userSearch);
-
-module.exports = router;
+// import express
+import express from "express";
+  
+// import function from controller
+import { showUsers, showUserById, createUser, updateUser, deleteUser } from "../controllers/usersController.js";
+  
+// init express router
+const UserRouter = express.Router();
+  
+// Get All User
+UserRouter.get('/users', showUsers);
+  
+// Get certain User
+UserRouter.get('/users/:id', showUserById);
+  
+// Create New User
+UserRouter.post('/users', createUser);
+  
+// Update User
+UserRouter.put('/users/:id', updateUser);
+  
+// Delete User
+UserRouter.delete('/users/:id', deleteUser);
+  
+// export default router
+export default UserRouter;
