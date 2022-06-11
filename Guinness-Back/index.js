@@ -13,6 +13,10 @@ import postRouter from "./routers/postRoutes.js";
 import userRouter from "./routers/userRoutes.js";
 import authRouter from "./routers/authRouter.js";
 
+import dotenv from 'dotenv';
+dotenv.config();
+
+console.log("확인"+ process.env.TOKEN_KEY);
 // init express
 const app = express();
   
