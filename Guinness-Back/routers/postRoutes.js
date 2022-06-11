@@ -18,7 +18,6 @@ module.exports = router;
 
 // import express
 import express from "express";
-
 // import function from controller
 import {showPosts, showPostByNum, createPost, updatePost, deletePost} from "../controllers/postsController.js";
 

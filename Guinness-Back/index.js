@@ -3,14 +3,16 @@
 import express from "express";
 // import cors
 import cors from "cors";
-
+import createError from 'http-errors';
+import path from 'path';
 
 import bodyParser from "body-parser";
  
 // import routes
 import postRouter from "./routers/postRoutes.js";
 import userRouter from "./routers/userRoutes.js";
-  
+import authRouter from "./routers/authRouter.js";
+
 // init express
 const app = express();
   
@@ -26,7 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // use router
 app.use('/post',postRouter);
 app.use('/user', userRouter);
- 
+app.use('/auth', authRouter);
+
 // Handling Errors
 app.use((err, req, res, next) => {
     // console.log(err);
