@@ -11,4 +11,14 @@ function loginUser(userData) {
   return instance.post("auth/login", userData);
 }
 
-export { registerUser, loginUser };
+// 회원정보 조회
+function fetchUser(userID) {
+  return instance.get(`/user/users/${userID}`);
+}
+
+// 회원정보 수정
+function updateUser(userID, userData) {
+  return instance.put(`/user/users/${userID}`, userData);
+}
+
+export { registerUser, loginUser, fetchUser, updateUser };
