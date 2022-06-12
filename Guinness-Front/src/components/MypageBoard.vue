@@ -53,7 +53,7 @@ export default {
       this.$router.push("/");
     },
     toMyInquiry() {
-      this.$router.push("/");
+      this.$router.push("/myinquiry");
     },
     followingActive() {
       this.isActive1 = true;

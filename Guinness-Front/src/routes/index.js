@@ -74,6 +74,13 @@ const router = new VueRouter({
       },
     },
     {
+      path: "/myinquiry",
+      component: () => import("@/Views/MyInquiry.vue"),
+      meta: {
+        auth: true,
+      },
+    },
+    {
       path: "/postview/:id",
       component: () => import("@/Views/PostView.vue"),
     },

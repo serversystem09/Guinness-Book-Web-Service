@@ -4,9 +4,9 @@
     <change-info-step-1
       @submitForm="submitForm"
       :step="step"
-      v-if="step == 1"
+      v-if="step == 3"
     ></change-info-step-1>
-    <change-info-step-2 v-else-if="step == 2"></change-info-step-2>
+    <change-info-step-2 v-else-if="step == 1"></change-info-step-2>
   </div>
 </template>
 
