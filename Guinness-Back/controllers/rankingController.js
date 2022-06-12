@@ -13,4 +13,4 @@ export const showRanks = (req, res) => {
             res.json(results);
         }
     });
-}
+} 
