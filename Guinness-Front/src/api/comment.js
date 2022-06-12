@@ -16,8 +16,8 @@ function fetchComment(postNum) {
 }
 
 // 댓글 개별 삭제
-function deleteComment(postNum) {
-  return instance.delete(`comm/comment${postNum}`);
+function deleteComment(commentNum) {
+  return instance.delete(`comm/comment/${commentNum}`);
 }
 
 export { createComment, fetchComment, fetchComments, deleteComment };

@@ -27,12 +27,15 @@
             <div class="text__contents">{{ postData.content }}</div>
             <!-- 댓글 -->
             <div
-              v-for="data in comments"
+              v-for="(data, index) in comments"
               :key="data.index"
               class="text__comments"
             >
               <span> {{ data.content }}</span>
               <span> {{ data.userID }}</span>
+              <button @click="deleteComment(index)" class="btn_del-comment">
+                삭제
+              </button>
             </div>
             <button type="button" class="btn-like" @click="likePost">
               좋아요&nbsp;{{ postData.likeNum }}&nbsp;<i
@@ -56,7 +59,7 @@
 
 <script>
 import { fetchPost, deletePost } from "@/api/posts";
-import { createComment, fetchComments } from "@/api/comment";
+import { createComment, fetchComments, deleteComment } from "@/api/comment";
 // import { createFollow } from "@/api.follow";
 export default {
   created() {
@@ -72,6 +75,7 @@ export default {
       contents: "내용",
       comments: [],
       comment: "",
+      commentNum: "",
       postData: [],
       postId: this.$route.params.id,
       liked: false,
@@ -152,6 +156,20 @@ export default {
     },
     initForm() {
       this.comment = "";
+    },
+    async deleteComment(index) {
+      const result = confirm("정말 삭제하시겠습니까?");
+      if (result == true) {
+        try {
+          const { data } = await deleteComment(this.comments[index].commentNum);
+          console.log(data);
+          this.fetchComments();
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        console.log("삭제 취소");
+      }
     },
   },
 };
@@ -236,6 +254,15 @@ h3 {
   background-color: transparent;
   margin: 10px 0;
   padding: 3px 10px;
+}
+
+.btn_del-comment {
+  border-style: none;
+  border-radius: 5px;
+  border: 1px solid rgb(180, 179, 179);
+  background-color: transparent;
+  margin: 0;
+  padding: 3px 3px;
 }
 
 .post-card__follow {
