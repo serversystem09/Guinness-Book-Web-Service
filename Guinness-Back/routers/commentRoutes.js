@@ -7,7 +7,7 @@ import {showComments, showCommentByNum, createComment, deleteComment} from "../c
 
 const commRouter = express.Router();
 
-commRouter.get('/comments', showComments);
+commRouter.get('/comments/:id', showComments);
   
 
 commRouter.get('/comment/:id', showCommentByNum);
