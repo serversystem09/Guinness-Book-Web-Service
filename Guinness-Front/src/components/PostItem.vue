@@ -7,7 +7,7 @@
         <div>
           <div class="post-card__follow">
             <div>
-              <span>{{ this.$store.state.userID }}</span>
+              <span>{{ postData.writerID }}</span>
               <button type="button" class="btn-like" @click="followUser">
                 팔로우&nbsp;<i
                   :class="['fa-heart', follow ? 'fas' : 'far']"
@@ -57,6 +57,7 @@
 <script>
 import { fetchPost, deletePost } from "@/api/posts";
 import { createComment, fetchComments } from "@/api/comment";
+// import { createFollow } from "@/api.follow";
 export default {
   created() {
     this.fetchPost();
@@ -101,6 +102,7 @@ export default {
         console.log("좋아요 취소");
       }
     },
+    // 팔로우
     async followUser() {
       console.log("팔로우");
       this.follow = !this.follow;
