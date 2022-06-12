@@ -34,7 +34,11 @@
               ></i>
             </button>
           </div>
-          <div class="comment-form"><input /><button>작성</button></div>
+          <div class="comment-form">
+            <input v-model="comment" /><button @click="createComment">
+              작성
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -42,10 +46,8 @@
 </template>
 
 <script>
-// import { reactive } from "vue";
-// import axios from "axios";
 import { fetchPost, deletePost } from "@/api/posts";
-
+import { createComment } from "@/api/comment";
 export default {
   created() {
     this.fetchPost();
@@ -57,7 +59,8 @@ export default {
     return {
       title: "제목",
       contents: "내용",
-      comments: "댓글",
+      comments: [],
+      comment: "",
       postData: [],
       postId: this.$route.params.id,
       liked: false,
@@ -104,9 +107,28 @@ export default {
         console.log("삭제 취소");
       }
     },
+    // 게시글 수정 페이지로
     async editPost() {
       const id = this.postId;
       this.$router.push({ path: `/postview/edit/${id}`, replace: true });
+    },
+    // 댓글 작성
+    async createComment() {
+      try {
+        const { data } = await createComment({
+          content: this.comment,
+          userID: this.$store.state.userID,
+          postNum: this.postId,
+        });
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.initForm();
+      }
+    },
+    initForm() {
+      this.comment = "";
     },
   },
 };
