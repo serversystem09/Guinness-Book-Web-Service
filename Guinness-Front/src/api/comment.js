@@ -12,7 +12,7 @@ function fetchComments(postNum) {
 
 // 댓글 개별 조회
 function fetchComment(postNum) {
-  return instance.get(`comm/comment${postNum}`);
+  return instance.get(`comm/comment/${postNum}`);
 }
 
 // 댓글 개별 삭제

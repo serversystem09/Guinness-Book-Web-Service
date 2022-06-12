@@ -7,7 +7,7 @@
         <div>
           <div class="post-card__follow">
             <div>
-              <span>{{ this.$store.state.userEmail }}</span>
+              <span>{{ this.$store.state.userID }}</span>
               <button type="button" class="btn-like" @click="followUser">
                 팔로우&nbsp;<i
                   :class="['fa-heart', follow ? 'fas' : 'far']"
@@ -22,12 +22,17 @@
           </div>
 
           <div class="post-card__contents">
-            <h2 class="text__title">{{ postData.postTitle }}</h2>
+            <h3 class="text__title">{{ postData.postTitle }}</h3>
 
             <div class="text__contents">{{ postData.content }}</div>
             <!-- 댓글 -->
-            <div class="text__comments">{{ comments }}</div>
-            <div>sns</div>
+            <div
+              v-for="comment in comments"
+              :key="comment.commentNum"
+              class="text__comments"
+            >
+              {{ comment.content }}
+            </div>
             <button type="button" class="btn-like" @click="likePost">
               좋아요&nbsp;{{ postData.likeNum }}&nbsp;<i
                 :class="['fa-heart', liked ? 'fas' : 'far']"
@@ -47,10 +52,11 @@
 
 <script>
 import { fetchPost, deletePost } from "@/api/posts";
-import { createComment } from "@/api/comment";
+import { createComment, fetchComments } from "@/api/comment";
 export default {
   created() {
     this.fetchPost();
+    this.fetchComments();
   },
   mounted() {
     console.log("id:", this.$route.params.id);
@@ -69,6 +75,7 @@ export default {
     };
   },
   methods: {
+    // 게시글 상세 조회
     async fetchPost() {
       try {
         const { data } = await fetchPost(this.postId);
@@ -78,6 +85,7 @@ export default {
         console.log(error);
       }
     },
+    // 게시글 좋아요
     async likePost() {
       console.log("좋아요");
       this.liked = !this.liked;
@@ -93,6 +101,7 @@ export default {
       console.log("팔로우");
       this.follow = !this.follow;
     },
+    // 게시글 삭제
     async deletePost() {
       const result = confirm("정말 삭제하시겠습니까?");
       if (result == true) {
@@ -126,6 +135,12 @@ export default {
       } finally {
         this.initForm();
       }
+    },
+    // 댓글 조회
+    async fetchComments() {
+      const { data } = await fetchComments(this.postId);
+      this.comments = data;
+      console.log(data);
     },
     initForm() {
       this.comment = "";
@@ -164,20 +179,23 @@ export default {
   margin-bottom: 10px;
 }
 
-h2 {
+h3 {
   line-height: 50px;
   border-bottom: 1px solid rgb(226, 225, 225);
 }
 
 .text__contents {
   border-bottom: 1px solid rgb(226, 225, 225);
-  height: 220px;
-  font-size: 20px;
+  height: auto;
+  padding: 10px 0 100px 0;
+  font-size: 22px;
 }
 
 .text__comments {
   border-bottom: 1px solid rgb(226, 225, 225);
-  height: 120px;
+  height: auto;
+  padding: 5px 0;
+  font-size: 18px;
 }
 
 .comment-form {
