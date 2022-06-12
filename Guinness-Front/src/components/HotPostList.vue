@@ -16,9 +16,11 @@
 </template>
 
 <script>
+import { fetchHotPostRank } from "@/api/rank";
 export default {
   data() {
     return {
+      hotLists: [],
       contents: [
         { id: 0, nickname: "도연", scrap_cnt: "29" },
         { id: 1, nickname: "민영", scrap_cnt: "80" },
@@ -26,7 +28,16 @@ export default {
       ],
     };
   },
-  methods: {},
+  created() {
+    this.fetchHotPostRank();
+  },
+  methods: {
+    async fetchHotPostRank() {
+      const { data } = await fetchHotPostRank();
+      this.hotPosts = data;
+      console.log(data);
+    },
+  },
 };
 </script>
 

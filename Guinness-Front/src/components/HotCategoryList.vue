@@ -14,9 +14,14 @@
 </template>
 
 <script>
+import { fetchHotCateRank } from "@/api/rank";
 export default {
+  created() {
+    this.fetchHotCateRank();
+  },
   data() {
     return {
+      hotLists: [],
       categoryLists: [
         {
           rank: 1,
@@ -37,7 +42,13 @@ export default {
       ],
     };
   },
-  methods: {},
+  methods: {
+    async fetchHotCateRank() {
+      const { data } = await fetchHotCateRank();
+      this.hotLists = data;
+      console.log(data);
+    },
+  },
 };
 </script>
 
