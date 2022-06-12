@@ -1,13 +1,13 @@
 import db from "../config/dbConnection.js";
   
 
-export const getComments = (result) => {
-    db.query("SELECT * FROM comment", (err, results) => {             
+export const getComments = (id, result) => {
+    db.query("SELECT * FROM comment where postNum =?",[id], (err, results) => {             
         if(err) {
             console.log(err);
             result(err, null);
         } else {
-            result(null, results);
+            result(null, results[0]);
         }
     });   
 }

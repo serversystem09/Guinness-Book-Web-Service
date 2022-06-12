@@ -2,7 +2,7 @@
 import {getComments, getCommentByNum, insertComment, deleteCommentByNum} from "../models/comment.js";
 
 export const showComments = (req, res) => {
-    getComments((err, results) => {
+    getComments(req.params.id, (err, results) => {
         if (err){
             res.send(err);
         }else{
