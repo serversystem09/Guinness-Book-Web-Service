@@ -4,8 +4,8 @@ import mysql from "mysql2";
 const db = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "o1011920820!",
-  database: "popete_db",
+  password: "MySQLsujin!",
+  database: "popeteDB",
 });
 
 export default db;
