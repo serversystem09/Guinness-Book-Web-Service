@@ -4,9 +4,9 @@
     <div class="post-card">
       <div class="post-card__img">이미지 자리</div>
       <div class="post-card__contents">
-        <h2 class="text__title" @click="toDetail">
+        <h3 class="text__title" @click="toDetail">
           &nbsp;{{ postItem.postTitle }}
-        </h2>
+        </h3>
         <h5 class="text__title">
           &nbsp;<i class="fa-heart fas"></i>&nbsp;{{ postItem.likeNum }}
         </h5>

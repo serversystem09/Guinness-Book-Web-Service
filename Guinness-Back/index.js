@@ -16,16 +16,10 @@ import catRouter from "./routers/categoryRoutes.js";
 import commRouter from "./routers/commentRoutes.js";
 import followRouter from "./routers/followRoutes.js";
 import CSRouter from "./routers/csBoardRouter.js";
-<<<<<<< HEAD
-import indexRouter from "./routers/indexRoutes.js";
-import rankRouter from "./routers/rankingRoutes.js";
-=======
 
 import MPRouter from "./routers/myPageRouter.js";
 import indexRouter from "./routers/indexRoutes.js";
 import rankRouter from "./routers/rankingRoutes.js";
-
->>>>>>> 5039088929c12d33a92c3d538f14c59674068347
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -43,17 +37,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // use router
-app.use('/post',postRouter);
-app.use('/user', userRouter);
-app.use('/auth', authRouter);
-app.use('/cat', catRouter);
-app.use('/comm', commRouter);
-app.use('/foll', followRouter);
-app.use('/cs', CSRouter);
-app.use('/', indexRouter);
-app.use('/rank', rankRouter);
-app.use('/mypage', MPRouter);
-
+app.use("/post", postRouter);
+app.use("/user", userRouter);
+app.use("/auth", authRouter);
+app.use("/cat", catRouter);
+app.use("/comm", commRouter);
+app.use("/foll", followRouter);
+app.use("/cs", CSRouter);
+app.use("/", indexRouter);
+app.use("/rank", rankRouter);
+app.use("/mypage", MPRouter);
 
 // Handling Errors
 app.use((err, req, res, next) => {

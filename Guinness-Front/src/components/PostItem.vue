@@ -27,11 +27,12 @@
             <div class="text__contents">{{ postData.content }}</div>
             <!-- 댓글 -->
             <div
-              v-for="comment in comments"
-              :key="comment.commentNum"
+              v-for="data in comments"
+              :key="data.index"
               class="text__comments"
             >
-              {{ comment.content }}
+              <span> {{ data.content }}</span>
+              <span> {{ data.userID }}</span>
             </div>
             <button type="button" class="btn-like" @click="likePost">
               좋아요&nbsp;{{ postData.likeNum }}&nbsp;<i
@@ -40,7 +41,10 @@
             </button>
           </div>
           <div class="comment-form">
-            <input v-model="comment" /><button @click="createComment">
+            <input v-model="comment" /><button
+              :disabled="!this.comment"
+              @click="createComment"
+            >
               작성
             </button>
           </div>
@@ -134,6 +138,7 @@ export default {
         console.log(error);
       } finally {
         this.initForm();
+        this.fetchComments();
       }
     },
     // 댓글 조회
@@ -141,6 +146,7 @@ export default {
       const { data } = await fetchComments(this.postId);
       this.comments = data;
       console.log(data);
+      console.log("댓글", this.comments);
     },
     initForm() {
       this.comment = "";
@@ -182,20 +188,23 @@ export default {
 h3 {
   line-height: 50px;
   border-bottom: 1px solid rgb(226, 225, 225);
+  width: 100%;
 }
 
 .text__contents {
-  border-bottom: 1px solid rgb(226, 225, 225);
+  /* border-bottom: 1px solid rgb(226, 225, 225); */
   height: auto;
   padding: 10px 0 100px 0;
   font-size: 22px;
 }
 
 .text__comments {
-  border-bottom: 1px solid rgb(226, 225, 225);
+  border-top: 1px solid rgb(226, 225, 225);
   height: auto;
   padding: 5px 0;
-  font-size: 18px;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .comment-form {

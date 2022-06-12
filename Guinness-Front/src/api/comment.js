@@ -5,9 +5,9 @@ function createComment(postData) {
   return instance.post("comm/comment", postData);
 }
 
-// 댓글 전체 조회
+// 댓글 조회
 function fetchComments(postNum) {
-  return instance.get("comm/comments", postNum);
+  return instance.get(`comm/comments/${postNum}`);
 }
 
 // 댓글 개별 조회
