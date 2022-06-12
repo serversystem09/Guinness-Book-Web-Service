@@ -1,13 +1,12 @@
-
 // import express
 import express from "express";
 // import cors
 import cors from "cors";
-import createError from 'http-errors';
-import path from 'path';
+import createError from "http-errors";
+import path from "path";
 
 import bodyParser from "body-parser";
-import multer from 'multer';
+import multer from "multer";
 
 // import routes
 import postRouter from "./routers/postRoutes.js";
@@ -20,46 +19,40 @@ import CSRouter from "./routers/csBoardRouter.js";
 import indexRouter from "./routers/indexRoutes.js";
 import rankRouter from "./routers/rankingRoutes.js";
 
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
 // init express
 const app = express();
-  
+
 // use express json
 app.use(express.json());
-  
+
 // use cors
 app.use(cors());
- 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-  
+
 // use router
-app.use('/post',postRouter);
-app.use('/user', userRouter);
-app.use('/auth', authRouter);
-app.use('/cat', catRouter);
-app.use('/comm', commRouter);
-app.use('/foll', followRouter);
-app.use('/cs', CSRouter);
-app.use('/', indexRouter);
-<<<<<<< HEAD
-app.use('/ranking', rankRouter);
-app.use('/mypage', MPRouter);
-=======
-app.use('/rank', rankRouter);
->>>>>>> bfde6b226dce99fc8f26a9c93afa6a44dd6ff9bb
+app.use("/post", postRouter);
+app.use("/user", userRouter);
+app.use("/auth", authRouter);
+app.use("/cat", catRouter);
+app.use("/comm", commRouter);
+app.use("/foll", followRouter);
+app.use("/cs", CSRouter);
+app.use("/", indexRouter);
+app.use("/rank", rankRouter);
 
 // Handling Errors
 app.use((err, req, res, next) => {
-    // console.log(err);
-    err.statusCode = err.statusCode || 500;
-    err.message = err.message || "Internal Server Error";
-    res.status(err.statusCode).json({
-      message: err.message,
-    });
+  // console.log(err);
+  err.statusCode = err.statusCode || 500;
+  err.message = err.message || "Internal Server Error";
+  res.status(err.statusCode).json({
+    message: err.message,
+  });
 });
 
-
-app.listen(3000, () => console.log('Server running at http://localhost:3000'));
+app.listen(3000, () => console.log("Server running at http://localhost:3000"));

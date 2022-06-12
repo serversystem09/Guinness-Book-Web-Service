@@ -97,7 +97,6 @@ export default {
           // selected2: this.selected2,
           content: this.content,
           writerID: this.$store.state.userID,
-          writeDate: 11,
         });
         console.log(data);
       } catch (error) {

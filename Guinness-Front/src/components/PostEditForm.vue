@@ -7,7 +7,7 @@
     <form class="form" @submit.prevent="submitForm">
       <div class="input__wrapper">
         <label for="title">제목</label>
-        <input id="title" v-model="title" />
+        <input id="title" v-model="postData.postTitle" />
       </div>
       <div class="input__wrapper">
         <label>분류</label>
@@ -28,12 +28,16 @@
       </div>
       <div class="input__wrapper">
         <label>소분류</label>
-        <input placeholder="소분류" id="input-etc" v-model="selected2" />
+        <input
+          placeholder="소분류"
+          id="input-etc"
+          v-model="postData.eventName"
+        />
       </div>
 
       <div class="input__wrapper">
         <label for="content">소개</label>
-        <textarea rows="5" id="content" v-model="content" />
+        <textarea rows="5" id="content" v-model="postData.content" />
       </div>
       <div class="input__wrapper">
         <label for="file">첨부파일</label>
@@ -53,31 +57,37 @@
         type="submit"
         class="btnInActive"
         :class="{ btnPrimary: isValid }"
+        @click="submitForm"
       >
-        작성
+        수정
       </button>
     </form>
   </div>
 </template>
 
 <script>
-import { uploadImage, createPost } from "@/api/index";
+import { uploadImage, fetchPost, editPost } from "@/api/posts";
 
 export default {
+  created() {
+    this.fetchPostData();
+  },
   data() {
     return {
-      title: "",
       selected1: "대분류",
-      selected2: "",
-      // selected2Input: "",
-      content: "",
+      postData: [],
       uploadimageurl: [], // 업로드한 이미지의 미리보기 기능을 위해 url 저장하는 객체
       imagecnt: 0, // 업로드한 이미지 개수 => 제출버튼 클릭시 back서버와 axios 통신하게 되는데,
     };
   },
   computed: {
     isValid() {
-      if (this.title && this.content && this.selected1 && this.selected2) {
+      if (
+        this.postData.postTitle &&
+        this.postData.content &&
+        this.selected1 &&
+        this.postData.eventName
+      ) {
         return true;
       } else {
         return false;
@@ -87,27 +97,36 @@ export default {
   methods: {
     async submitForm() {
       try {
-        console.log("게시글 작성 폼 제출");
-        const postData = await createPost({
-          title: this.title,
-          selected1: this.selected1,
-          selected2: this.selected2,
-          // newSelected2: this.selected2Input,
-          content: this.content,
+        const { data } = await editPost(this.$route.params.id, {
+          postTitle: this.postData.postTitle,
+          content: this.postData.content,
+          eventName: this.postData.eventName,
+          // selected2: this.selected2,
+          writerID: this.$store.state.userID,
         });
-        console.log(postData);
+        console.log(data);
+        this.$router.push({
+          path: `/postview/${this.$route.params.id}`,
+          replace: true,
+        });
       } catch (error) {
-        console.log(error.message);
-      } finally {
-        this.$router.push("/");
-        this.initForm();
+        console.log(error);
+      }
+    },
+    async fetchPostData() {
+      try {
+        const { data } = await fetchPost(this.$route.params.id);
+        console.log(data);
+        this.postData = data;
+      } catch (error) {
+        console.log(error);
       }
     },
     initForm() {
       this.title = "";
       this.selected1 = "";
       this.selected2 = "";
-      (this.selected2Input = ""), (this.content = "");
+      this.content = "";
       this.userBirth = "";
     },
     async onImageChange(file) {

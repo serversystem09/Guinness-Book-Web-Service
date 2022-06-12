@@ -30,9 +30,9 @@
       >
         로그인
       </button>
-      <button class="btnPrimary">
-        <router-link to="/signup">회원가입</router-link>
-      </button>
+      <router-link to="/signup"
+        ><button class="btnPrimary">회원가입</button></router-link
+      >
     </form>
   </div>
 </template>

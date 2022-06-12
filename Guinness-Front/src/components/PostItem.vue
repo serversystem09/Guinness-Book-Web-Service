@@ -99,21 +99,14 @@ export default {
         } catch (error) {
           console.log(error);
         }
-        this.$router.push("/postview");
+        this.$router.push("/category");
       } else {
-        this.$router.push(`postview/${this.postId}`);
+        console.log("삭제 취소");
       }
     },
     async editPost() {
-      try {
-        const { data } = await this.editPost(this.postId, {
-          postTitle: this.postData.postTitle,
-          content: this.postData.content,
-        });
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
+      const id = this.postId;
+      this.$router.push({ path: `/postview/edit/${id}`, replace: true });
     },
   },
 };
@@ -141,7 +134,7 @@ export default {
 
 .post-card__contents {
   width: 500px;
-  height: 500px;
+  height: auto;
   border: 1px solid rgb(226, 225, 225);
   border-radius: 5px;
   box-sizing: 10px;
@@ -157,6 +150,7 @@ h2 {
 .text__contents {
   border-bottom: 1px solid rgb(226, 225, 225);
   height: 220px;
+  font-size: 20px;
 }
 
 .text__comments {
