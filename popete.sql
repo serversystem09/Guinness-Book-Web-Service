@@ -31,21 +31,21 @@ CREATE TABLE `follow` (
 
 
 CREATE TABLE `category` (
-  `categoryNum` int NOT NULL,
+  `categoryNum` INT(10) NOT NULL AUTO_INCREMENT,
   `categoryName` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`categoryNum`)
 );
 
 
 CREATE TABLE `post` (
-  `postNum` int NOT NULL,
+  `postNum` INT(10) NOT NULL AUTO_INCREMENT,
   `postTitle` varchar(40) DEFAULT NULL,
   `content` varchar(10000) DEFAULT NULL,
  `eventName` varchar(30) DEFAULT NULL,
   `writerID` int DEFAULT NULL,
   `likeNum` int DEFAULT NULL,
   `commentON` tinyint(1) DEFAULT NULL,
-  `writeDate` datetime DEFAULT NULL,
+  `writeDate` datetime DEFAULT now(),
   PRIMARY KEY (`postNum`),
   KEY `writerID` (`writerID`),
   CONSTRAINT `post_ibfk_2` FOREIGN KEY (`writerID`) REFERENCES `user` (`userID`)
@@ -53,7 +53,7 @@ CREATE TABLE `post` (
 
 
 CREATE TABLE `csboard` (
-  `csNum` int NOT NULL,
+  `csNum` INT(10) NOT NULL AUTO_INCREMENT,
   `csTitle` varchar(40) DEFAULT NULL,
   `content` varchar(400) DEFAULT NULL,
   `answer` varchar(400) DEFAULT NULL,
@@ -65,8 +65,8 @@ CREATE TABLE `csboard` (
 
 
 CREATE TABLE `comment` (
-  `commentNum` int NOT NULL,
-  `postNum` int DEFAULT NULL,
+  `commentNum` INT(10) NOT NULL AUTO_INCREMENT,
+  `postNum` INT,
   `createDate` datetime DEFAULT NULL,
   `likeNum` int DEFAULT NULL,
   `userID` int DEFAULT NULL,
@@ -78,6 +78,8 @@ CREATE TABLE `comment` (
   CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`)
 ) ;
 
+
+CREATE TABLE attachment(id INT(10) NOT NULL AUTO_INCREMENT, file_src TEXT, PRIMARY KEY(id));
 
 -- insert DATA
 INSERT INTO `user` VALUES ('1111','johnDoe','johnho',01044444444,'johnDoe@gmail.com','gold','2001-04-04 00:00:00', default);
