@@ -17,7 +17,6 @@ import catRouter from "./routers/categoryRoutes.js";
 import dotenv from 'dotenv';
 dotenv.config();
 
-console.log("확인"+ process.env.TOKEN_KEY);
 // init express
 const app = express();
   
