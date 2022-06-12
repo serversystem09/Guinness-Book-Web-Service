@@ -8,8 +8,7 @@ function fetchPosts() {
 
 // 특정 게시글을 조회하는 API
 function fetchPost(postData) {
-  const params = { id: postData };
-  return instance.get("post/posts/:id", { params });
+  return instance.get(`post/posts/${postData}`);
 }
 
 // 게시글 생성
@@ -18,13 +17,13 @@ function createPost(postData) {
 }
 
 // 게시글 삭제
-function deletePost(postData) {
-  return instance.delete("post/posts/:id", postData);
+function deletePost(postNum) {
+  return instance.delete(`post/posts/${postNum}`);
 }
 
 // 게시글 수정
 function editPost(postNum, postData) {
-  return instance.put("post/posts/:id", postNum, postData);
+  return instance.put(`post/posts/${postNum}`, postData);
 }
 
 export { fetchPosts, createPost, deletePost, fetchPost, editPost };

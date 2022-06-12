@@ -7,7 +7,7 @@
         <div>
           <div class="post-card__follow">
             <div>
-              <span>{{ username }}</span>
+              <span>{{ this.$store.state.userEmail }}</span>
               <button type="button" class="btn-like" @click="followUser">
                 팔로우&nbsp;<i
                   :class="['fa-heart', follow ? 'fas' : 'far']"
@@ -16,20 +16,22 @@
             </div>
             <!-- 게시글 작성자일 경우에만 보여줌 -->
             <div v-if="this.$store.state.token" class="post-card__btns">
-              <button class="btn__edit">수정</button>
-              <button class="btn__delete">삭제</button>
+              <button @click="editPost" class="btn__edit">수정</button>
+              <button @click="deletePost" class="btn__delete">삭제</button>
             </div>
           </div>
 
           <div class="post-card__contents">
-            <h2 class="text__title">{{ title }}</h2>
+            <h2 class="text__title">{{ postData.postTitle }}</h2>
 
-            <div class="text__contents">{{ contents }}</div>
+            <div class="text__contents">{{ postData.content }}</div>
             <!-- 댓글 -->
             <div class="text__comments">{{ comments }}</div>
             <div>sns</div>
             <button type="button" class="btn-like" @click="likePost">
-              좋아요&nbsp;<i :class="['fa-heart', liked ? 'fas' : 'far']"></i>
+              좋아요&nbsp;{{ postData.likeNum }}&nbsp;<i
+                :class="['fa-heart', liked ? 'fas' : 'far']"
+              ></i>
             </button>
           </div>
           <div class="comment-form"><input /><button>작성</button></div>
@@ -42,19 +44,22 @@
 <script>
 // import { reactive } from "vue";
 // import axios from "axios";
-import { fetchPost } from "@/api/posts";
+import { fetchPost, deletePost } from "@/api/posts";
 
 export default {
   created() {
     this.fetchPost();
+  },
+  mounted() {
+    console.log("id:", this.$route.params.id);
   },
   data() {
     return {
       title: "제목",
       contents: "내용",
       comments: "댓글",
-      postItems: [],
-      postId: "",
+      postData: [],
+      postId: this.$route.params.id,
       liked: false,
       follow: false,
       username: "닉네임",
@@ -62,17 +67,53 @@ export default {
   },
   methods: {
     async fetchPost() {
-      const { postData } = await fetchPost(this.postId);
-      this.postItems = postData;
-      console.log("특정 게시글 정보 조회", this.postItems);
+      try {
+        const { data } = await fetchPost(this.postId);
+        console.log(data);
+        this.postData = data;
+      } catch (error) {
+        console.log(error);
+      }
     },
     async likePost() {
       console.log("좋아요");
       this.liked = !this.liked;
+      if (this.liked == false) {
+        this.postData.likeNum -= 1;
+        console.log("좋아요");
+      } else {
+        this.postData.likeNum += 1;
+        console.log("좋아요 취소");
+      }
     },
     async followUser() {
       console.log("팔로우");
       this.follow = !this.follow;
+    },
+    async deletePost() {
+      const result = confirm("정말 삭제하시겠습니까?");
+      if (result == true) {
+        try {
+          const { data } = await deletePost(this.postId);
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
+        this.$router.push("/postview");
+      } else {
+        this.$router.push(`postview/${this.postId}`);
+      }
+    },
+    async editPost() {
+      try {
+        const { data } = await this.editPost(this.postId, {
+          postTitle: this.postData.postTitle,
+          content: this.postData.content,
+        });
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

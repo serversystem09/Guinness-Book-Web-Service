@@ -8,7 +8,9 @@
           class="category"
           @click="showSubcategory(index)"
         >
-          {{ data.title }}&nbsp;&nbsp;<i class="fas fa-angle-right"></i>
+          {{ category[index].title }}&nbsp;&nbsp;<i
+            class="fas fa-angle-right"
+          ></i>
           <!--<i class="fa fa-angle-down"></i>-->
           <!-- <ul class="subCategory" v-if="isActive[index] == true">
             <li
@@ -30,7 +32,7 @@ import { fetchCategory } from "@/api/category";
 
 export default {
   created() {
-    this.fetchCategory();
+    // this.fetchCategory();
   },
   data: function () {
     return {
