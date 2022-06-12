@@ -35,19 +35,21 @@
         <label for="content">소개</label>
         <textarea rows="5" id="content" v-model="content" />
       </div>
+      <!-- 첨부 파일 -->
       <div class="input__wrapper">
         <label for="file">첨부파일</label>
-        <input id="file" type="file" @change="onImageChange" />
-        <v-img
-          v-for="(item, i) in uploadimageurl"
-          :key="i"
-          :src="item.url"
-          contain
-          height="150px"
-          width="200px"
-          style="border: 2px solid black; margin-left: 100px"
-        />
+        <!-- <input id="file" type="file" @change="onFileSelected" ref="image" />
+        <button @click="onUpload">이미지 업로드</button> -->
+        <vue-upload-multiple-image
+          @upload-success="uploadImageSuccess"
+          @edit-image="editImage"
+          @before-remove="beforeRemove"
+          :data-images="images"
+          :dragText="drag"
+          :browseText="browseText"
+        ></vue-upload-multiple-image>
       </div>
+
       <button
         :disabled="!isValid"
         type="submit"
@@ -57,14 +59,28 @@
         작성
       </button>
     </form>
+    <!-- <v-img
+      v-for="(item, i) in uploadimageurl"
+      :key="i"
+      :src="item.url"
+      contain
+      height="150px"
+      width="200px"
+      style="border: 2px solid black; margin-left: 100px"
+    /> -->
   </div>
 </template>
 
 <script>
-import { uploadImage, createPost } from "@/api/posts";
+import { createPost } from "@/api/posts";
+import axios from "axios";
 // import { dateFormat } from "@/utils/date";
+import VueUploadMultipleImage from "vue-upload-multiple-image";
 
 export default {
+  components: {
+    VueUploadMultipleImage,
+  },
   data() {
     return {
       title: "",
@@ -74,6 +90,9 @@ export default {
       content: "",
       uploadimageurl: [], // 업로드한 이미지의 미리보기 기능을 위해 url 저장하는 객체
       imagecnt: 0, // 업로드한 이미지 개수 => 제출버튼 클릭시 back서버와 axios 통신하게 되는데,
+      images: [],
+      drag: "",
+      browseText: "업로드",
     };
   },
   computed: {
@@ -98,6 +117,7 @@ export default {
           content: this.content,
           writerID: this.$store.state.userID,
         });
+
         console.log(data);
       } catch (error) {
         console.log(error.message);
@@ -113,33 +133,69 @@ export default {
       (this.selected2Input = ""), (this.content = "");
       this.userBirth = "";
     },
-    async onImageChange(file) {
-      // v-file-input 변경시
-      try {
-        if (!file) {
-          return;
-        }
-        const formData = new FormData(); // 파일을 전송할때는 FormData 형식으로 전송
-        this.uploadimageurl = []; // uploadimageurl은 미리보기용으로 사용
-        file.forEach((item) => {
-          formData.append("filelist", item); // formData의 key: 'filelist', value: 이미지
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.uploadimageurl.push({ url: e.target.result });
-            // e.target.result를 통해 이미지 url을 가져와서 uploadimageurl에 저장
-          };
-          reader.readAsDataURL(item);
+    uploadImageSuccess(formData, index, fileList) {
+      console.log("data", formData, index, fileList);
+      // Upload image api
+      axios
+        .post(`${process.env.VUE_APP_API_URL}post/uploadphoto`, formData)
+        .then((response) => {
+          console.log(response);
         });
-        const { data } = await uploadImage({
-          data: formData,
-        });
-        console.log(data);
-        this.imagecnt = file.length;
-      } catch (error) {
-        console.log(error.message);
+    },
+    beforeRemove(index, done, fileList) {
+      console.log("index", index, fileList);
+      var r = confirm("remove image");
+      if (r == true) {
+        done();
+      } else {
+        console.log("이미지 삭제 안함");
       }
     },
+    editImage(formData, index, fileList) {
+      console.log("edit data", formData, index, fileList);
+    },
   },
+  // 첨부 파일
+  // onFileSelected() {
+  //   // this.seletedFile = event.target.files[0];
+  //   //  const event = this.$refs['image'].files[0]
+  //   let form = new FormData();
+  //   let image = this.$refs["image"].files[0];
+
+  //   form.append("image", image);
+
+  //   axios
+  //     .post(`${process.env.VUE_APP_API_URL}post/uploadphoto`, form, {
+  //       header: { "Content-Type": "multipart/form-data" },
+  //     })
+  //     .then(({ data }) => {
+  //       this.images = data;
+  //     })
+  //     .catch((err) => console.log(err));
+  // },
+  // onUpload() {
+  //   const fd = new FormData();
+  //   fd.append("image", this.selectedFile, this.selectedFile.name);
+  //   axios
+  //     .post(`${process.env.VUE_APP_API_URL}post/uploadphoto`, fd, {
+  //       header: { "Content-Type": "multipart/form-data" },
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //     });
+  // },
+  // onFileChange(e) {
+  //   console.log(e);
+  //   const file = e.target.files[0];
+  //   this.url = URL.createObjectURL(file);
+  //   var imagefile = document.querySelector("#imageUpload");
+  //   console.log(file);
+  //   console.log(imagefile.files[0]);
+  //   let formData = new FormData();
+
+  //   formData.append("image", file);
+  //   this.$store.dispatch("uploadImage", formData);
+  // },
 };
 </script>
 

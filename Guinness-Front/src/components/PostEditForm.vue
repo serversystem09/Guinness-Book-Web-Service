@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { uploadImage, fetchPost, editPost } from "@/api/posts";
+import { fetchPost, editPost } from "@/api/posts";
 
 export default {
   created() {
@@ -128,32 +128,6 @@ export default {
       this.selected2 = "";
       this.content = "";
       this.userBirth = "";
-    },
-    async onImageChange(file) {
-      // v-file-input 변경시
-      try {
-        if (!file) {
-          return;
-        }
-        const formData = new FormData(); // 파일을 전송할때는 FormData 형식으로 전송
-        this.uploadimageurl = []; // uploadimageurl은 미리보기용으로 사용
-        file.forEach((item) => {
-          formData.append("filelist", item); // formData의 key: 'filelist', value: 이미지
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.uploadimageurl.push({ url: e.target.result });
-            // e.target.result를 통해 이미지 url을 가져와서 uploadimageurl에 저장
-          };
-          reader.readAsDataURL(item);
-        });
-        const { data } = await uploadImage({
-          data: formData,
-        });
-        console.log(data);
-        this.imagecnt = file.length;
-      } catch (error) {
-        console.log(error.message);
-      }
     },
   },
 };

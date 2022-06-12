@@ -2,7 +2,9 @@
   <div>
     <div class="mypage__wrapper">
       <div>
-        <span class="mypage__nickname">{{ nickname }} 님 환영합니다.</span>
+        <span class="mypage__nickname"
+          >{{ this.$store.state.userEmail }} 님 환영합니다.</span
+        >
         <span class="mypage__rank">&nbsp;&nbsp;&nbsp;[순위: {{ rank }}등]</span>
       </div>
       <div>

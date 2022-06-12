@@ -26,4 +26,9 @@ function editPost(postNum, postData) {
   return instance.put(`post/posts/${postNum}`, postData);
 }
 
-export { fetchPosts, createPost, deletePost, fetchPost, editPost };
+// 사진 첨부
+function uploadImg() {
+  return instance.post("/post/uploadphoto");
+}
+
+export { fetchPosts, createPost, deletePost, fetchPost, editPost, uploadImg };
