@@ -1,8 +1,5 @@
 /node_modules
 
-/config
-config.json
-dbConnection.json
 start.js
 
 

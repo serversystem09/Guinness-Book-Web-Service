@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "[계정이름]",
+    "password": "[계정비번]",
+    "database": "popete_db",
+    "host": "34.64.106.168",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "34.64.106.168",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "34.64.106.168",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  }
+}
