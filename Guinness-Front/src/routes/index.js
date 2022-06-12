@@ -73,7 +73,7 @@ const router = new VueRouter({
       },
     },
     {
-      path: "/:id/postview",
+      path: "/postview/:id",
       component: () => import("@/Views/PostView.vue"),
     },
     {

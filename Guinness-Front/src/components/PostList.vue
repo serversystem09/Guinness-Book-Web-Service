@@ -19,19 +19,7 @@
 </template>
 
 <script>
-// import { fetchPosts } from "@/api/posts";
-
 export default {
-  data() {
-    return {
-      postLists: [
-        { id: 0, title: "제목", contents: "내용내용", subCategory: "소분류" },
-        { id: 1, title: "제목", contents: "내용내용", subCategory: "소분류" },
-      ],
-
-      isLoading: false,
-    };
-  },
   props: {
     postItem: {
       type: Object,
@@ -39,8 +27,14 @@ export default {
     },
   },
   methods: {
-    toDetail() {
-      this.$router.push("/:id/postview");
+    async toDetail() {
+      try {
+        const id = this.postItem.postNum;
+        console.log("해당 게시글 아이디", id);
+        this.$router.push(`postview/${id}`);
+      } catch (error) {
+        console.log(error);
+      }
     },
     // async fetchData() {
     //   try {

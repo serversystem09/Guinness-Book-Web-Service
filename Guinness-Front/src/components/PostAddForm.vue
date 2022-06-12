@@ -88,9 +88,8 @@ export default {
   methods: {
     async submitForm() {
       try {
-        const date = Date();
+        // const date = Date();
         // const writeDate = dateFormat(date);
-        console.log(date);
         console.log("게시글 작성 폼 제출");
         const { data } = await createPost({
           postTitle: this.title,
@@ -99,7 +98,7 @@ export default {
           content: this.content,
           writerID: this.$store.state.userID,
           postNum: 111221,
-          writeDate: date,
+          writeDate: 11,
         });
         console.log(data);
       } catch (error) {
