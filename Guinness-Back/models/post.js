@@ -23,6 +23,17 @@ export const getPostByNum = (id, result) => {
         }
     });   
 }
+
+export const getPostByCat = (id, result) => {
+    db.query("SELECT * FROM post WHERE categoryNum = ?", [id], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results[0]);
+        }
+    });   
+}
   
 // Insert Post to Database
 export const insertPost = (data, result) => {
