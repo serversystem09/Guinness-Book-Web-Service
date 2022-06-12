@@ -55,17 +55,14 @@ DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
   `commentNum` int NOT NULL,
   `postNum` int DEFAULT NULL,
-  `eventID` int DEFAULT NULL,
   `createDate` datetime DEFAULT NULL,
   `likeNum` int DEFAULT NULL,
   `userID` int DEFAULT NULL,
   `content` varchar(400) DEFAULT NULL,
   PRIMARY KEY (`commentNum`),
   KEY `postNum` (`postNum`),
-  KEY `eventID` (`eventID`),
   KEY `userID` (`userID`),
   CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`) ON DELETE CASCADE,
-  CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`eventID`) REFERENCES `event` (`eventID`),
   CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`)
 ) ;
 
@@ -73,36 +70,12 @@ CREATE TABLE `comment` (
 -- Dumping data for table `comment`
 --
 
-INSERT INTO `comment` VALUES (1,1011,3000,'2022-05-28 11:01:47',111,'1111','ㅋㅋㅋ우리 할아버지도 50개는 함ㅋ');
+INSERT INTO `comment` VALUES (1,1011,'2022-05-28 11:01:47',111,'1111','ㅋㅋㅋ우리 할아버지도 50개는 함ㅋ');
 
 
 --
 -- Table structure for table `event`
 --
-
-DROP TABLE IF EXISTS `event`;
-
-CREATE TABLE `event` (
-  `eventID` int NOT NULL,
-  `eventName` varchar(20) DEFAULT NULL,
-  `categoryNum` int DEFAULT NULL,
-  `userAmount` int DEFAULT NULL,
-  `content` varchar(10000) DEFAULT NULL,
-  `createDate` datetime DEFAULT NULL,
-  `createrID` int DEFAULT NULL,
-  PRIMARY KEY (`eventID`),
-  KEY `createrID` (`createrID`),
-  KEY `categoryNum` (`categoryNum`),
-  CONSTRAINT `event_ibfk_1` FOREIGN KEY (`createrID`) REFERENCES `user` (`userID`),
-  CONSTRAINT `event_ibfk_2` FOREIGN KEY (`categoryNum`) REFERENCES `category` (`categoryNum`)
-);
-
---
--- Dumping data for table `event`
---
-
-
-INSERT INTO `event` VALUES (3000,'팔굽혀펴기 한번에 몇 개 까지',1,100,'팔굽혀펴기 한번에 몇 개 까지 가능하세요?','2022-05-27 04:51:15','20200975');
 
 
 --
@@ -134,40 +107,19 @@ CREATE TABLE `post` (
   `postNum` int NOT NULL,
   `postTitle` varchar(40) DEFAULT NULL,
   `content` varchar(10000) DEFAULT NULL,
-  `eventID` int DEFAULT NULL,
+ `eventName` varchar(30) DEFAULT NULL,
   `writerID` int DEFAULT NULL,
   `likeNum` int DEFAULT NULL,
   `commentON` tinyint(1) DEFAULT NULL,
   `writeDate` datetime DEFAULT NULL,
   PRIMARY KEY (`postNum`),
-  KEY `eventID` (`eventID`),
   KEY `writerID` (`writerID`),
-  CONSTRAINT `post_ibfk_1` FOREIGN KEY (`eventID`) REFERENCES `event` (`eventID`),
   CONSTRAINT `post_ibfk_2` FOREIGN KEY (`writerID`) REFERENCES `user` (`userID`)
 );
 
 
-INSERT INTO `post` VALUES (1011,'한번에 50개 완전 가능이지','쉽쥬?',3000,'20200975',123,0,'2022-05-27 09:10:52');
+INSERT INTO `post` VALUES (1011,'한번에 50개 완전 가능이지','쉽쥬?','팔굽혀펴기','20200975',123,0,'2022-05-27 09:10:52');
 
-
---
--- Table structure for table `recommend`
---
-
-DROP TABLE IF EXISTS `recommend`;
-CREATE TABLE `recommend` (
-  `recommendNum` int NOT NULL,
-  `eventID` int NOT NULL,
-  `postNum` int DEFAULT NULL,
-  PRIMARY KEY (`recommendNum`,`eventID`),
-  KEY `postNum` (`postNum`),
-  CONSTRAINT `recommend_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`) ON DELETE CASCADE
-);
-
-
-
-
-INSERT INTO `recommend` VALUES (1010,3000,1011);
 
 
 DROP TABLE IF EXISTS `user`;
