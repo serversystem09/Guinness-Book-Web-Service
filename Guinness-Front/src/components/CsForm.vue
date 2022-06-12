@@ -24,25 +24,6 @@
           v-model="content"
         ></textarea>
       </div>
-      <!-- <div class="typo--col">
-        <label class="left">첨부파일</label>
-        <label
-          ><input
-            type="file"
-            name="attachment"
-            id="FileOpenInput"
-            @change="onImageChange"
-        /></label>
-        <v-img
-          v-for="(item, i) in uploadimageurl"
-          :key="i"
-          :src="item.url"
-          contain
-          height="150px"
-          width="200px"
-          style="border: 2px solid black; margin-left: 100px"
-        />
-      </div> -->
 
       <button
         type="button"
@@ -58,7 +39,7 @@
 </template>
 
 <script>
-import { createInquiry } from "@/api/index";
+import { createInquiry } from "@/api/csBoard.js";
 export default {
   data() {
     return {
@@ -79,12 +60,12 @@ export default {
     async submitForm() {
       try {
         console.log("문의하기 폼 제출");
-        const data = {
-          title: this.title,
+        const { data } = await createInquiry({
+          csTitle: this.title,
           content: this.content,
-        };
-        const { inquiryData } = await createInquiry(data);
-        console.log(inquiryData);
+          writerID: this.$store.state.userID,
+        });
+        console.log(data);
       } catch (error) {
         console.log(error.message);
       } finally {

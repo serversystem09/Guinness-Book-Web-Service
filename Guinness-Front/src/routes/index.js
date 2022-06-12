@@ -53,6 +53,9 @@ const router = new VueRouter({
     {
       path: "/csboard",
       component: () => import("@/Views/CsBoard.vue"),
+      meta: {
+        auth: true,
+      },
     },
     {
       path: "/ranking",

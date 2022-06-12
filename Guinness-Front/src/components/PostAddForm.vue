@@ -24,19 +24,6 @@
               <option value="7">오락</option>
             </select>
           </div>
-          <!-- <div id="select-2">
-            <select v-model="selected2">
-              <option selected>소분류</option>
-              <option value="1">체육</option>
-              <option value="2">음식</option>
-              <option value="3">춤</option>
-              <option value="4">노래</option>
-              <option value="5">공예</option>
-              <option value="6">사회 캠페인</option>
-              <option value="7">오락</option>
-              <option value="etc">직접 입력</option>
-            </select>
-          </div> -->
         </div>
       </div>
       <div class="input__wrapper">
@@ -74,7 +61,7 @@
 </template>
 
 <script>
-import { uploadImage, createPost } from "@/api/index";
+import { uploadImage, createPost } from "@/api/posts";
 
 export default {
   data() {
@@ -101,14 +88,15 @@ export default {
     async submitForm() {
       try {
         console.log("게시글 작성 폼 제출");
-        const postData = await createPost({
-          title: this.title,
-          selected1: this.selected1,
-          selected2: this.selected2,
-          // newSelected2: this.selected2Input,
+        const { data } = await createPost({
+          postTitle: this.title,
+          // selected1: this.selected1,
+          // selected2: this.selected2,
           content: this.content,
+          writerID: 11,
+          postNum: 11,
         });
-        console.log(postData);
+        console.log(data);
       } catch (error) {
         console.log(error.message);
       } finally {

@@ -5,7 +5,7 @@ const db = mysql.createConnection({
   host: "127.0.0.1",
   user: "root",
   password: "o1011920820!",
-  database: "popete_db",
+  database: "popeteDB",
 });
 
 export default db;

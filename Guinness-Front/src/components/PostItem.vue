@@ -14,7 +14,8 @@
                 ></i>
               </button>
             </div>
-            <div class="post-card__btns">
+            <!-- 게시글 작성자일 경우에만 보여줌 -->
+            <div v-if="this.$store.state.token" class="post-card__btns">
               <button class="btn__edit">수정</button>
               <button class="btn__delete">삭제</button>
             </div>

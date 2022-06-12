@@ -8,9 +8,7 @@
           class="category"
           @click="showSubcategory(index)"
         >
-          {{ category[index].title }}&nbsp;&nbsp;<i
-            class="fas fa-angle-right"
-          ></i>
+          {{ data.title }}&nbsp;&nbsp;<i class="fas fa-angle-right"></i>
           <!--<i class="fa fa-angle-down"></i>-->
           <!-- <ul class="subCategory" v-if="isActive[index] == true">
             <li
@@ -28,9 +26,12 @@
 </template>
 
 <script>
-import { fetchCategory } from "@/api/index";
+import { fetchCategory } from "@/api/category";
 
 export default {
+  created() {
+    this.fetchCategory();
+  },
   data: function () {
     return {
       isActive: [true, true, true, true, true, true, true],
@@ -79,8 +80,8 @@ export default {
     // 카테고리 데이터 조회
     async fetchCategory() {
       try {
-        const { categoryData } = await fetchCategory();
-        this.category = categoryData;
+        const { data } = await fetchCategory();
+        this.category = data;
         console.log(this.category);
       } catch (error) {
         console.log(error.message);

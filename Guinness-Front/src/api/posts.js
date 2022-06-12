@@ -7,23 +7,24 @@ function fetchPosts() {
 }
 
 // 특정 게시글을 조회하는 API
-function fetchPost(postId) {
-  return instance.get(postId);
+function fetchPost(postData) {
+  const params = { id: postData };
+  return instance.get("post/posts/:id", { params });
 }
 
 // 게시글 생성
 function createPost(postData) {
-  return instance.post("/addBoard", postData);
+  return instance.post("post/posts", postData);
 }
 
 // 게시글 삭제
-function deletePost(postId) {
-  return instance.delete(postId);
+function deletePost(postData) {
+  return instance.delete("post/posts/:id", postData);
 }
 
 // 게시글 수정
-function editPost(postId, postData) {
-  return instance.put(postId, postData);
+function editPost(postNum, postData) {
+  return instance.put("post/posts/:id", postNum, postData);
 }
 
 export { fetchPosts, createPost, deletePost, fetchPost, editPost };

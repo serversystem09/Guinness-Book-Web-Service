@@ -68,10 +68,13 @@ export default {
           password: this.userPw,
         });
         console.log(data.token);
+        console.log(data.user.email);
+        console.log(data.user.userID);
+
         this.$store.commit("setUserEmail", this.userEmail);
         this.$store.commit("setToken", data.token);
         saveAuthToCookie(data.token);
-        saveUserToCookie(data.email);
+        saveUserToCookie(data.user.email);
 
         // await this.$store.dispatch("LOGIN", userData);
         this.$router.push("/main");
