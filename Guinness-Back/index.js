@@ -17,8 +17,8 @@ import catRouter from "./routers/categoryRoutes.js";
 import commRouter from "./routers/commentRoutes.js";
 import followRouter from "./routers/followRoutes.js";
 import CSRouter from "./routers/csBoardRouter.js";
-import rankRouter from "./routers/indexRoutes.js";
-import indexRouter from "./routers/rankingRoutes.js";
+import indexRouter from "./routers/indexRoutes.js";
+import rankRouter from "./routers/rankingRoutes.js";
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -44,7 +44,7 @@ app.use('/comm', commRouter);
 app.use('/foll', followRouter);
 app.use('/cs', CSRouter);
 app.use('/', indexRouter);
-app.use('/ranking', rankRouter);
+app.use('/rank', rankRouter);
 
 // Handling Errors
 app.use((err, req, res, next) => {
