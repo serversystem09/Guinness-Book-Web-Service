@@ -4,10 +4,12 @@
     <div class="wrapper">
       <table class="ranktable">
         <!--회원 수를 고려하여 tr의 개수 동적으로 생성-->
-        <tr v-for="categoryList in categoryLists" :key="categoryList.title">
-          <th>{{ categoryList.rank }}위</th>
-          <td>{{ categoryList.username }} 님</td>
-          <td>{{ categoryList.content }}</td>
+        <tr v-for="(data, index) in rankData" :key="data.index">
+          <th>{{ index + 1 }}위</th>
+          <td>{{ data.postTitle }}</td>
+          <td>{{ data.nickName }} 님</td>
+          <td>{{ data.eventName }}</td>
+          <td>{{ data.likes }}</td>
         </tr>
       </table>
     </div>
@@ -15,32 +17,23 @@
 </template>
 
 <script>
+import { fetchRank } from "@/api/rank";
+
 export default {
+  async created() {
+    await this.fetchRank();
+  },
   data() {
     return {
-      categoryLists: [
-        {
-          rank: 1,
-          username: "서민영",
-          content: "애국가 타자 빨리치기",
-        },
-        {
-          rank: 2,
-          username: "서민영",
-          content: "애국가 타자 빨리치기",
-        },
-        {
-          rank: 3,
-          username: "서민영",
-          content: "애국가 타자 빨리치기",
-        },
-        {
-          rank: 4,
-          username: "서민영",
-          content: "애국가 타자 빨리치기",
-        },
-      ],
+      rankData: [],
     };
+  },
+  methods: {
+    async fetchRank() {
+      const { data } = await fetchRank();
+      this.rankData = data;
+      console.log(data);
+    },
   },
 };
 </script>
@@ -76,6 +69,7 @@ table.ranktable {
   border-top: 3px solid #ccc;
   line-height: 1.5;
   text-align: left;
+  font-size: 20px;
 }
 
 table.ranktable th {
@@ -87,7 +81,7 @@ table.ranktable th {
 }
 
 table.ranktable td {
-  width: 350px;
+  width: auto;
   padding: 30px;
   vertical-align: top;
   border-bottom: 3px solid #ccc;

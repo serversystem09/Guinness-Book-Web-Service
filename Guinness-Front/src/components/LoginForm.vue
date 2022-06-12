@@ -30,8 +30,8 @@
       >
         로그인
       </button>
-      <router-link to="/signup"
-        ><button class="btnPrimary">회원가입</button></router-link
+      <router-link to="/signup" class="btnPrimary btn-signup"
+        ><button>회원가입</button></router-link
       >
     </form>
   </div>
@@ -119,11 +119,12 @@ form {
 h1 {
   margin-bottom: 60px;
 }
-.btn-signup {
-  background-color: rgb(215, 215, 211);
-}
-button > a {
+
+.btn-signup > button {
   text-decoration: none;
+  border-style: none;
+  background: transparent;
   color: black;
+  width: 100%;
 }
 </style>

@@ -14,11 +14,7 @@
 </template>
 
 <script>
-import { fetchRank } from "@/api/rank";
 export default {
-  async created() {
-    await this.fetchRank();
-  },
   data() {
     return {
       categoryLists: [
@@ -41,12 +37,7 @@ export default {
       ],
     };
   },
-  methods: {
-    async fetchRank() {
-      const { data } = fetchRank();
-      console.log(data);
-    },
-  },
+  methods: {},
 };
 </script>
 
