@@ -7,7 +7,8 @@ import createError from 'http-errors';
 import path from 'path';
 
 import bodyParser from "body-parser";
- 
+import multer from 'multer';
+
 // import routes
 import postRouter from "./routers/postRoutes.js";
 import userRouter from "./routers/userRoutes.js";
@@ -18,6 +19,7 @@ import followRouter from "./routers/followRoutes.js";
 import CSRouter from "./routers/csBoardRouter.js";
 import rankRouter from "./routers/indexRoutes.js";
 import indexRouter from "./routers/rankingRoutes.js";
+import MPRouter from "./routers/myPageRouter.js";
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -44,6 +46,7 @@ app.use('/foll', followRouter);
 app.use('/cs', CSRouter);
 app.use('/', indexRouter);
 app.use('/ranking', rankRouter);
+app.use('/mypage', MPRouter);
 
 // Handling Errors
 app.use((err, req, res, next) => {
@@ -54,5 +57,6 @@ app.use((err, req, res, next) => {
       message: err.message,
     });
 });
+
 
 app.listen(3000, () => console.log('Server running at http://localhost:3000'));
