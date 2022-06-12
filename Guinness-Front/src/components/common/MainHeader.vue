@@ -50,8 +50,11 @@ export default {
     logoutUser() {
       this.$store.commit("clearUserEmail");
       this.$store.commit("clearToken");
+      this.$store.commit("clearUserID");
       deleteCookie("til_auth");
-      deleteCookie("til_user");
+      deleteCookie("til_user_id");
+      deleteCookie("til_user_email");
+
       this.$router.push("/login");
     },
   },

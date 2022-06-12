@@ -1,8 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import {
+  getIDFromCookie,
+  getEmailFromCookie,
   getAuthFromCookie,
-  getUserFromCookie,
+
   // saveAuthToCookie,
   // saveUserToCookie,
 } from "@/utils/cookies";
@@ -12,8 +14,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userEmail: getUserFromCookie() || "",
-    userID: "",
+    userEmail: getEmailFromCookie() || "",
+    userID: getIDFromCookie() || "",
     token: getAuthFromCookie() || "",
   },
   // computed와 유사
@@ -32,6 +34,9 @@ export default new Vuex.Store({
     },
     clearUserEmail(state) {
       state.userEmail = "";
+    },
+    clearUserID(state) {
+      state.userID = "";
     },
     setToken(state, token) {
       state.token = token;

@@ -39,7 +39,11 @@
 
 <script>
 import { loginUser } from "@/api/auth";
-import { saveAuthToCookie, saveUserToCookie } from "@/utils/cookies";
+import {
+  saveAuthToCookie,
+  saveEmailToCookie,
+  saveIDToCookie,
+} from "@/utils/cookies";
 
 export default {
   data() {
@@ -72,9 +76,11 @@ export default {
         console.log(data.user.userID);
 
         this.$store.commit("setUserEmail", this.userEmail);
+        this.$store.commit("setUserID", data.user.userID);
         this.$store.commit("setToken", data.token);
         saveAuthToCookie(data.token);
-        saveUserToCookie(data.user.email);
+        saveEmailToCookie(data.user.email);
+        saveIDToCookie(data.user.userID);
 
         // await this.$store.dispatch("LOGIN", userData);
         this.$router.push("/main");

@@ -62,6 +62,7 @@
 
 <script>
 import { uploadImage, createPost } from "@/api/posts";
+// import { dateFormat } from "@/utils/date";
 
 export default {
   data() {
@@ -77,7 +78,7 @@ export default {
   },
   computed: {
     isValid() {
-      if (this.title && this.content && this.selected1 && this.selected2) {
+      if (this.title && this.content && this.selected1) {
         return true;
       } else {
         return false;
@@ -87,14 +88,18 @@ export default {
   methods: {
     async submitForm() {
       try {
+        const date = Date();
+        // const writeDate = dateFormat(date);
+        console.log(date);
         console.log("게시글 작성 폼 제출");
         const { data } = await createPost({
           postTitle: this.title,
-          // selected1: this.selected1,
+          eventName: this.selected2,
           // selected2: this.selected2,
           content: this.content,
-          writerID: 11,
-          postNum: 11,
+          writerID: this.$store.state.userID,
+          postNum: 111221,
+          writeDate: date,
         });
         console.log(data);
       } catch (error) {
