@@ -6,7 +6,7 @@ import fs from 'file-system';
 import db from "../config/dbConnection.js";
 
 // import function from controller
-import {showPosts, showPostByNum, createPost, updatePost, deletePost} from "../controllers/postsController.js";
+import {showPosts, showPostByNum, createPost, updatePost, deletePost, showPostByCat} from "../controllers/postsController.js";
 
 var app = express();
 
@@ -18,7 +18,10 @@ PostRouter.get('/posts', showPosts);
   
 // Get Single Post
 PostRouter.get('/posts/:id', showPostByNum);
-  
+
+
+PostRouter.get('/postsByCat/:id', showPostByCat);
+
 // Create New Post
 PostRouter.post('/posts', createPost);
   
