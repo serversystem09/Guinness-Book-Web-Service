@@ -1,25 +1,25 @@
-const router = require("express").Router();
-const categorysController = require("../controllers/categorysController");
-const { isLoggedIn } = require("../controllers/middlewares");
+//const { isLoggedIn } = require("../controllers/middlewares");
 
-router.get("", categorysController.index, categorysController.indexView);
-router.get("/new", categorysController.new);
-router.post(
-  "/create",
-  categorysController.create,
-  categorysController.redirectView
-);
-router.get("/:id/edit", categorysController.edit);
-router.put(
-  "/:id/update",
-  categorysController.update,
-  categorysController.redirectView
-);
-router.get("/:id", categorysController.show, categorysController.showView);
-router.delete(
-  "/:id/delete",
-  categorysController.delete,
-  categorysController.redirectView
-);
+// import express
+import express from "express";
 
-module.exports = router;
+// import function from controller
+import {showCategories, showCategoryByNum, createCategory, deleteCategory} from "../controllers/categoryController.js";
+
+// init express router
+const catRouter = express.Router();
+  
+// Get All category
+catRouter.get('/categories', showCategories);
+  
+// Get Single category
+catRouter.get('/categories/:id', showCategoryByNum);
+  
+// Create New category
+catRouter.post('/categories', createCategory);
+  
+  
+// Delete category
+catRouter.delete('/categories/:id', deleteCategory);
+
+export default catRouter;
