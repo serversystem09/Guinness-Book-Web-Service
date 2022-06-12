@@ -249,6 +249,11 @@ router.post('/get-user',  [
     if (error) throw error;
     return res.send({ error: false, data: results[0], message: '사용자 로그인 정보 확인되었습니다.' });
     });
+    db.query(
+      `SELECT userID FROM user where email='${decoded.email}'`,function (error, results, fields) {
+    if (error) throw error;
+    return res.send({ error: false, data: results[0], message: '사용자id값 저장됨' });
+    });
     });
 
 export default router;
