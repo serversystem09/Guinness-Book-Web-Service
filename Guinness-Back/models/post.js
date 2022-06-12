@@ -30,7 +30,7 @@ export const getPostByCat = (id, result) => {
             console.log(err);
             result(err, null);
         } else {
-            result(null, results[0]);
+            result(null, results);
         }
     });   
 }

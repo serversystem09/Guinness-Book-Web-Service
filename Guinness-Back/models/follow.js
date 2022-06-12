@@ -18,7 +18,7 @@ export const getFollowersByID = (id, result) => {
             console.log(err);
             result(err, null);
         } else {
-            result(null, results[0]);
+            result(null, results);
         }
     });   
 }
@@ -29,7 +29,7 @@ export const getFolloweesByID = (id, result) => {
           console.log(err);
           result(err, null);
       } else {
-          result(null, results[0]);
+          result(null, results);
       }
   });   
 }
