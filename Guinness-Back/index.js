@@ -7,7 +7,8 @@ import createError from 'http-errors';
 import path from 'path';
 
 import bodyParser from "body-parser";
- 
+import multer from 'multer';
+
 // import routes
 import postRouter from "./routers/postRoutes.js";
 import userRouter from "./routers/userRoutes.js";
@@ -51,5 +52,26 @@ app.use((err, req, res, next) => {
       message: err.message,
     });
 });
+
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './uploads');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + '-' + Date.now());
+  }
+});
+
+var upload = multer({ storage : storage});
+ 
+app.post('/uploadmultiple', upload.array('myFiles', 12), (req, res, next) => {
+  const files = req.files
+  if (!files) {
+    const error = new Error('Please choose files')
+    error.httpStatusCode = 400
+    return next(error)
+  }
+    res.send(files)
+})
 
 app.listen(3000, () => console.log('Server running at http://localhost:3000'));
