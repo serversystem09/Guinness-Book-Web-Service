@@ -1,5 +1,7 @@
-import {getByUserAmount, getRankingByLikes} from "../models/ranks.js";
+import {getHotRanks} from "../models/ranks.js";
 
+
+/*
 //main에서 볼 수 있는 등수 항목들
 export const showHots = (req, res) => {
     getByLikes((err, results) => {
@@ -7,15 +9,27 @@ export const showHots = (req, res) => {
             res.send(err);
         }else{
             res.json(results);
+
+ //           export const showHotCategory = (req, res) => {
+                getByUserAmount((err, results) => {
+                    if (err){
+                        res.send(err);
+                    }else{
+                        res.json(results);
+                    }
+                });
+            }            
         }
-    });
+    );
 }
-export const showHotCategory = (req, res) => {
-    getByUserAmount((err, results) => {
+*/
+
+export const showHotRanks = (req, res) => {
+    getHotRanks((err, results) => {
         if (err){
             res.send(err);
         }else{
             res.json(results);
-        }
+        } 
     });
 }
