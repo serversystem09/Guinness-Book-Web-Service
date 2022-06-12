@@ -14,6 +14,7 @@ import userRouter from "./routers/userRoutes.js";
 import authRouter from "./routers/authRouter.js";
 import catRouter from "./routers/categoryRoutes.js";
 import commRouter from "./routers/commentRoutes.js";
+import followRouter from "./routers/followRoutes.js";
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -36,6 +37,7 @@ app.use('/user', userRouter);
 app.use('/auth', authRouter);
 app.use('/cat', catRouter);
 app.use('/comm', commRouter);
+app.use('/foll', followRouter);
 
 // Handling Errors
 app.use((err, req, res, next) => {

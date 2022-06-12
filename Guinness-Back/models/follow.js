@@ -1,34 +1,57 @@
-module.exports = (sequelize, Sequelize) => {
-    class Follow extends Sequelize.Model {
-      //함수 입력하기
-    }
-    Follow.init(
-      {
-        followerID: {
-          type: Sequelize.varchar(20),
-          allowNull: false,
-          primaryKey: true,
-          references: {
-            model: User,
-            key: "userID",
-          },
-        },
-        followeeID: {
-          type: Sequelize.varchar(20),
-          allowNull: false,
-          primaryKey: true,
-          references: {
-            model: User,
-            key: "userID",
-          },
-        },
-      },
-      {
-        sequelize,
-        modelName: "follow",
-        timestamps: true,
-      }
-    );
-    return Follow;
-  };
+import db from "../config/dbConnection.js";
+
+export const getFollows = (result) => {
+    db.query("SELECT * FROM follow", (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });   
+}
   
+
+export const getFollowersByID = (id, result) => {
+    db.query("SELECT followerID FROM follow WHERE followeeID = ?", [id], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results[0]);
+        }
+    });   
+}
+
+export const getFolloweesByID = (id, result) => {
+  db.query("SELECT followeeID FROM follow WHERE followerID = ?", [id], (err, results) => {             
+      if(err) {
+          console.log(err);
+          result(err, null);
+      } else {
+          result(null, results[0]);
+      }
+  });   
+}
+
+export const insertFollow = (data, result) => {
+    db.query("INSERT INTO follow SET ?", [data], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });   
+}
+  
+export const deleteFollowByID = (fwer, fwee, result) => {
+    db.query("DELETE FROM follow WHERE followerID = ? AND followeeID = ?", [fwer, fwee], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });   
+}
