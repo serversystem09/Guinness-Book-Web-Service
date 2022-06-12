@@ -1,5 +1,3 @@
-//const { isLoggedIn } = require("../controllers/middlewares");
-
 // import express
 import express from "express";
 

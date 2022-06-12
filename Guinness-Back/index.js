@@ -13,6 +13,7 @@ import postRouter from "./routers/postRoutes.js";
 import userRouter from "./routers/userRoutes.js";
 import authRouter from "./routers/authRouter.js";
 import catRouter from "./routers/categoryRoutes.js";
+import commRouter from "./routers/commentRoutes.js";
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -34,6 +35,7 @@ app.use('/post',postRouter);
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
 app.use('/cat', catRouter);
+app.use('/comm', commRouter);
 
 // Handling Errors
 app.use((err, req, res, next) => {
