@@ -58,6 +58,18 @@ export const updatePostByNum = (data, id, result) => {
         }
     });   
 }
+
+// report Post
+export const reportPostByNum = (data, id, result) => {
+    db.query("UPDATE post SET reportCount = reportCount + 1 WHERE postNum = ?", [id], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });   
+}
   
 // Delete Product to Database
 export const deletePostByNum = (id, result) => {

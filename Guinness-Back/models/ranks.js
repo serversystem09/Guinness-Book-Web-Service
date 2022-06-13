@@ -31,7 +31,7 @@ export const getByUserAmount = (result) => {
 //3. /rank
 //좋아요 기준 -> 게시글 5개 추출 (총 기네스 순위) => 순위, 이름, 소분류
 export const getRankingByLikes = (result) => {
-    db.query("SELECT user.nickName, post.postTitle, post.event, post.likeNum as likes    from post    join user    on  post.writerID = user.userID     GROUP BY writerID     ORDER BY likes DESC     LIMIT 4", (err, results) => {
+    db.query("SELECT user.nickName, post.postTitle, post.eventName, post.likeNum as likes    from post    join user    on  post.writerID = user.userID     GROUP BY writerID     ORDER BY likes DESC     LIMIT 4", (err, results) => {
         if(err) {
             console.log(err);
             result(err, null);
