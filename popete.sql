@@ -33,6 +33,7 @@ CREATE TABLE `follow` (
 CREATE TABLE `category` (
   `categoryNum` int NOT NULL,
   `categoryName` varchar(10) DEFAULT NULL,
+  `userAmount` int DEFAULT NULL,
   PRIMARY KEY (`categoryNum`)
 );
 
@@ -41,11 +42,11 @@ CREATE TABLE `post` (
   `postNum` int NOT NULL,
   `postTitle` varchar(40) DEFAULT NULL,
   `content` varchar(10000) DEFAULT NULL,
- `eventName` varchar(30) DEFAULT NULL,
   `writerID` int DEFAULT NULL,
   `likeNum` int DEFAULT NULL,
-  `commentON` tinyint(1) DEFAULT NULL,
   `writeDate` datetime DEFAULT NULL,
+  `event` varchar(20) DEFAULT NULL,
+  `photo` blob(255) DEFAULT NULL,
   PRIMARY KEY (`postNum`),
   KEY `writerID` (`writerID`),
   CONSTRAINT `post_ibfk_2` FOREIGN KEY (`writerID`) REFERENCES `user` (`userID`)
@@ -85,7 +86,15 @@ INSERT INTO `user` VALUES ('20200975','waterjin','starstar',01082636230,'2020097
 
 INSERT INTO `follow` VALUES ('20200975','1111');
 
-INSERT INTO `category` VALUES (1,'운동');
+INSERT INTO `category` VALUES (1,'sport', 12);
+INSERT INTO `category` VALUES (2,'food', 22);
+INSERT INTO `category` VALUES (3,'dance', 3);
+INSERT INTO `category` VALUES (4,'sing', 1);
+INSERT INTO `category` VALUES (5,'craft', 52);
+INSERT INTO `category` VALUES (6,'social', 3);
+INSERT INTO `category` VALUES (7,'game', 2);
+
+
 
 INSERT INTO `post` VALUES (1011,'한번에 50개 완전 가능이지','쉽쥬?','팔굽혀펴기','20200975',123,0,'2022-05-27 09:10:52');
 
