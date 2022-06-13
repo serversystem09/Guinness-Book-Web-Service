@@ -3,10 +3,10 @@
     <div>
       <h2>Personal</h2>
       <div class="personal__wrapper">
-        <button @click="toMyPost">작성글</button>
-        <button @click="toMyGuinness">기네스 참여<br />현황 보기</button>
-        <button @click="toMyComment">작성 댓글 보기</button>
-        <button @click="toMyInquiry">문의 내역</button>
+        <button @click="toMyPost">내가 쓴 게시글</button>
+        <!-- <button @click="toMyGuinness">기네스 참여<br />현황 보기</button> -->
+        <button @click="toMyComment">내가 쓴 댓글</button>
+        <button @click="toMyInquiry">내 문의 내역</button>
       </div>
     </div>
     <div>
@@ -44,11 +44,11 @@ export default {
   },
   methods: {
     toMyPost() {
-      this.$router.push("/");
+      this.$router.push("/mypost");
     },
-    toMyGuinness() {
-      this.$router.push("/");
-    },
+    // toMyGuinness() {
+    //   this.$router.push("/");
+    // },
     toMyComment() {
       this.$router.push("/mycomment");
     },
