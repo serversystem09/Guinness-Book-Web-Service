@@ -35,6 +35,16 @@ function fetchPostByCat(cateNum) {
   return instance.get(`/post/postsByCat/${cateNum}`);
 }
 
+// 게시글 좋아요 기능
+function likePost(postNum) {
+  return instance.post(`/post/like/${postNum}`);
+}
+
+// 신고 기능
+function reportPost(postNum) {
+  return instance.post(`/post/report/${postNum}`);
+}
+
 export {
   fetchPosts,
   createPost,
@@ -43,4 +53,6 @@ export {
   editPost,
   uploadImg,
   fetchPostByCat,
+  likePost,
+  reportPost,
 };
