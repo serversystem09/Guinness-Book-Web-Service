@@ -15,7 +15,7 @@ export const getMyPosts = (id, result) => {
 }
 
 export const getPostMyComments = (id, result) => {
-    db.query("SELECT * FROM post WHERE writerID = ?", [id], (err, results) => {             
+    db.query("SELECT * from post where postNum IN (SELECT postNum FROM comment where userID = ?);", [id], (err, results) => {             
         if(err) {
             console.log(err);
             result(err, null);
