@@ -11,6 +11,16 @@ export const getCSs = (result) => {
     });   
 }
   
+export const getMyCS = (id, result) => {
+    db.query("SELECT * FROM csboard WHERE writerID = ?", [id], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });   
+}
 
 export const getCSByNum = (id, result) => {
     db.query("SELECT * FROM csboard WHERE csNum = ?", [id], (err, results) => {             

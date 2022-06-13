@@ -1,9 +1,9 @@
 
 // Import function from Post Model
-import {getCSs, getCSByNum, insertCS, updateCSByNum, deleteCSByNum} from "../models/csboard.js";
+import {getCSs, getMyCS, getCSByNum, insertCS, updateCSByNum, deleteCSByNum} from "../models/csboard.js";
 
 export const showCSs = (req, res) => {
-    getCSs((err, results) => {
+    getCSs( (err, results) => {
         if (err){
             res.send(err);
         }else{
@@ -11,7 +11,16 @@ export const showCSs = (req, res) => {
         }
     });
 }
-  
+
+export const showMyCSs = (req, res) => {
+    getMyCS(req.params.id, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
 
 export const showCSByNum = (req, res) => {
     getCSByNum(req.params.id, (err, results) => {
