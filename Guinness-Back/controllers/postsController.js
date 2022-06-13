@@ -1,5 +1,5 @@
 // Import function from Post Model
- import {getPosts, getPostByNum, reportPostByNum, getPostByCat, insertPost, updatePostByNum, deletePostByNum} from "../models/post.js";
+ import {getPosts, getPostByNum, likePostByNum, reportPostByNum, getPostByCat, insertPost, updatePostByNum, deletePostByNum} from "../models/post.js";
 // Get All Posts
 export const showPosts = (req, res) => {
     getPosts((err, results) => {
@@ -60,9 +60,8 @@ export const updatePost = (req, res) => {
 
 
 export const reportPost = (req, res) => {
-    const data  = req.body;
     const id    = req.params.id;
-    reportPostByNum(data, id, (err, results) => {
+    reportPostByNum(id, (err, results) => {
         if (err){
             res.send(err);
         }else{
@@ -71,7 +70,16 @@ export const reportPost = (req, res) => {
     });
 }
 
-
+export const likePost = (req, res) => {
+    const id    = req.params.id;
+    likePostByNum( id, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
 // Delete Post
 export const deletePost = (req, res) => {
     const id = req.params.id;
