@@ -33,6 +33,7 @@ CREATE TABLE `follow` (
 CREATE TABLE `category` (
   `categoryNum` INT(10) NOT NULL AUTO_INCREMENT,
   `categoryName` varchar(10) DEFAULT NULL,
+`userAmount` int DEFAULT NULL,
   PRIMARY KEY (`categoryNum`)
 );
 
@@ -42,13 +43,14 @@ CREATE TABLE `post` (
   `postTitle` varchar(40) DEFAULT NULL,
   `content` varchar(10000) DEFAULT NULL,
  `eventName` varchar(30) DEFAULT NULL,
+ `categoryNum` INT(10) DEFAULT NULL,
   `writerID` int DEFAULT NULL,
   `likeNum` int DEFAULT NULL,
-  `commentON` tinyint(1) DEFAULT NULL,
   `writeDate` datetime DEFAULT now(),
   PRIMARY KEY (`postNum`),
   KEY `writerID` (`writerID`),
-  CONSTRAINT `post_ibfk_2` FOREIGN KEY (`writerID`) REFERENCES `user` (`userID`)
+  CONSTRAINT `post_ibfk_2` FOREIGN KEY (`writerID`) REFERENCES `user` (`userID`),
+  CONSTRAINT `post_ibfk_1` FOREIGN KEY (`categoryNum`) REFERENCES `category` (`categoryNum`)
 );
 
 
@@ -87,9 +89,15 @@ INSERT INTO `user` VALUES ('20200975','waterjin','starstar',01082636230,'2020097
 
 INSERT INTO `follow` VALUES ('20200975','1111');
 
-INSERT INTO `category` VALUES (1,'운동');
+INSERT INTO `category` VALUES (1,'운동', 12);
+INSERT INTO `category` VALUES (2,'음식', 22);
+INSERT INTO `category` VALUES (3,'춤', 3);
+INSERT INTO `category` VALUES (4,'노래', 1);
+INSERT INTO `category` VALUES (5,'만들기', 52);
+INSERT INTO `category` VALUES (6,'캠페인', 3);
+INSERT INTO `category` VALUES (7,'게임', 2);
 
-INSERT INTO `post` VALUES (1011,'한번에 50개 완전 가능이지','쉽쥬?','팔굽혀펴기','20200975',123,0,'2022-05-27 09:10:52');
+INSERT INTO `post` VALUES (1011,'한번에 50개 완전 가능이지','쉽쥬?','팔굽혀펴기',1,20200975,123,'2022-05-27 09:10:52');
 
 INSERT INTO `comment` VALUES (1,1011,'2022-05-28 11:01:47',111,'1111','ㅋㅋㅋ우리 할아버지도 50개는 함ㅋ');
 

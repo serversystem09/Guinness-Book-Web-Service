@@ -1,6 +1,17 @@
 import db from "../config/dbConnection.js";
 
-export const getCSs = (id, result) => {
+export const getCSs = (result) => {
+  db.query("SELECT * FROM csboard", (err, results) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+export const getMyCS = (id, result) => {
   db.query("SELECT * FROM csboard WHERE writerID = ?", [id], (err, results) => {
     if (err) {
       console.log(err);
