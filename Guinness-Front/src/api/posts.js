@@ -37,12 +37,12 @@ function fetchPostByCat(cateNum) {
 
 // 게시글 좋아요 기능
 function likePost(postNum) {
-  return instance.post(`/post/like/${postNum}`);
+  return instance.put(`/post/like/${postNum}`);
 }
 
 // 신고 기능
 function reportPost(postNum) {
-  return instance.post(`/post/report/${postNum}`);
+  return instance.put(`/post/report/${postNum}`);
 }
 
 export {

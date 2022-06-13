@@ -38,9 +38,11 @@
               </button>
             </div>
             <button type="button" class="btn-like" @click="likePost">
-              좋아요&nbsp;{{ postData.likeNum }}&nbsp;<i
-                :class="['fa-heart', liked ? 'fas' : 'far']"
-              ></i>
+              좋아요&nbsp;{{ postData.likeNum }}&nbsp;
+              <!-- <i :class="['fa-heart', liked ? 'fas' : 'far']"></i> -->
+            </button>
+            <button type="button" class="btn-report" @click="reportPost">
+              신고하기&nbsp;{{ postData.reportCount }}&nbsp;
             </button>
           </div>
           <div class="comment-form">
@@ -58,7 +60,7 @@
 </template>
 
 <script>
-import { fetchPost, deletePost } from "@/api/posts";
+import { fetchPost, deletePost, likePost, reportPost } from "@/api/posts";
 import { createComment, fetchComments, deleteComment } from "@/api/comment";
 // import { createFollow } from "@/api.follow";
 export default {
@@ -96,14 +98,34 @@ export default {
     },
     // 게시글 좋아요
     async likePost() {
-      console.log("좋아요");
-      this.liked = !this.liked;
-      if (this.liked == false) {
-        this.postData.likeNum -= 1;
-        console.log("좋아요");
-      } else {
-        this.postData.likeNum += 1;
-        console.log("좋아요 취소");
+      // console.log("좋아요");
+      try {
+        if (this.liked == false) {
+          this.liked = !this.liked;
+          const { data } = await likePost(this.postId);
+          console.log("좋아요", data);
+          this.postData.likeNum -= 1;
+        } else {
+          return this.postId;
+          // this.postData.likeNum += 1;
+          // console.log("좋아요 취소");
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.fetchPost();
+      }
+    },
+    // 게시글 신고
+    async reportPost() {
+      try {
+        const { data } = await reportPost(this.postId);
+        console.log("게시글 신고", data);
+        this.$router.go(this.$router.currentRoute);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.fetchPost();
       }
     },
     // 팔로우
@@ -252,8 +274,17 @@ h3 {
   border-radius: 5px;
   border: 1px solid rgb(180, 179, 179);
   background-color: transparent;
-  margin: 10px 0;
+  margin: 10px 10px 10px 0;
   padding: 3px 10px;
+}
+
+.btn-report {
+  border-style: none;
+  border-radius: 5px;
+  background-color: rgb(228, 61, 61);
+  margin: 10px 10px 10px 0;
+  padding: 3px 10px;
+  color: white;
 }
 
 .btn_del-comment {
