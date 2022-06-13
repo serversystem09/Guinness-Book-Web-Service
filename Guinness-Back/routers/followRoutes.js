@@ -13,7 +13,7 @@ followRouter.get('/followers/:id', showFollowersByID);
 followRouter.get('/followees/:id', showFolloweesByID);
 
   
-followRouter.post('/create', createFollow);
+followRouter.post('/create/:fwer/:fwee', createFollow);
 
 followRouter.delete('/delete/:fwer/:fwee', deleteFollow);
 

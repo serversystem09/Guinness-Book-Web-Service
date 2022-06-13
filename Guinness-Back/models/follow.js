@@ -34,8 +34,8 @@ export const getFolloweesByID = (id, result) => {
   });   
 }
 
-export const insertFollow = (data, result) => {
-    db.query("INSERT INTO follow SET ?", [data], (err, results) => {             
+export const insertFollow = (fwer, fwee,  result) => {
+    db.query("INSERT INTO follow (followerID, followeeID) VALUES (?,?)",[fwer, fwee], (err, results) => {             
         if(err) {
             console.log(err);
             result(err, null);
