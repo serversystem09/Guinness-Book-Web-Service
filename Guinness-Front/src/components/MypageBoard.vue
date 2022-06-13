@@ -35,12 +35,17 @@
 </template>
 
 <script>
+import { getFollow } from "@/api/follow";
 export default {
   data() {
     return {
       isActive1: true,
       isActive2: false,
+      following: [],
     };
+  },
+  created() {
+    this.fetchFollower();
   },
   methods: {
     toMyPost() {
@@ -62,6 +67,10 @@ export default {
     followerActive() {
       this.isActive1 = false;
       this.isActive2 = true;
+    },
+    async fetchFollower() {
+      const { data } = await getFollow(this.$store.state.userID);
+      console.log(data);
     },
   },
 };

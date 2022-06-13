@@ -4,7 +4,7 @@
     <div class="post-card">
       <div class="post-card__img">이미지 자리</div>
       <div class="post-card__contents">
-        <h3 class="text__title" @click="toDetail">
+        <h3 class="text__title cursor" @click="toDetail">
           [{{ postItem.eventName }}]&nbsp;{{ postItem.postTitle }}
         </h3>
         <h5 class="text__title">
@@ -75,6 +75,10 @@ export default {
   height: 200px;
   box-sizing: 10px;
   padding: 20px;
+}
+
+.cursor {
+  cursor: pointer;
 }
 
 h2 {

@@ -54,32 +54,11 @@ export default {
     this.fetchPostByCat(this.cateNum);
   },
   methods: {
-    // postByCate(data, cnt) {
-    //   this.data = data;
-    //   this.category = data.categoryName;
-    //   this.cateNum = data.categoryNum;
-    //   // console.log(data.categoryNum);
-    // },
-    // 클릭한 카테고리 num 전송
-    // async fetchCateByNum(cateNum) {
-    //   try {
-    //     const { data } = await fetchCateByNum(cateNum);
-    //     console.log(data);
-    //     this.cateNum = data.categoryNum;
-    //     this.category = data.categoryName;
-    //     this.data = data;
-    //     const { postData } = await fetchPostByCat(this.cateNum);
-    //     this.postItems = postData;
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
-    // 카테고리 데이터 조회
     async fetchCategory() {
       try {
         const { data } = await fetchCategory();
         this.category = data;
-        console.log(this.category);
+        console.log("카테고리", this.category);
       } catch (error) {
         console.log(error.message);
       }

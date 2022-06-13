@@ -15,7 +15,10 @@
               </button>
             </div>
             <!-- 게시글 작성자일 경우에만 보여줌 -->
-            <div v-if="this.$store.state.token" class="post-card__btns">
+            <div
+              v-if="this.$store.state.userID == this.postData.writerID"
+              class="post-card__btns"
+            >
               <button @click="editPost" class="btn__edit">수정</button>
               <button @click="deletePost" class="btn__delete">삭제</button>
             </div>
