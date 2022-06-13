@@ -36,9 +36,11 @@
             >
               <span> {{ data.content }}</span>
               <span> {{ data.userID }}</span>
+              <!-- <div v-if="this.myID == data.userID"> -->
               <button @click="deleteComment(index)" class="btn_del-comment">
                 삭제
               </button>
+              <!-- </div> -->
             </div>
             <button type="button" class="btn-like" @click="likePost">
               좋아요&nbsp;{{ postData.likeNum }}&nbsp;
@@ -87,6 +89,7 @@ export default {
       liked: false,
       follow: false,
       username: "닉네임",
+      myID: this.$store.state.userID,
     };
   },
   methods: {

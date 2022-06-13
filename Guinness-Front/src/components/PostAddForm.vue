@@ -38,8 +38,8 @@
       <!-- 첨부 파일 -->
       <div class="input__wrapper">
         <label for="file">첨부파일</label>
-        <!-- <input id="file" type="file" @change="onFileSelected" ref="image" />
-        <button @click="onUpload">이미지 업로드</button> -->
+        <input id="file" type="file" @change="selectFile" />
+        <button type="button" @click="onUpload">이미지 업로드</button>
         <vue-upload-multiple-image
           @upload-success="uploadImageSuccess"
           @edit-image="editImage"
@@ -48,6 +48,16 @@
           :dragText="drag"
           :browseText="browseText"
         ></vue-upload-multiple-image>
+      </div>
+      <div class="dropbox">
+        <input
+          class="input-file"
+          type="file"
+          name="myImage"
+          @change="upload($event.target.name, $event.target.files)"
+          @drop="upload($event.target.name, $event.target.files)"
+        />
+        <h2>파일을 드래그해서 드랍해주세요.</h2>
       </div>
 
       <button
@@ -72,7 +82,7 @@
 </template>
 
 <script>
-import { createPost } from "@/api/posts";
+import { createPost, uploadImg } from "@/api/posts";
 import axios from "axios";
 // import { dateFormat } from "@/utils/date";
 import VueUploadMultipleImage from "vue-upload-multiple-image";
@@ -93,6 +103,7 @@ export default {
       images: [],
       drag: "",
       browseText: "업로드",
+      image: "",
     };
   },
   computed: {
@@ -130,6 +141,32 @@ export default {
       this.eventName = "";
       (this.eventNameInput = ""), (this.content = "");
       this.userBirth = "";
+    },
+    upload(name, files) {
+      const formData = new FormData();
+      formData.append(name, files[0], files[0].name);
+      const url = "http://localhost:3000/post/upload";
+      axios.post(url, formData).then((response) => {
+        console.log(response);
+      });
+    },
+    // 이벤트 감지 - 인자로 선택된 파일 객체를 전달받음 -> 해당 객체를 image에 할당
+    selectFile(file) {
+      this.image = file;
+    },
+    async onUpload() {
+      const formData = new FormData();
+      formData.append("image", this.image);
+      try {
+        const { data } = await uploadImg(formData, {
+          headers: {
+            "Content-Type": "multipart / form - data",
+          },
+        });
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
     },
     uploadImageSuccess(formData, index, fileList) {
       console.log("data", formData, index, fileList);
@@ -201,5 +238,29 @@ export default {
 @import "@/assets/css/common.css";
 #select-1 {
   width: 100%;
+}
+
+.dropbox {
+  outline: 2px dashed #aaa;
+  background: #7fb4dd;
+  width: 300px;
+  height: 300px;
+  position: relative;
+  margin: 0 auto;
+}
+.dropbox > h2 {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  z-index: 2;
+}
+.input-file {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 3;
 }
 </style>

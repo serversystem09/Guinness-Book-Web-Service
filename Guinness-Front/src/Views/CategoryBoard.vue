@@ -87,6 +87,7 @@ export default {
   /* box-sizing: border-box;
   padding: 90px 0; */
   background-color: #f9f9f9;
+  height: 100%;
 }
 
 .post-card__wrapper {
@@ -96,15 +97,16 @@ export default {
 .post-list__wrapper {
   position: fixed;
   top: 0px;
-  left: 330px;
-  /* width: 100%; */
+  height: 100vh;
+  width: 100%;
+  overflow-y: scroll;
   box-sizing: border-box;
-  padding: 150px 0px;
+  padding: 180px 50px 150px 380px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  /* height: 100vh; */
+  z-index: 0;
   background-color: #f9f9f9;
 }
 
@@ -119,7 +121,7 @@ export default {
 h3 {
   margin-bottom: 20px;
   text-align: left;
-  width: 700px;
+  width: 100%;
 }
 
 .categoryNav {
@@ -134,6 +136,7 @@ h3 {
   background-color: white;
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.08);
   height: 100vh;
+  z-index: 80;
 }
 
 ul {

@@ -67,7 +67,7 @@ export default {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 100;
 }
 
 header {
@@ -77,7 +77,6 @@ header {
   box-sizing: border-box;
   padding: 20px 30px;
   background-color: white;
-  z-index: 2;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
 }
 
