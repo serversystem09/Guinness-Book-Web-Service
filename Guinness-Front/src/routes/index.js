@@ -81,6 +81,13 @@ const router = new VueRouter({
       },
     },
     {
+      path: "/mycomment",
+      component: () => import("@/Views/MyComment.vue"),
+      meta: {
+        auth: true,
+      },
+    },
+    {
       path: "/postview/:id",
       component: () => import("@/Views/PostView.vue"),
     },

@@ -10,14 +10,14 @@ function fetchComments(postNum) {
   return instance.get(`comm/comments/${postNum}`);
 }
 
+// 댓글 개별 조회
+function fetchComment(postNum) {
+  return instance.get(`comm/comment/${postNum}`);
+}
+
 // 댓글 개별 삭제
 function deleteComment(commentNum) {
   return instance.delete(`comm/comment/${commentNum}`);
-}
-
-// 내가 쓴 댓글 조회
-function fetchComment(userID) {
-  return instance.get(`comm/comment/${userID}`);
 }
 
 export { createComment, fetchComment, fetchComments, deleteComment };

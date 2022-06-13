@@ -50,7 +50,7 @@ export default {
       this.$router.push("/");
     },
     toMyComment() {
-      this.$router.push("/");
+      this.$router.push("/mycomment");
     },
     toMyInquiry() {
       this.$router.push("/myinquiry");
