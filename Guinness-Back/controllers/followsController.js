@@ -35,8 +35,9 @@ export const showFolloweesByID = (req, res) => {
 }
 
 export const createFollow = (req, res) => {
-    const data = req.body;
-    insertFollow(data, (err, results) => {
+    const fwer = req.params.fwer;
+    const fwee = req.params.fwee;
+    insertFollow(fwer, fwee, (err, results) => {
         if (err){
             res.send(err);
         }else{

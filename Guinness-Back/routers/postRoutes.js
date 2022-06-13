@@ -4,6 +4,7 @@ import multer from 'multer';
 import bodyParser from "body-parser";
 import fs from 'file-system';
 import db from "../config/dbConnection.js";
+import path from 'path';
 
 // import function from controller
 import {showPosts, showPostByNum, createPost, reportPost, likePost, updatePost, deletePost, showPostByCat} from "../controllers/postsController.js";
@@ -37,31 +38,32 @@ PostRouter.put('/like/:id', likePost);
 // Delete Post
 PostRouter.delete('/posts/:id', deletePost);
 
-var storage =   multer.diskStorage({
-    destination: function (req, file, callback) {
-      callback(null, './uploads');
+const storage =   multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads');
     },
-    filename: function (req, file, callback) {
-      callback(null, file.fieldname + '-' + Date.now());
+    filename: (req, file, cb)=> {
+      console.log(file);
+      cb(null, Date.now() + path.extname(file.originalname))
     }
   });
-  
-var upload = multer({ storage : storage});
+
+  const upload = multer({ storage : storage});
  
 
-PostRouter.post('/uploadphoto', upload.single('myImage'), (req, res) => {
+PostRouter.post('/upload', upload.single('myImage'), (req, res) => {
     if (!req.file) {
-        console.log("No file upload");
+      console.log("No file upload");
     } else {
         console.log(req.file.filename)
         var imgsrc = 'http://127.0.0.1:3000/uploads/' + req.file.filename
-        var insertData = "INSERT INTO attachment(file_src)VALUES(?)"
+       var insertData = "INSERT INTO attachment(file_src)VALUES(?)"
         db.query(insertData, [imgsrc], (err, result) => {
             if (err) throw err
-            console.log("file uploaded");
+           console.log("file uploaded");
             
         })
-        res.send("file uploaded");
+        res.send("image uploaded");
     }
 })
 
