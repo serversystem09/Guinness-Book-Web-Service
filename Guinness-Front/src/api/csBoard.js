@@ -7,7 +7,7 @@ function createInquiry(postNum) {
 
 // 문의내역 조회
 function fetchInquiry(userID) {
-  return instance.get("cs/CSs", userID);
+  return instance.get(`cs/myCSs/${userID}`);
 }
 
 export { createInquiry, fetchInquiry };
