@@ -84,7 +84,7 @@ export default {
   data() {
     return {
       title: "",
-      categoryNum: "대분류",
+      categoryNum: "",
       eventName: "",
       // eventNameInput: "",
       content: "",
@@ -197,6 +197,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import "@/assets/css/common.css";
+#select-1 {
+  width: 100%;
+}
 </style>

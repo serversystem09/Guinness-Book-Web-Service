@@ -5,7 +5,7 @@
       <div class="post-card__img">이미지 자리</div>
       <div class="post-card__contents">
         <h3 class="text__title" @click="toDetail">
-          &nbsp;{{ postItem.postTitle }}
+          [{{ postItem.eventName }}]&nbsp;{{ postItem.postTitle }}
         </h3>
         <h5 class="text__title">
           &nbsp;<i class="fa-heart fas"></i>&nbsp;{{ postItem.likeNum }}

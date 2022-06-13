@@ -1,10 +1,5 @@
 <template>
   <div class="category-board">
-    <!-- <category-nav
-      @postByCate="postByCate"
-      :data="data"
-      :cnt="cnt"
-    ></category-nav> -->
     <div class="categoryNav">
       <aside>
         <ul>
@@ -21,8 +16,7 @@
     </div>
     <div class="post-list__wrapper">
       <h3>
-        {{ this.category.categoryName }} <i class="fas fa-angle-right"></i>
-        <!-- {{ this.subcategory }} -->
+        {{ this.data.data.categoryName }} <i class="fas fa-angle-right"></i>
       </h3>
       <div class="post-card__wrapper">
         <PostList
@@ -40,7 +34,7 @@
 // import CategoryNav from "../components/CategoryNav.vue";
 import { fetchPostByCat } from "@/api/posts";
 import PostList from "@/components/PostList.vue";
-import { fetchCategory } from "@/api/category";
+import { fetchCategory, fetchCateByNum } from "@/api/category";
 
 // import axios from "axios";
 export default {
@@ -57,6 +51,7 @@ export default {
   },
   created() {
     this.fetchCategory();
+    this.fetchPostByCat(this.cateNum);
   },
   methods: {
     // postByCate(data, cnt) {
@@ -93,6 +88,11 @@ export default {
       try {
         const { data } = await fetchPostByCat(cateNum);
         this.postItems = data;
+        console.log("게시글", this.postItems);
+        const postItem = this.postItems;
+        this.data = await fetchCateByNum(cateNum);
+
+        this.$emit("fetchPostByCat", postItem);
       } catch (error) {
         console.log(error);
       }
