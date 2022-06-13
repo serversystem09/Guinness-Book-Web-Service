@@ -62,6 +62,7 @@
 <script>
 import { fetchPost, deletePost, likePost, reportPost } from "@/api/posts";
 import { createComment, fetchComments, deleteComment } from "@/api/comment";
+import { createFollow, deleteFollow } from "@/api/follow";
 // import { createFollow } from "@/api.follow";
 export default {
   created() {
@@ -130,8 +131,21 @@ export default {
     },
     // 팔로우
     async followUser() {
-      console.log("팔로우");
-      this.follow = !this.follow;
+      try {
+        const fwer = this.postData.writerID;
+        const fwee = this.$store.state.userID;
+        if (this.follow == false) {
+          const { data } = await createFollow(fwer, fwee);
+          this.follow = true;
+          console.log("팔로우", data);
+        } else {
+          await deleteFollow(fwer, fwee);
+          this.follow = false;
+          console.log("팔로우 취소");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     // 게시글 삭제
     async deletePost() {
