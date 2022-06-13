@@ -31,4 +31,17 @@ function uploadImg() {
   return instance.post("/post/uploadphoto");
 }
 
-export { fetchPosts, createPost, deletePost, fetchPost, editPost, uploadImg };
+// 카테고리에 해당하는 게시글 조회
+function fetchPostByCat(cateNum) {
+  return instance.get(`/post/postsByCat/${cateNum}`);
+}
+
+export {
+  fetchPosts,
+  createPost,
+  deletePost,
+  fetchPost,
+  editPost,
+  uploadImg,
+  fetchPostByCat,
+};

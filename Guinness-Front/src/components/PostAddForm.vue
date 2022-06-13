@@ -13,7 +13,7 @@
         <label>분류</label>
         <div class="select__wrapper">
           <div id="select-1">
-            <select v-model="selected1">
+            <select v-model="categoryNum">
               <option selected>대분류</option>
               <option value="1">체육</option>
               <option value="2">음식</option>
@@ -28,7 +28,7 @@
       </div>
       <div class="input__wrapper">
         <label>소분류</label>
-        <input placeholder="소분류" id="input-etc" v-model="selected2" />
+        <input placeholder="소분류" id="input-etc" v-model="eventName" />
       </div>
 
       <div class="input__wrapper">
@@ -84,9 +84,9 @@ export default {
   data() {
     return {
       title: "",
-      selected1: "대분류",
-      selected2: "",
-      // selected2Input: "",
+      categoryNum: "대분류",
+      eventName: "",
+      // eventNameInput: "",
       content: "",
       uploadimageurl: [], // 업로드한 이미지의 미리보기 기능을 위해 url 저장하는 객체
       imagecnt: 0, // 업로드한 이미지 개수 => 제출버튼 클릭시 back서버와 axios 통신하게 되는데,
@@ -97,7 +97,7 @@ export default {
   },
   computed: {
     isValid() {
-      if (this.title && this.content && this.selected1) {
+      if (this.title && this.content && this.categoryNum && this.eventName) {
         return true;
       } else {
         return false;
@@ -107,13 +107,11 @@ export default {
   methods: {
     async submitForm() {
       try {
-        // const date = Date();
-        // const writeDate = dateFormat(date);
         console.log("게시글 작성 폼 제출");
         const { data } = await createPost({
           postTitle: this.title,
-          eventName: this.selected2,
-          // selected2: this.selected2,
+          eventName: this.eventName,
+          categoryNum: this.categoryNum,
           content: this.content,
           writerID: this.$store.state.userID,
         });
@@ -128,9 +126,9 @@ export default {
     },
     initForm() {
       this.title = "";
-      this.selected1 = "";
-      this.selected2 = "";
-      (this.selected2Input = ""), (this.content = "");
+      this.categoryNum = "";
+      this.eventName = "";
+      (this.eventNameInput = ""), (this.content = "");
       this.userBirth = "";
     },
     uploadImageSuccess(formData, index, fileList) {

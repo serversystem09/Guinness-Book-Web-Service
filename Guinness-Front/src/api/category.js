@@ -2,7 +2,11 @@ import { instance } from "./index";
 
 // 카테고리 게시판
 function fetchCategory() {
-  return instance.get("cat/categoryies");
+  return instance.get("cat/categories");
 }
 
-export { fetchCategory };
+function fetchCateByNum(cateNum) {
+  return instance.get(`cat/categories/${cateNum}`);
+}
+
+export { fetchCategory, fetchCateByNum };

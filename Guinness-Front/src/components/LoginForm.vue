@@ -25,6 +25,7 @@
         :disabled="!isValid"
         type="button"
         @click="submitForm"
+        @keyup="submitForm"
         class="btnInActive"
         :class="{ btnPrimary: isValid }"
       >
