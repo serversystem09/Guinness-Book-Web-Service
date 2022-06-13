@@ -47,6 +47,7 @@ CREATE TABLE `post` (
   `writerID` int DEFAULT NULL,
   `likeNum` int DEFAULT NULL,
   `writeDate` datetime DEFAULT now(),
+`reportCount` int(10) DEFAULT 0,
   PRIMARY KEY (`postNum`),
   KEY `writerID` (`writerID`),
   CONSTRAINT `post_ibfk_2` FOREIGN KEY (`writerID`) REFERENCES `user` (`userID`),
@@ -60,7 +61,7 @@ CREATE TABLE `csboard` (
   `content` varchar(400) DEFAULT NULL,
   `answer` varchar(400) DEFAULT NULL,
   `writerID` int DEFAULT NULL,
-  `writeDate` datetime DEFAULT NULL,
+  `writeDate` datetime DEFAULT now(),
   PRIMARY KEY (`csNum`),
   CONSTRAINT `cs_ibfk_2` FOREIGN KEY (`writerID`) REFERENCES `user` (`userID`)
 );
@@ -97,7 +98,7 @@ INSERT INTO `category` VALUES (5,'만들기', 52);
 INSERT INTO `category` VALUES (6,'캠페인', 3);
 INSERT INTO `category` VALUES (7,'게임', 2);
 
-INSERT INTO `post` VALUES (1011,'한번에 50개 완전 가능이지','쉽쥬?','팔굽혀펴기',1,20200975,123,'2022-05-27 09:10:52');
+INSERT INTO `post` VALUES (1011,'한번에 50개 완전 가능이지','쉽쥬?','팔굽혀펴기',1,20200975,123,'2022-05-27 09:10:52',0);
 
 INSERT INTO `comment` VALUES (1,1011,'2022-05-28 11:01:47',111,'1111','ㅋㅋㅋ우리 할아버지도 50개는 함ㅋ');
 
