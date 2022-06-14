@@ -45,7 +45,7 @@ CREATE TABLE `post` (
  `eventName` varchar(30) DEFAULT NULL,
  `categoryNum` INT(10) DEFAULT NULL,
   `writerID` int DEFAULT NULL,
-  `likeNum` int DEFAULT NULL,
+  `likeNum` int DEFAULT DEFAULT 0,,
   `writeDate` datetime DEFAULT now(),
 `reportCount` int(10) DEFAULT 0,
   PRIMARY KEY (`postNum`),

@@ -16,8 +16,8 @@ function getFollow() {
 }
 
 // 팔로워 아이디 조회
-function getFollower(followerID) {
-  return instance.get(`foll/followers/${followerID}`);
+function getFollower(userID) {
+  return instance.get(`foll/followers/${userID}`);
 }
 
 // 팔로위 아이디 조회
