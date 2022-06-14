@@ -11,7 +11,7 @@ use popeteDB;
 
 
 CREATE TABLE `user` (
-  `userID` int NOT NULL AUTO_INCREMENT,
+  `userID` int(10) NOT NULL AUTO_INCREMENT,
   `nickName` varchar(50) DEFAULT NULL,
   `password` varchar(200) NOT NULL,
   `phoneNumber` int DEFAULT NULL,
@@ -54,6 +54,23 @@ CREATE TABLE `post` (
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`categoryNum`) REFERENCES `category` (`categoryNum`)
 );
 
+
+CREATE TABLE `likeTbl` (
+  `postNum` INT(10) NOT NULL,
+  `userID` INT(10) NOT NULL,
+  PRIMARY KEY (`postNum`,`userID`),
+CONSTRAINT `like_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
+  CONSTRAINT `like_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`)
+) ;
+
+
+CREATE TABLE `reportTbl` (
+  `postNum` INT(10) NOT NULL,
+  `userID` INT(10) NOT NULL,
+  PRIMARY KEY (`postNum`,`userID`),
+CONSTRAINT `report_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
+  CONSTRAINT `report_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`)
+) ;
 
 CREATE TABLE `csboard` (
   `csNum` INT(10) NOT NULL AUTO_INCREMENT,
@@ -99,7 +116,8 @@ INSERT INTO `category` VALUES (6,'캠페인', 3);
 INSERT INTO `category` VALUES (7,'게임', 2);
 
 INSERT INTO `post` VALUES (1011,'한번에 50개 완전 가능이지','쉽쥬?','팔굽혀펴기',1,20200975,123,'2022-05-27 09:10:52',0);
-
+INSERT INTO `likeTbl` VALUES (1011, 1111);
+INSERT INTO `reportTbl` VALUES (1011, 20200975);
 INSERT INTO `comment` VALUES (1,1011,'2022-05-28 11:01:47',111,'1111','ㅋㅋㅋ우리 할아버지도 50개는 함ㅋ');
 
 INSERT INTO `csboard` VALUES (1, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', '20200975', now());
