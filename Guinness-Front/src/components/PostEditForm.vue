@@ -105,10 +105,11 @@ export default {
           writerID: this.$store.state.userID,
         });
         console.log(data);
-        this.$router.push({
-          path: `/postview/${this.$route.params.id}`,
-          replace: true,
-        });
+        this.$router.push(
+          // path: `/postview/${this.$route.params.id}`,
+          // replace: true,
+          "/category"
+        );
       } catch (error) {
         console.log(error);
       }

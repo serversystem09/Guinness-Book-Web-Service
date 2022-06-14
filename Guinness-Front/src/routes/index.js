@@ -10,7 +10,7 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   // url에 # 제거
   // 스토리 모드 주의할 점: 공식문서- 웹 자원들을 서버에 배포했을 때 참고하기(서버가 url을 보고 구분할 수 있도록 설정)
-  mode: "history",
+  // mode: "history",
   routes: [
     {
       path: "/",
@@ -100,7 +100,7 @@ const router = new VueRouter({
     },
     // 게시글 수정
     {
-      path: "/postview/edit/:id",
+      path: "/edit/:id",
       component: () => import("@/Views/PostEditPage.vue"),
       meta: {
         auth: true,
