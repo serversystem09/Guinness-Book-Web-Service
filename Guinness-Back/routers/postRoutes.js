@@ -46,13 +46,13 @@ const storage =   multer.diskStorage({
   const upload = multer({ storage : storage});
  
 
-PostRouter.post('/upload', upload.single('myImage'), (req, res) => {
+PostRouter.post('/upload', upload.single('file'), (req, res) => {
     if (!req.file) {
       console.log("No file upload");
     } else {
         console.log(req.file.filename)
         var imgsrc = 'http://127.0.0.1:3000/uploads/' + req.file.filename
-       var insertData = "INSERT INTO post(file_src)VALUES(?)"
+       var insertData = "INSERT INTO attachment(file_src)VALUES(?)"
         db.query(insertData, [imgsrc], (err, result) => {
             if (err) throw err
            console.log("file uploaded");
