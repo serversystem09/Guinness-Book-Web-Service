@@ -50,7 +50,12 @@
               </button>
               <!-- </div> -->
             </div>
-            <button type="button" class="btn-like" @click="likePost">
+            <button
+              type="button"
+              class="btn-like"
+              :disabled="this.likedValue"
+              @click="likePost"
+            >
               좋아요&nbsp;{{ postData.likeNum }}&nbsp;
               <!-- <i :class="['fa-heart', liked ? 'fas' : 'far']"></i> -->
             </button>
@@ -73,9 +78,10 @@
 </template>
 
 <script>
-import { fetchPost, deletePost, likePost, reportPost } from "@/api/posts";
+import { fetchPost, deletePost, reportPost } from "@/api/posts";
 import { createComment, fetchComments, deleteComment } from "@/api/comment";
 import { createFollow, deleteFollow, getFollowee } from "@/api/follow";
+import { fetchIfUserLiked, createLike } from "@/api/like";
 // import { createFollow } from "@/api.follow";
 export default {
   async created() {
@@ -83,6 +89,7 @@ export default {
     await this.fetchComments();
     await this.fetchFollowee();
     await this.checkFollow();
+    await this.fetchIfUserLiked();
   },
   mounted() {
     console.log("id:", this.$route.params.id);
@@ -101,17 +108,10 @@ export default {
       username: "닉네임",
       writerID: "",
       followeeList: [],
+      likedValue: 0,
     };
   },
-  computed: {
-    // checkFollow() {
-    //   this.followeeList.some(function findFollowee(element) {
-    //     if (element.followeeID == this.writerID) {
-    //       return true;
-    //     }
-    //   });
-    // },
-  },
+  computed: {},
   methods: {
     async checkFollow() {
       try {
@@ -130,15 +130,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-      // includes()는 데이터 타입까지 비교
-      // const followArray = this.followeeList.includes(this.postData.writerID);
-      // console.log("writerID", String(this.postData.writerID));
-
-      // if (followArray == this.postData.writerID) {
-      //   this.follow = true;
-      // } else {
-      //   this.follow = false;
-      // }
     },
     // 게시글 상세 조회
     async fetchPost() {
@@ -151,15 +142,31 @@ export default {
         console.log(error);
       }
     },
+    // 사용자가 해당 게시글 좋아요 눌렀는지 카운트 값 리턴(눌렀으면 1)
+    async fetchIfUserLiked() {
+      try {
+        const { data } = await fetchIfUserLiked(
+          this.postId,
+          this.$store.state.userID
+        );
+        this.likedValue = data[0]["count(*)"];
+        console.log("좋아요 값 반환", this.likedValue);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     // 게시글 좋아요
     async likePost() {
       // console.log("좋아요");
       try {
-        if (this.liked == false) {
-          this.liked = !this.liked;
-          const { data } = await likePost(this.postId);
-          console.log("좋아요", data);
-          this.postData.likeNum -= 1;
+        if (this.likedValue == 0) {
+          // this.liked = !this.liked;
+          const { data } = await createLike(
+            this.postId,
+            this.$store.state.userID
+          );
+          console.log("좋아요 누름", data);
+          // this.postData.likeNum -= 1;
         } else {
           return this.postId;
           // this.postData.likeNum += 1;
