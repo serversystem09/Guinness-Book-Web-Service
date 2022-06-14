@@ -17,6 +17,7 @@ import commRouter from "./routers/commentRoutes.js";
 import followRouter from "./routers/followRoutes.js";
 import CSRouter from "./routers/csBoardRouter.js";
 
+
 import MPRouter from "./routers/myPageRouter.js";
 import indexRouter from "./routers/indexRoutes.js";
 import rankRouter from "./routers/rankingRoutes.js";
