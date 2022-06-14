@@ -25,21 +25,26 @@
         :disabled="!isValid"
         type="button"
         @click="submitForm"
+        @keyup="submitForm"
         class="btnInActive"
         :class="{ btnPrimary: isValid }"
       >
         로그인
       </button>
-      <button class="btnPrimary">
-        <router-link to="/signup">회원가입</router-link>
-      </button>
+      <router-link to="/signup" class="btnPrimary btn-signup"
+        ><button>회원가입</button></router-link
+      >
     </form>
   </div>
 </template>
 
 <script>
 import { loginUser } from "@/api/auth";
-import { saveAuthToCookie, saveUserToCookie } from "@/utils/cookies";
+import {
+  saveAuthToCookie,
+  saveEmailToCookie,
+  saveIDToCookie,
+} from "@/utils/cookies";
 
 export default {
   data() {
@@ -68,10 +73,15 @@ export default {
           password: this.userPw,
         });
         console.log(data.token);
+        console.log(data.user.email);
+        console.log(data.user.userID);
+
         this.$store.commit("setUserEmail", this.userEmail);
+        this.$store.commit("setUserID", data.user.userID);
         this.$store.commit("setToken", data.token);
         saveAuthToCookie(data.token);
-        saveUserToCookie(data.email);
+        saveEmailToCookie(data.user.email);
+        saveIDToCookie(data.user.userID);
 
         // await this.$store.dispatch("LOGIN", userData);
         this.$router.push("/main");
@@ -110,11 +120,12 @@ form {
 h1 {
   margin-bottom: 60px;
 }
-.btn-signup {
-  background-color: rgb(215, 215, 211);
-}
-button > a {
+
+.btn-signup > button {
   text-decoration: none;
+  border-style: none;
+  background: transparent;
   color: black;
+  width: 100%;
 }
 </style>

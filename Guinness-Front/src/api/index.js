@@ -29,23 +29,12 @@ export const instance = createInstance();
 export const files = createFileInstance("addBoard");
 export const posts = createInstanceWithAuth("posts");
 
-// 문의하기 폼 제출
-function createInquiry(inquiryData) {
-  return instance.post(inquiryData);
-}
 // 게시글 이미지 제출 폼
 function uploadImage(image) {
   return files.post(image);
 }
-function createPost(postData) {
-  return instance.post("addBoard", postData);
-}
 
-// 카테고리 게시판
-function fetchCategory() {
-  return instance.get("category");
-}
-export { createInquiry, uploadImage, createPost, fetchCategory };
+export { uploadImage };
 
 // CREATE - posts
 // POST - posts

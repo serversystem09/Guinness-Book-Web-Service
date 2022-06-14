@@ -166,8 +166,8 @@ export default {
           password: this.userPw,
           nickname: this.userNickname,
           email: this.userEmail,
-          // phone: this.userPhone,
-          // birth: this.userBirth,
+          phone: this.userPhone,
+          birth: this.userBirth,
         };
         const { data } = await registerUser(userData);
         console.log(data);

@@ -1,4 +1,3 @@
-// 학습 노트 조작과 관련된 CRUD API 함수 파일
 import { instance } from "./index";
 
 // 게시글 목록 조회
@@ -7,23 +6,53 @@ function fetchPosts() {
 }
 
 // 특정 게시글을 조회하는 API
-function fetchPost(postId) {
-  return instance.get(postId);
+function fetchPost(postData) {
+  return instance.get(`post/posts/${postData}`);
 }
 
 // 게시글 생성
 function createPost(postData) {
-  return instance.post("/addBoard", postData);
+  return instance.post("post/posts", postData);
 }
 
 // 게시글 삭제
-function deletePost(postId) {
-  return instance.delete(postId);
+function deletePost(postNum) {
+  return instance.delete(`post/posts/${postNum}`);
 }
 
 // 게시글 수정
-function editPost(postId, postData) {
-  return instance.put(postId, postData);
+function editPost(postNum, postData) {
+  return instance.put(`post/posts/${postNum}`, postData);
 }
 
-export { fetchPosts, createPost, deletePost, fetchPost, editPost };
+// 사진 첨부
+function uploadImg() {
+  return instance.post("/post/uploadphoto");
+}
+
+// 카테고리에 해당하는 게시글 조회
+function fetchPostByCat(cateNum) {
+  return instance.get(`/post/postsByCat/${cateNum}`);
+}
+
+// 게시글 좋아요 기능
+function likePost(postNum) {
+  return instance.put(`/post/like/${postNum}`);
+}
+
+// 신고 기능
+function reportPost(postNum) {
+  return instance.put(`/post/report/${postNum}`);
+}
+
+export {
+  fetchPosts,
+  createPost,
+  deletePost,
+  fetchPost,
+  editPost,
+  uploadImg,
+  fetchPostByCat,
+  likePost,
+  reportPost,
+};

@@ -6,21 +6,9 @@
           v-for="(i, index) in category"
           :key="index"
           class="category"
-          @click="showSubcategory(index)"
+          @click="fetchCateByNum(i.categoryNum)"
         >
-          {{ category[index].title }}&nbsp;&nbsp;<i
-            class="fas fa-angle-right"
-          ></i>
-          <!--<i class="fa fa-angle-down"></i>-->
-          <!-- <ul class="subCategory" v-if="isActive[index] == true">
-            <li
-              v-for="(j, index) in category[0].subCategory"
-              :key="j"
-              @click="showSubcategory(j)"
-            >
-              {{ category[0].subCategory[index] }}
-            </li>
-          </ul> -->
+          {{ i.categoryName }}&nbsp;&nbsp;<i class="fas fa-angle-right"></i>
         </li>
       </ul>
     </aside>
@@ -28,59 +16,35 @@
 </template>
 
 <script>
-import { fetchCategory } from "@/api/index";
+import { fetchCategory, fetchCateByNum } from "@/api/category";
 
 export default {
+  created() {
+    this.fetchCategory();
+  },
   data: function () {
     return {
       isActive: [true, true, true, true, true, true, true],
-      category: [
-        {
-          title: "체육",
-          subCategory: ["수영", "필라테스"],
-        },
-        {
-          title: "음식",
-          subCategory: ["수영", "필라테스"],
-        },
-        {
-          title: "춤",
-          subCategory: ["수영", "필라테스"],
-        },
-        {
-          title: "노래",
-          subCategory: ["수영", "필라테스"],
-        },
-        {
-          title: "공예",
-          subCategory: ["수영", "필라테스"],
-        },
-        {
-          title: "사회 캠페인",
-          subCategory: ["수영", "필라테스"],
-        },
-        {
-          title: "오락",
-          subCategory: ["수영", "필라테스"],
-        },
-      ],
+      category: [],
     };
   },
   methods: {
-    showSubcategory(index) {
-      const i = index;
-      console.log(i);
-      this.isActive[i] = !this.isActive[i];
-      console.log(this.isActive[i]);
-      const category = this.category[i].title;
-      const subcategory = this.category[i].subCategory;
-      this.$emit("submitCategory", category, subcategory);
+    // 클릭한 카테고리 num 전송
+    async fetchCateByNum(cateNum) {
+      try {
+        const { data } = await fetchCateByNum(cateNum);
+        const cnt = 1;
+        this.$emit("postByCate", data, cnt);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
     },
     // 카테고리 데이터 조회
     async fetchCategory() {
       try {
-        const { categoryData } = await fetchCategory();
-        this.category = categoryData;
+        const { data } = await fetchCategory();
+        this.category = data;
         console.log(this.category);
       } catch (error) {
         console.log(error.message);
@@ -107,13 +71,13 @@ export default {
 
 ul {
   list-style: none;
-  line-height: 40px;
+  line-height: 58px;
   padding: 0;
 }
 
 .category {
   font-weight: 600;
-  font-size: 20px;
+  font-size: 24px;
   cursor: pointer;
   margin-bottom: 10px;
 }

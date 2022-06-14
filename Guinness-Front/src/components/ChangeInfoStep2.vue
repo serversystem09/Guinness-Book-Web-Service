@@ -15,8 +15,13 @@
       </div>
       <div class="input__wrapper">
         <label for="passwordck">비밀번호 확인</label>
-        <input type="passwordck" id="passwordck" v-model="passwordck" />
+        <input type="password" id="passwordck" v-model="passwordck" />
       </div>
+      <p class="validation-text">
+        <span class="warning" v-if="!this.isPwSame && password">
+          비밀번호가 일치하지 않습니다.
+        </span>
+      </p>
       <div class="input__wrapper">
         <label for="birth">생년월일</label>
         <input type="birth" id="birth" v-model="birth" />
@@ -31,6 +36,7 @@
 </template>
 
 <script>
+import { fetchUser, updateUser } from "@/api/auth";
 export default {
   data() {
     return {
@@ -42,9 +48,41 @@ export default {
       phoneNum: "",
     };
   },
+  created() {
+    this.fetchUser();
+  },
+  computed: {
+    isPwSame() {
+      if (this.password == this.passwordck && this.password) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
   methods: {
-    submitForm() {
-      this.$router.push("/mypage");
+    async submitForm() {
+      try {
+        const { data } = await updateUser(this.$store.state.userID, {
+          nickname: this.nickname,
+          email: this.email,
+          password: this.password,
+          birth: this.birth,
+          phoneNumber: this.phoneNum,
+        });
+        console.log(data);
+        this.$router.push("/mypage");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchUser() {
+      const { data } = await fetchUser(this.$store.state.userID);
+      console.log("회원정보 조회", data);
+      this.nickname = data.nickName;
+      this.email = data.email;
+      this.birth = data.birth;
+      this.phoneNum = data.phoneNum;
     },
   },
 };

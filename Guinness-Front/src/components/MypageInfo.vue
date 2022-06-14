@@ -2,12 +2,14 @@
   <div>
     <div class="mypage__wrapper">
       <div>
-        <span class="mypage__nickname">{{ nickname }} 님 환영합니다.</span>
-        <span class="mypage__rank">&nbsp;&nbsp;&nbsp;[순위: {{ rank }}등]</span>
+        <span class="mypage__nickname"
+          >{{ this.$store.state.userEmail }} 님 환영합니다.</span
+        >
+        <!-- <span class="mypage__rank">&nbsp;&nbsp;&nbsp;[순위: {{ rank }}등]</span> -->
       </div>
       <div>
         <span class="mypage__membership">{{ membership }} 등급</span
-        >&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<span>{{ name }}</span
+        >&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<span>{{ nickname }}</span
         ><span class="mypage__email"
           >&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{{ email }}</span
         >
@@ -18,19 +20,32 @@
 </template>
 
 <script>
+import { fetchUser } from "@/api/auth";
+
 export default {
   data() {
     return {
       nickname: "닉네임",
       rank: 1,
       membership: "gold",
-      name: "서민영",
       email: "seo1234@naver.com",
     };
+  },
+  created() {
+    this.fetchUser();
   },
   methods: {
     toChangeInfo() {
       this.$router.push("/changeinfo");
+    },
+    async fetchUser() {
+      const { data } = await fetchUser(this.$store.state.userID);
+      console.log("회원정보 조회", data);
+      this.nickname = data.nickName;
+      this.email = data.email;
+      // this.birth = data.birth;
+      // this.phoneNum = data.phoneNum;
+      this.membership = data.ranking;
     },
   },
 };

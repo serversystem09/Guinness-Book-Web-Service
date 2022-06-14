@@ -3,14 +3,14 @@
     <div>
       <h2>Personal</h2>
       <div class="personal__wrapper">
-        <button @click="toMyPost">작성글</button>
-        <button @click="toMyGuinness">기네스 참여<br />현황 보기</button>
-        <button @click="toMyComment">작성 댓글 보기</button>
-        <button @click="toMyInquiry">문의 내역</button>
+        <button @click="toMyPost">내가 쓴 게시글</button>
+        <!-- <button @click="toMyGuinness">기네스 참여<br />현황 보기</button> -->
+        <button @click="toMyComment">내가 쓴 댓글</button>
+        <button @click="toMyInquiry">내 문의 내역</button>
       </div>
     </div>
     <div>
-      <h2>follow & follower</h2>
+      <h2>follower & followee</h2>
       <div class="follow__wrapper">
         <div class="btn__wrapper">
           <button
@@ -18,42 +18,66 @@
             class="inActive"
             :class="{ active: isActive1 }"
           >
-            following</button
+            follower</button
           >&nbsp;<button
             @click="followerActive"
             class="inActive"
             :class="{ active: isActive2 }"
           >
-            follower
+            followee
           </button>
         </div>
-        <div v-if="isActive1" class="following__contents">following</div>
-        <div v-else-if="isActive2" class="follower__contents">follower</div>
+        <div v-if="isActive1" class="following__contents">
+          <div v-for="(follower, index) in followerList" :key="index">
+            <strong
+              ><span>{{ index + 1 }}.</span></strong
+            ><span> {{ follower.followerID }}</span
+            ><br />
+          </div>
+        </div>
+
+        <div v-else-if="isActive2" class="followee__contents">
+          <div v-for="(followee, index) in followeeList" :key="index">
+            <strong
+              ><span>{{ index + 1 }}.</span></strong
+            >
+            <span> {{ followee.followeeID }}</span
+            ><br />
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getFollower, getFollowee } from "@/api/follow";
 export default {
   data() {
     return {
       isActive1: true,
       isActive2: false,
+      following: [],
+      followerList: [],
+      followeeList: [],
     };
+  },
+  created() {
+    this.fetchFollower();
+    this.fetchFollowee();
   },
   methods: {
     toMyPost() {
-      this.$router.push("/");
+      this.$router.push("/mypost");
     },
-    toMyGuinness() {
-      this.$router.push("/");
-    },
+    // toMyGuinness() {
+    //   this.$router.push("/");
+    // },
     toMyComment() {
-      this.$router.push("/");
+      this.$router.push("/mycomment");
     },
     toMyInquiry() {
-      this.$router.push("/");
+      this.$router.push("/myinquiry");
     },
     followingActive() {
       this.isActive1 = true;
@@ -62,6 +86,16 @@ export default {
     followerActive() {
       this.isActive1 = false;
       this.isActive2 = true;
+    },
+    async fetchFollower() {
+      const { data } = await getFollower(this.$store.state.userID);
+      console.log("팔로워", data);
+      this.followerList = data;
+    },
+    async fetchFollowee() {
+      const { data } = await getFollowee(this.$store.state.userID);
+      console.log("팔로위", data);
+      this.followeeList = data;
     },
   },
 };
@@ -82,7 +116,7 @@ export default {
   border-radius: 5px;
   box-sizing: border-box;
   padding: 50px;
-  height: 400px;
+  height: auto;
 }
 
 .personal__wrapper {
@@ -102,13 +136,15 @@ export default {
 }
 
 .following__contents,
-.follower__contents {
+.followee__contents {
   display: flex;
+  flex-direction: column;
   background-color: rgba(239, 239, 239, 0.701);
   border-radius: 5px;
-  height: 200px;
+  height: auto;
   width: 100%;
   margin-top: 15px;
+  padding: 20px;
 }
 
 .btn__wrapper {

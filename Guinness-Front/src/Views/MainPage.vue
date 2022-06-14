@@ -1,15 +1,15 @@
 <template>
   <div class="mainpage">
-    <HotPostList></HotPostList>
+    <!-- <HotPostList></HotPostList> -->
     <HotCategoryList></HotCategoryList>
   </div>
 </template>
 
 <script>
-import HotPostList from "@/components/HotPostList.vue";
+// import HotPostList from "@/components/HotPostList.vue";
 import HotCategoryList from "@/components/HotCategoryList.vue";
 export default {
-  components: { HotPostList, HotCategoryList },
+  components: { HotCategoryList },
 };
 </script>
 

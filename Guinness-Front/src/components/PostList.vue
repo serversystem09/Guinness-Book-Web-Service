@@ -4,9 +4,9 @@
     <div class="post-card">
       <div class="post-card__img">이미지 자리</div>
       <div class="post-card__contents">
-        <h2 class="text__title" @click="toDetail">
-          &nbsp;{{ postItem.postTitle }}
-        </h2>
+        <h3 class="text__title cursor" @click="toDetail">
+          [{{ postItem.eventName }}]&nbsp;{{ postItem.postTitle }}
+        </h3>
         <h5 class="text__title">
           &nbsp;<i class="fa-heart fas"></i>&nbsp;{{ postItem.likeNum }}
         </h5>
@@ -19,19 +19,7 @@
 </template>
 
 <script>
-// import { fetchPosts } from "@/api/posts";
-
 export default {
-  data() {
-    return {
-      postLists: [
-        { id: 0, title: "제목", contents: "내용내용", subCategory: "소분류" },
-        { id: 1, title: "제목", contents: "내용내용", subCategory: "소분류" },
-      ],
-
-      isLoading: false,
-    };
-  },
   props: {
     postItem: {
       type: Object,
@@ -39,8 +27,14 @@ export default {
     },
   },
   methods: {
-    toDetail() {
-      this.$router.push("/:id/postview");
+    async toDetail() {
+      try {
+        const id = this.postItem.postNum;
+        console.log("해당 게시글 아이디", id);
+        this.$router.push(`postview/${id}`);
+      } catch (error) {
+        console.log(error);
+      }
     },
     // async fetchData() {
     //   try {
@@ -81,6 +75,10 @@ export default {
   height: 200px;
   box-sizing: 10px;
   padding: 20px;
+}
+
+.cursor {
+  cursor: pointer;
 }
 
 h2 {

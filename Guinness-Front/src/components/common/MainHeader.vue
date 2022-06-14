@@ -50,8 +50,11 @@ export default {
     logoutUser() {
       this.$store.commit("clearUserEmail");
       this.$store.commit("clearToken");
+      this.$store.commit("clearUserID");
       deleteCookie("til_auth");
-      deleteCookie("til_user");
+      deleteCookie("til_user_id");
+      deleteCookie("til_user_email");
+
       this.$router.push("/login");
     },
   },
@@ -64,7 +67,7 @@ export default {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 100;
 }
 
 header {
@@ -74,7 +77,6 @@ header {
   box-sizing: border-box;
   padding: 20px 30px;
   background-color: white;
-  z-index: 2;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
 }
 

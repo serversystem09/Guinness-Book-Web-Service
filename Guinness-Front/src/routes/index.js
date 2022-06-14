@@ -36,6 +36,7 @@ const router = new VueRouter({
         auth: true,
       },
     },
+
     {
       path: "/findinfo",
       component: () => import("@/Views/FindInfoPage.vue"),
@@ -53,6 +54,9 @@ const router = new VueRouter({
     {
       path: "/csboard",
       component: () => import("@/Views/CsBoard.vue"),
+      meta: {
+        auth: true,
+      },
     },
     {
       path: "/ranking",
@@ -70,8 +74,37 @@ const router = new VueRouter({
       },
     },
     {
-      path: "/:id/postview",
+      path: "/myinquiry",
+      component: () => import("@/Views/MyInquiry.vue"),
+      meta: {
+        auth: true,
+      },
+    },
+    {
+      path: "/mycomment",
+      component: () => import("@/Views/MyComment.vue"),
+      meta: {
+        auth: true,
+      },
+    },
+    {
+      path: "/mypost",
+      component: () => import("@/Views/MyPosts.vue"),
+      meta: {
+        auth: true,
+      },
+    },
+    {
+      path: "/postview/:id",
       component: () => import("@/Views/PostView.vue"),
+    },
+    // 게시글 수정
+    {
+      path: "/postview/edit/:id",
+      component: () => import("@/Views/PostEditPage.vue"),
+      meta: {
+        auth: true,
+      },
     },
     {
       // 없는 페이지 처리
