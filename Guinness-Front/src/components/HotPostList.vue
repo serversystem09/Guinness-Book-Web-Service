@@ -75,7 +75,7 @@ header h1 {
 }
 
 .card {
-  width: 400px;
+  width: 350px;
   height: 400px;
   background-color: white;
   border: 1px solid rgb(203, 203, 203);

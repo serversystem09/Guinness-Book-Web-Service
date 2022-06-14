@@ -27,7 +27,7 @@ function editPost(postNum, postData) {
 
 // 사진 첨부
 function uploadImg() {
-  return instance.post("/post/uploadphoto");
+  return instance.post("post/upload");
 }
 
 // 카테고리에 해당하는 게시글 조회

@@ -4,7 +4,11 @@
       <h1>게시글 작성</h1>
     </header>
 
-    <form class="form" @submit.prevent="submitForm">
+    <form
+      class="form"
+      @submit.prevent="submitForm"
+      enctype="multipart/form-data"
+    >
       <div class="input__wrapper">
         <label for="title">제목</label>
         <input id="title" v-model="title" />
@@ -38,26 +42,8 @@
       <!-- 첨부 파일 -->
       <div class="input__wrapper">
         <label for="file">첨부파일</label>
-        <input id="file" type="file" @change="selectFile" />
+        <input id="file" type="file" @change="selectFile" ref="file" />
         <button type="button" @click="onUpload">이미지 업로드</button>
-        <vue-upload-multiple-image
-          @upload-success="uploadImageSuccess"
-          @edit-image="editImage"
-          @before-remove="beforeRemove"
-          :data-images="images"
-          :dragText="drag"
-          :browseText="browseText"
-        ></vue-upload-multiple-image>
-      </div>
-      <div class="dropbox">
-        <input
-          class="input-file"
-          type="file"
-          name="myImage"
-          @change="upload($event.target.name, $event.target.files)"
-          @drop="upload($event.target.name, $event.target.files)"
-        />
-        <h2>파일을 드래그해서 드랍해주세요.</h2>
       </div>
 
       <button
@@ -69,28 +55,15 @@
         작성
       </button>
     </form>
-    <!-- <v-img
-      v-for="(item, i) in uploadimageurl"
-      :key="i"
-      :src="item.url"
-      contain
-      height="150px"
-      width="200px"
-      style="border: 2px solid black; margin-left: 100px"
-    /> -->
   </div>
 </template>
 
 <script>
 import { createPost, uploadImg } from "@/api/posts";
-import axios from "axios";
-// import { dateFormat } from "@/utils/date";
-import VueUploadMultipleImage from "vue-upload-multiple-image";
+// import axios from "axios";
 
 export default {
-  components: {
-    VueUploadMultipleImage,
-  },
+  components: {},
   data() {
     return {
       title: "",
@@ -98,11 +71,8 @@ export default {
       eventName: "",
       // eventNameInput: "",
       content: "",
-      uploadimageurl: [], // 업로드한 이미지의 미리보기 기능을 위해 url 저장하는 객체
-      imagecnt: 0, // 업로드한 이미지 개수 => 제출버튼 클릭시 back서버와 axios 통신하게 되는데,
-      images: [],
-      drag: "",
-      browseText: "업로드",
+      file: "",
+      message: "",
       image: "",
     };
   },
@@ -117,7 +87,10 @@ export default {
   },
   methods: {
     async submitForm() {
+      const formData = new FormData();
+      formData.append("myImage", this.file);
       try {
+        await uploadImg(formData);
         console.log("게시글 작성 폼 제출");
         const { data } = await createPost({
           postTitle: this.title,
@@ -126,8 +99,8 @@ export default {
           content: this.content,
           writerID: this.$store.state.userID,
         });
-
         console.log(data);
+        // 첨부파일
       } catch (error) {
         console.log(error.message);
       } finally {
@@ -142,21 +115,21 @@ export default {
       (this.eventNameInput = ""), (this.content = "");
       this.userBirth = "";
     },
-    upload(name, files) {
-      const formData = new FormData();
-      formData.append(name, files[0], files[0].name);
-      const url = "http://localhost:3000/post/upload";
-      axios.post(url, formData).then((response) => {
-        console.log(response);
-      });
-    },
+    // upload(name, files) {
+    //   const formData = new FormData();
+    //   formData.append(name, files[0], files[0].name);
+    //   const url = "http://localhost:3000/post/upload";
+    //   axios.post(url, formData).then((response) => {
+    //     console.log(response);
+    //   });
+    // },
     // 이벤트 감지 - 인자로 선택된 파일 객체를 전달받음 -> 해당 객체를 image에 할당
-    selectFile(file) {
-      this.image = file;
+    selectFile() {
+      this.file = this.$refs.file.files[0];
     },
     async onUpload() {
       const formData = new FormData();
-      formData.append("image", this.image);
+      formData.append("myImage", this.file);
       try {
         const { data } = await uploadImg(formData, {
           headers: {
@@ -167,27 +140,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
-    uploadImageSuccess(formData, index, fileList) {
-      console.log("data", formData, index, fileList);
-      // Upload image api
-      axios
-        .post(`${process.env.VUE_APP_API_URL}post/uploadphoto`, formData)
-        .then((response) => {
-          console.log(response);
-        });
-    },
-    beforeRemove(index, done, fileList) {
-      console.log("index", index, fileList);
-      var r = confirm("remove image");
-      if (r == true) {
-        done();
-      } else {
-        console.log("이미지 삭제 안함");
-      }
-    },
-    editImage(formData, index, fileList) {
-      console.log("edit data", formData, index, fileList);
     },
   },
   // 첨부 파일
