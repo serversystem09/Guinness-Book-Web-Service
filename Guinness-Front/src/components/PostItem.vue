@@ -8,11 +8,19 @@
           <div class="post-card__follow">
             <div>
               <span>{{ postData.writerID }}</span>
-              <button type="button" class="btn-like" @click="followUser">
+              <button
+                v-if="this.$store.state.userID != this.postData.writerID"
+                type="button"
+                class="btn-like"
+                @click="followUser"
+              >
                 팔로우&nbsp;<i
                   :class="['fa-heart', follow ? 'fas' : 'far']"
                 ></i>
               </button>
+              <div v-if="this.$store.state.userID == this.postData.writerID">
+                <span class="myPost"> [내가 쓴 글] </span>
+              </div>
             </div>
             <!-- 게시글 작성자일 경우에만 보여줌 -->
             <div
@@ -67,12 +75,14 @@
 <script>
 import { fetchPost, deletePost, likePost, reportPost } from "@/api/posts";
 import { createComment, fetchComments, deleteComment } from "@/api/comment";
-import { createFollow, deleteFollow } from "@/api/follow";
+import { createFollow, deleteFollow, getFollowee } from "@/api/follow";
 // import { createFollow } from "@/api.follow";
 export default {
-  created() {
-    this.fetchPost();
-    this.fetchComments();
+  async created() {
+    await this.fetchPost();
+    await this.fetchComments();
+    await this.fetchFollowee();
+    await this.checkFollow();
   },
   mounted() {
     console.log("id:", this.$route.params.id);
@@ -89,16 +99,54 @@ export default {
       liked: false,
       follow: false,
       username: "닉네임",
-      myID: this.$store.state.userID,
+      writerID: "",
+      followeeList: [],
     };
   },
+  computed: {
+    // checkFollow() {
+    //   this.followeeList.some(function findFollowee(element) {
+    //     if (element.followeeID == this.writerID) {
+    //       return true;
+    //     }
+    //   });
+    // },
+  },
   methods: {
+    async checkFollow() {
+      try {
+        const writer = await this.writerID;
+        const followCheck = this.followeeList.some(function findFollowee(
+          element
+        ) {
+          if (element.followeeID == writer) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        this.follow = followCheck;
+        console.log("내가 이미 글쓴이를 팔로우 중인지", followCheck);
+      } catch (error) {
+        console.log(error);
+      }
+      // includes()는 데이터 타입까지 비교
+      // const followArray = this.followeeList.includes(this.postData.writerID);
+      // console.log("writerID", String(this.postData.writerID));
+
+      // if (followArray == this.postData.writerID) {
+      //   this.follow = true;
+      // } else {
+      //   this.follow = false;
+      // }
+    },
     // 게시글 상세 조회
     async fetchPost() {
       try {
         const { data } = await fetchPost(this.postId);
         console.log(data);
         this.postData = data;
+        this.writerID = data.writerID;
       } catch (error) {
         console.log(error);
       }
@@ -135,11 +183,22 @@ export default {
         this.fetchPost();
       }
     },
+    // 나의 팔로위 목록 조회 -> 글 작성자를 이미 팔로우 중이면 true값 반환하여야 함
+    async fetchFollowee() {
+      try {
+        const { data } = await getFollowee(this.$store.state.userID);
+        this.followeeList = data;
+        // this.followeeList = this.followeeList.map((a) => a.followeeID);
+        console.log("나의 팔로위 목록 배열로 조회", this.followeeList);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     // 팔로우
     async followUser() {
       try {
-        const fwer = this.postData.writerID;
-        const fwee = this.$store.state.userID;
+        const fwee = this.postData.writerID;
+        const fwer = this.$store.state.userID;
         if (this.follow == false) {
           const { data } = await createFollow(fwer, fwee);
           this.follow = true;
@@ -327,6 +386,10 @@ h3 {
   margin-left: 10px;
 }
 
+.post-card__btns {
+  margin: 10px;
+}
+
 .post-card__btns > .btn__edit {
   width: 90px;
   border-style: none;
@@ -342,5 +405,14 @@ h3 {
   background-color: rgb(190, 190, 190);
   color: rgb(16, 16, 16);
   padding: 5px 0;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
+.myPost {
+  color: rgb(255, 79, 79);
 }
 </style>

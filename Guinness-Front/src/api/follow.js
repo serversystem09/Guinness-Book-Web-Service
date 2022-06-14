@@ -21,8 +21,8 @@ function getFollower(followerID) {
 }
 
 // 팔로위 아이디 조회
-function getFollowee(followeeID) {
-  return instance.get(`foll/followees/${followeeID}`);
+function getFollowee(userID) {
+  return instance.get(`foll/followees/${userID}`);
 }
 
 export { createFollow, deleteFollow, getFollow, getFollower, getFollowee };
