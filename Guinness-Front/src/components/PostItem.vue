@@ -44,17 +44,26 @@
             >
               <span> {{ data.content }}</span>
               <span> {{ data.userID }}</span>
-              <!-- <div v-if="this.myID == data.userID"> -->
+
               <button @click="deleteComment(index)" class="btn_del-comment">
                 삭제
               </button>
-              <!-- </div> -->
             </div>
-            <button type="button" class="btn-like" @click="likePost">
+            <button
+              type="button"
+              class="btn-like"
+              :disabled="this.likedValue == 1"
+              @click="likePost"
+            >
               좋아요&nbsp;{{ postData.likeNum }}&nbsp;
-              <!-- <i :class="['fa-heart', liked ? 'fas' : 'far']"></i> -->
+              <i :class="['fa-heart', likedValue == 1 ? 'fas' : 'far']"></i>
             </button>
-            <button type="button" class="btn-report" @click="reportPost">
+            <button
+              type="button"
+              class="btn-report"
+              :disabled="this.reportValue == 1"
+              @click="reportPost"
+            >
               신고하기&nbsp;{{ postData.reportCount }}&nbsp;
             </button>
           </div>
@@ -73,16 +82,20 @@
 </template>
 
 <script>
-import { fetchPost, deletePost, likePost, reportPost } from "@/api/posts";
+import { fetchPost, deletePost } from "@/api/posts";
 import { createComment, fetchComments, deleteComment } from "@/api/comment";
 import { createFollow, deleteFollow, getFollowee } from "@/api/follow";
-// import { createFollow } from "@/api.follow";
+import { fetchIfUserLiked, createLike } from "@/api/like";
+import { fetchReport, createReport } from "@/api/report";
+
 export default {
   async created() {
     await this.fetchPost();
     await this.fetchComments();
     await this.fetchFollowee();
     await this.checkFollow();
+    await this.fetchIfUserLiked();
+    await this.fetchReport();
   },
   mounted() {
     console.log("id:", this.$route.params.id);
@@ -96,22 +109,18 @@ export default {
       commentNum: "",
       postData: [],
       postId: this.$route.params.id,
-      liked: false,
+      myID: {
+        id: this.$store.state.userID,
+      },
       follow: false,
       username: "닉네임",
       writerID: "",
       followeeList: [],
+      likedValue: 0,
+      reportValue: 0,
     };
   },
-  computed: {
-    // checkFollow() {
-    //   this.followeeList.some(function findFollowee(element) {
-    //     if (element.followeeID == this.writerID) {
-    //       return true;
-    //     }
-    //   });
-    // },
-  },
+  computed: {},
   methods: {
     async checkFollow() {
       try {
@@ -130,15 +139,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-      // includes()는 데이터 타입까지 비교
-      // const followArray = this.followeeList.includes(this.postData.writerID);
-      // console.log("writerID", String(this.postData.writerID));
-
-      // if (followArray == this.postData.writerID) {
-      //   this.follow = true;
-      // } else {
-      //   this.follow = false;
-      // }
     },
     // 게시글 상세 조회
     async fetchPost() {
@@ -151,15 +151,31 @@ export default {
         console.log(error);
       }
     },
+    // 사용자가 해당 게시글 좋아요 눌렀는지 카운트 값 리턴(눌렀으면 1)
+    async fetchIfUserLiked() {
+      try {
+        const { data } = await fetchIfUserLiked(
+          this.postId,
+          this.$store.state.userID
+        );
+        this.likedValue = data[0]["count(*)"];
+        console.log("좋아요 값 반환", this.likedValue);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     // 게시글 좋아요
     async likePost() {
       // console.log("좋아요");
       try {
-        if (this.liked == false) {
-          this.liked = !this.liked;
-          const { data } = await likePost(this.postId);
-          console.log("좋아요", data);
-          this.postData.likeNum -= 1;
+        if (this.likedValue == 0) {
+          // this.liked = !this.liked;
+          const { data } = await createLike(
+            this.postId,
+            this.$store.state.userID
+          );
+          console.log("좋아요 누름", data);
+          // this.postData.likeNum -= 1;
         } else {
           return this.postId;
           // this.postData.likeNum += 1;
@@ -171,12 +187,32 @@ export default {
         this.fetchPost();
       }
     },
+    // 사용자가 해당 게시글 신고 눌렀는지 카운트 값 리턴(눌렀으면 1)
+    async fetchReport() {
+      try {
+        const { data } = await fetchReport(
+          this.postId,
+          this.$store.state.userID
+        );
+        this.reportValue = data[0]["count(*)"];
+        console.log("신고 값 반환", this.reportValue);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     // 게시글 신고
     async reportPost() {
       try {
-        const { data } = await reportPost(this.postId);
-        console.log("게시글 신고", data);
-        this.$router.go(this.$router.currentRoute);
+        if (this.reportValue == 0) {
+          const { data } = await createReport(
+            this.postId,
+            this.$store.state.userID
+          );
+
+          console.log("신고 누름", data);
+        } else {
+          return this.postId;
+        }
       } catch (error) {
         console.log(error);
       } finally {
@@ -258,18 +294,25 @@ export default {
     initForm() {
       this.comment = "";
     },
+
     async deleteComment(index) {
-      const result = confirm("정말 삭제하시겠습니까?");
-      if (result == true) {
-        try {
-          const { data } = await deleteComment(this.comments[index].commentNum);
-          console.log(data);
-          this.fetchComments();
-        } catch (error) {
-          console.log(error);
+      if (this.comments.userID == this.$store.state.userID) {
+        const result = confirm("정말 삭제하시겠습니까?");
+        if (result == true) {
+          try {
+            const { data } = await deleteComment(
+              this.comments[index].commentNum
+            );
+            console.log(data);
+            this.fetchComments();
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          console.log("삭제 취소");
         }
       } else {
-        console.log("삭제 취소");
+        return alert("본인이 작성한 댓글만 삭제할 수 있습니다");
       }
     },
   },
@@ -410,6 +453,10 @@ h3 {
 button:disabled {
   cursor: not-allowed;
   pointer-events: all !important;
+}
+
+.btn-report:disabled {
+  background: rgba(194, 52, 81, 0.679);
 }
 
 .myPost {

@@ -4,6 +4,7 @@
       <h2>Personal</h2>
       <div class="personal__wrapper">
         <button @click="toMyPost">내가 쓴 게시글</button>
+        <button @click="toMyLike">좋아요 한 게시글</button>
         <!-- <button @click="toMyGuinness">기네스 참여<br />현황 보기</button> -->
         <button @click="toMyComment">내가 쓴 댓글</button>
         <button @click="toMyInquiry">내 문의 내역</button>
@@ -70,9 +71,9 @@ export default {
     toMyPost() {
       this.$router.push("/mypost");
     },
-    // toMyGuinness() {
-    //   this.$router.push("/");
-    // },
+    toMyLike() {
+      this.$router.push("/mylike");
+    },
     toMyComment() {
       this.$router.push("/mycomment");
     },
