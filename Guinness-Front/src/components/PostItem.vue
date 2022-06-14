@@ -44,11 +44,10 @@
             >
               <span> {{ data.content }}</span>
               <span> {{ data.userID }}</span>
-              <!-- <div v-if="this.myID == data.userID"> -->
+
               <button @click="deleteComment(index)" class="btn_del-comment">
                 삭제
               </button>
-              <!-- </div> -->
             </div>
             <button
               type="button"
@@ -110,6 +109,9 @@ export default {
       commentNum: "",
       postData: [],
       postId: this.$route.params.id,
+      myID: {
+        id: this.$store.state.userID,
+      },
       follow: false,
       username: "닉네임",
       writerID: "",
@@ -292,18 +294,25 @@ export default {
     initForm() {
       this.comment = "";
     },
+
     async deleteComment(index) {
-      const result = confirm("정말 삭제하시겠습니까?");
-      if (result == true) {
-        try {
-          const { data } = await deleteComment(this.comments[index].commentNum);
-          console.log(data);
-          this.fetchComments();
-        } catch (error) {
-          console.log(error);
+      if (this.comments.userID == this.$store.state.userID) {
+        const result = confirm("정말 삭제하시겠습니까?");
+        if (result == true) {
+          try {
+            const { data } = await deleteComment(
+              this.comments[index].commentNum
+            );
+            console.log(data);
+            this.fetchComments();
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          console.log("삭제 취소");
         }
       } else {
-        console.log("삭제 취소");
+        return alert("본인이 작성한 댓글만 삭제할 수 있습니다");
       }
     },
   },
