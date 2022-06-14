@@ -33,7 +33,7 @@ CREATE TABLE `follow` (
 CREATE TABLE `category` (
   `categoryNum` INT(10) NOT NULL AUTO_INCREMENT,
   `categoryName` varchar(10) DEFAULT NULL,
-`userAmount` int DEFAULT NULL,
+  `userAmount` INT(100) DEFAULT NULL,
   PRIMARY KEY (`categoryNum`)
 );
 
@@ -45,9 +45,10 @@ CREATE TABLE `post` (
  `eventName` varchar(30) DEFAULT NULL,
  `categoryNum` INT(10) DEFAULT NULL,
   `writerID` int DEFAULT NULL,
+  `photo` BLOB(255) DEFAULT NULL,
   `likeNum` int DEFAULT DEFAULT 0,,
   `writeDate` datetime DEFAULT now(),
-`reportCount` int(10) DEFAULT 0,
+  `reportCount` int(10) DEFAULT 0,
   PRIMARY KEY (`postNum`),
   KEY `writerID` (`writerID`),
   CONSTRAINT `post_ibfk_2` FOREIGN KEY (`writerID`) REFERENCES `user` (`userID`),
