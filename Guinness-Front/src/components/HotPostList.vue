@@ -2,12 +2,18 @@
   <div class="hot-contents">
     <header><h1>HOT 게시글</h1></header>
     <div class="card__wrapper">
-      <div v-for="content in contents" :key="content.id" class="card">
+      <div v-for="(post, index) in hotPosts" :key="index" class="card">
         <div class="card__img">이미지 자리</div>
         <div class="card__content">
-          <div class="card__nickname">{{ content.nickname }}</div>
-          <div class="card__scrap">
-            <i class="icon ion-md-heart" />{{ content.scrap_cnt }}
+          <div>
+            <h4>{{ index + 1 }}위</h4>
+          </div>
+          <div class="card__title">{{ post.postTitle }}</div>
+          <div class="card__personal">
+            <div class="card__nickname">{{ post.nickName }}</div>
+            <div class="card__scrap">
+              <i class="icon ion-md-heart" /> {{ post.likes }}
+            </div>
           </div>
         </div>
       </div>
@@ -20,7 +26,7 @@ import { fetchHotPostRank } from "@/api/rank";
 export default {
   data() {
     return {
-      hotLists: [],
+      hotPosts: [],
       contents: [
         { id: 0, nickname: "도연", scrap_cnt: "29" },
         { id: 1, nickname: "민영", scrap_cnt: "80" },
@@ -75,7 +81,7 @@ header h1 {
   border: 1px solid rgb(203, 203, 203);
   border-radius: 5px;
   box-sizing: border-box;
-  padding: 0 0 15px 0;
+  padding: 0;
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.08);
   z-index: 3;
 }
@@ -83,16 +89,29 @@ header h1 {
 .card__img {
   background-color: rgb(205, 209, 212);
   width: 100%;
-  height: 280px;
+  height: 300px;
   border-radius: 5px 5px 0px 0px;
 }
 .card__content {
   box-sizing: border-box;
   padding: 15px;
-  height: 40px;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  gap: 5px;
+}
+
+.card__title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.card__personal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 18px;
 }
 
 /* 인기 종목 순위 */
