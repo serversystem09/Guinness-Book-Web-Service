@@ -27,11 +27,24 @@ export default {
     },
   },
   methods: {
-    toDetail() {
-      const id = this.postItem.postNum;
-      console.log("해당 게시글 아이디", id);
-      this.$router.push(`postview/${id}`);
+    async toDetail() {
+      try {
+        const id = this.postItem.postNum;
+        console.log("해당 게시글 아이디", id);
+        this.$router.push(`postview/${id}`);
+      } catch (error) {
+        console.log(error);
+      }
     },
+    // async fetchData() {
+    //   try {
+    //     const { postData } = await fetchPosts();
+    //     // this.postItems = postData;
+    //     console.log(postData);
+    //   } catch (error) {
+    //     console.log(error.message);
+    //   }
+    // },
   },
 };
 </script>

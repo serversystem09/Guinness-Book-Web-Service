@@ -7,6 +7,7 @@ import db from "../config/dbConnection.js";
 import path from "path";
 
 // import function from controller
+<<<<<<< HEAD
 import {
   showPosts,
   showPostByNum,
@@ -17,6 +18,9 @@ import {
   deletePost,
   showPostByCat,
 } from "../controllers/postsController.js";
+=======
+import {showPosts, showPostByNum, createPost, updatePost, deletePost, showPostByCat} from "../controllers/postsController.js";
+>>>>>>> cd9c299a790b12a1a14ad4e6907095f0fea234f8
 
 var app = express();
 
@@ -37,11 +41,6 @@ PostRouter.post("/posts", createPost);
 // Update Post
 PostRouter.put("/posts/:id", updatePost);
 
-// report Post
-PostRouter.put("/report/:id", reportPost);
-
-// like Post
-PostRouter.put("/like/:id", likePost);
 
 // Delete Post
 PostRouter.delete("/posts/:id", deletePost);

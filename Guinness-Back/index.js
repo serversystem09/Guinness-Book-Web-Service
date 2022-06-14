@@ -17,11 +17,16 @@ import commRouter from "./routers/commentRoutes.js";
 import followRouter from "./routers/followRoutes.js";
 import CSRouter from "./routers/csBoardRouter.js";
 
+
 import MPRouter from "./routers/myPageRouter.js";
 import indexRouter from "./routers/indexRoutes.js";
 import rankRouter from "./routers/rankingRoutes.js";
+import likeRouter from "./routers/likeRouter.js";
+import reportRouter from "./routers/reportRoutes.js";
 
 import dotenv from "dotenv";
+
+
 dotenv.config();
 
 // init express
@@ -49,6 +54,8 @@ app.use("/cs", CSRouter);
 app.use("/", indexRouter);
 app.use("/rank", rankRouter);
 app.use("/mypage", MPRouter);
+app.use("/like", likeRouter);
+app.use("/report", reportRouter);
 
 // Handling Errors
 app.use((err, req, res, next) => {

@@ -11,7 +11,7 @@ use popeteDB;
 
 
 CREATE TABLE `user` (
-  `userID` int NOT NULL AUTO_INCREMENT,
+  `userID` int(10) NOT NULL AUTO_INCREMENT,
   `nickName` varchar(50) DEFAULT NULL,
   `password` varchar(200) NOT NULL,
   `phoneNumber` int DEFAULT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `follow` (
 CREATE TABLE `category` (
   `categoryNum` INT(10) NOT NULL AUTO_INCREMENT,
   `categoryName` varchar(10) DEFAULT NULL,
-  `userAmount` INT(100) DEFAULT NULL,
+`userAmount` int DEFAULT NULL,
   PRIMARY KEY (`categoryNum`)
 );
 
@@ -45,17 +45,32 @@ CREATE TABLE `post` (
  `eventName` varchar(30) DEFAULT NULL,
  `categoryNum` INT(10) DEFAULT NULL,
   `writerID` int DEFAULT NULL,
-  `likeNum` int DEFAULT 0,
+  `likeNum` int DEFAULT NULL,
   `writeDate` datetime DEFAULT now(),
-  `reportCount` int(10) DEFAULT 0,
-  `fileID` INT(10) DEFAULT NULL, 
-  `file_src` TEXT DEFAULT NULL, 
+`reportCount` int(10) DEFAULT 0,
   PRIMARY KEY (`postNum`),
   KEY `writerID` (`writerID`),
   CONSTRAINT `post_ibfk_2` FOREIGN KEY (`writerID`) REFERENCES `user` (`userID`),
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`categoryNum`) REFERENCES `category` (`categoryNum`)
 );
 
+
+CREATE TABLE `likeTbl` (
+  `postNum` INT(10) NOT NULL,
+  `userID` INT(10) NOT NULL,
+  PRIMARY KEY (`postNum`,`userID`),
+CONSTRAINT `like_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
+  CONSTRAINT `like_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`)
+) ;
+
+
+CREATE TABLE `reportTbl` (
+  `postNum` INT(10) NOT NULL,
+  `userID` INT(10) NOT NULL,
+  PRIMARY KEY (`postNum`,`userID`),
+CONSTRAINT `report_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
+  CONSTRAINT `report_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`)
+) ;
 
 CREATE TABLE `csboard` (
   `csNum` INT(10) NOT NULL AUTO_INCREMENT,
@@ -84,19 +99,11 @@ CREATE TABLE `comment` (
 ) ;
 
 
-
+CREATE TABLE attachment(id INT(10) NOT NULL AUTO_INCREMENT, file_src TEXT, PRIMARY KEY(id));
 
 -- insert DATA
-INSERT INTO `user` VALUES ('20200908','johnDoe','johnho',01044444444,'johnDoe@gmail.com','gold','2001-04-04 00:00:00', default);
+INSERT INTO `user` VALUES ('1111','johnDoe','johnho',01044444444,'johnDoe@gmail.com','gold','2001-04-04 00:00:00', default);
 INSERT INTO `user` VALUES ('20200975','waterjin','starstar',01082636230,'20200975@sungshin.ac.kr','baby','2001-03-26 00:00:00', default);
-INSERT INTO `user` VALUES ('20200901','aaaaaa','starstar',01082636230,'20200901@sungshin.ac.kr','baby','2001-03-26 00:00:00', default);
-INSERT INTO `user` VALUES ('20200902','bbbbbb','starstar',01082636230,'20200902@sungshin.ac.kr','baby','2001-03-26 00:00:00', default);
-INSERT INTO `user` VALUES ('20200903','cccccc','starstar',01082636230,'20200903@sungshin.ac.kr','baby','2001-03-26 00:00:00', default);
-INSERT INTO `user` VALUES ('20200904','dddddd','starstar',01082636230,'20200904@sungshin.ac.kr','baby','2001-03-26 00:00:00', default);
-INSERT INTO `user` VALUES ('20200905','ffffff','starstar',01082636230,'20200905@sungshin.ac.kr','baby','2001-03-26 00:00:00', default);
-INSERT INTO `user` VALUES ('20200906','gggggg','starstar',01082636230,'20200906@sungshin.ac.kr','baby','2001-03-26 00:00:00', default);
-INSERT INTO `user` VALUES ('20200907','hhhhhh','starstar',01082636230,'20200907@sungshin.ac.kr','baby','2001-03-26 00:00:00', default);
-INSERT INTO `user` VALUES ('20200909','jjjjjj','starstar',01082636230,'20200909@sungshin.ac.kr','baby','2001-03-26 00:00:00', default);
 
 INSERT INTO `follow` VALUES ('20200975','1111');
 
@@ -108,18 +115,9 @@ INSERT INTO `category` VALUES (5,'만들기', 52);
 INSERT INTO `category` VALUES (6,'캠페인', 3);
 INSERT INTO `category` VALUES (7,'게임', 2);
 
-INSERT INTO `post` VALUES (1, '한번에 50개 완전 가능이지','쉽쥬?','팔굽혀펴기',1,20200975,123,'2022-05-27 09:10:52',0, 0, 0);
-INSERT INTO `post` VALUES (2, '한번에 50개 완전 가능이지','쉽쥬?','한식',2,20200908,123,'2022-05-27 09:10:52',0, 0, 0);
-INSERT INTO `post` VALUES (3, '한번에 50개 완전 가능이지','쉽쥬?','팝핀',3,20200907,123,'2022-05-27 09:10:52',0, 0, 0);
-INSERT INTO `post` VALUES (4, '한번에 50개 완전 가능이지','쉽쥬?','힙합',4,20200906,123,'2022-05-27 09:10:52',0, 0, 0);
-INSERT INTO `post` VALUES (5, '한번에 50개 완전 가능이지','쉽쥬?','점토',5,20200905,123,'2022-05-27 09:10:52',0, 0, 0);
-INSERT INTO `post` VALUES (6, '한번에 50개 완전 가능이지','쉽쥬?','환경',6,20200904,123,'2022-05-27 09:10:52',0, 0, 0);
-INSERT INTO `post` VALUES (7, '한번에 50개 완전 가능이지','쉽쥬?','쿠키런',7,20200903,123,'2022-05-27 09:10:52',0, 0, 0);
-INSERT INTO `post` VALUES (8, '한번에 50개 완전 가능이지','쉽쥬?','수영',1,20200902,123,'2022-05-27 09:10:52',0, 0, 0);
-INSERT INTO `post` VALUES (9, '한번에 50개 완전 가능이지','쉽쥬?','퓨전',2,20200901,123,'2022-05-27 09:10:52',0, 0, 0);
-INSERT INTO `post` VALUES (10, '한번에 50개 완전 가능이지','쉽쥬?','크럼프',3,20200909,123,'2022-05-27 09:10:52',0, 0, 0);
-
-
-INSERT INTO `comment` VALUES (1,1,'2022-05-28 11:01:47',111,'20200908','ㅋㅋㅋ우리 할아버지도 50개는 함ㅋ');
+INSERT INTO `post` VALUES (1011,'한번에 50개 완전 가능이지','쉽쥬?','팔굽혀펴기',1,20200975,123,'2022-05-27 09:10:52',0);
+INSERT INTO `likeTbl` VALUES (1011, 1111);
+INSERT INTO `reportTbl` VALUES (1011, 20200975);
+INSERT INTO `comment` VALUES (1,1011,'2022-05-28 11:01:47',111,'1111','ㅋㅋㅋ우리 할아버지도 50개는 함ㅋ');
 
 INSERT INTO `csboard` VALUES (1, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', '20200975', now());
