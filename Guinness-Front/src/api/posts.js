@@ -1,4 +1,4 @@
-import { instance } from "./index";
+import { instance, files } from "./index";
 
 // 게시글 목록 조회
 function fetchPosts() {
@@ -27,22 +27,12 @@ function editPost(postNum, postData) {
 
 // 사진 첨부
 function uploadImg() {
-  return instance.post("post/upload");
+  return files.post("post/upload");
 }
 
 // 카테고리에 해당하는 게시글 조회
 function fetchPostByCat(cateNum) {
   return instance.get(`/post/postsByCat/${cateNum}`);
-}
-
-// 게시글 좋아요 기능
-function likePost(postNum) {
-  return instance.put(`/post/like/${postNum}`);
-}
-
-// 신고 기능
-function reportPost(postNum) {
-  return instance.put(`/post/report/${postNum}`);
 }
 
 export {
@@ -53,6 +43,4 @@ export {
   editPost,
   uploadImg,
   fetchPostByCat,
-  likePost,
-  reportPost,
 };
