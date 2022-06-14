@@ -71,18 +71,6 @@ export const reportPostByNum = (id, result) => {
     });   
 }
 
-
-export const likePostByNum = (id, result) => {
-    db.query("UPDATE post SET likeNum = likeNum + 1 WHERE postNum = ?", [id], (err, results) => {             
-        if(err) {
-            console.log(err);
-            result(err, null);
-        } else {
-            result(null, results);
-        }
-    });   
-}
-
 // Delete Product to Database
 export const deletePostByNum = (id, result) => {
     db.query("DELETE FROM post WHERE postNum = ?", [id], (err, results) => {             

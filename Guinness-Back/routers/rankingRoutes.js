@@ -2,7 +2,7 @@
 import express from "express";
 
 // import function from controller
-import { showRanks } from "../controllers/rankingController";
+import { showRanks } from "../controllers/rankingController.js";
 
 // init express router
 const RankRouter = express.Router();
