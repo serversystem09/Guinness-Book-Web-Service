@@ -126,10 +126,6 @@ export default {
     // 게시글 상세 조회
     async fetchPost() {
       try {
-        // const { data } = axios.get(
-        //   `${process.env.VUE_APP_API_URL}post/posts/${this.$store.state.userID}`
-        // );
-
         const { data } = await fetchPost(this.postId);
         console.log("게시글 데이터", data);
         this.postData = data;
@@ -217,7 +213,7 @@ export default {
     // 게시글 수정 페이지로
     async editPost() {
       const id = this.postId;
-      this.$router.push({ path: `/postview/edit/${id}`, replace: true });
+      this.$router.push({ path: `/edit/${id}`, replace: true });
     },
     // 댓글 작성
     async createComment() {
