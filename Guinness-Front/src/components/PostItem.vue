@@ -76,6 +76,7 @@
 import { fetchPost, deletePost, likePost, reportPost } from "@/api/posts";
 import { createComment, fetchComments, deleteComment } from "@/api/comment";
 import { createFollow, deleteFollow, getFollowee } from "@/api/follow";
+// import axios from "axios";
 // import { createFollow } from "@/api.follow";
 export default {
   async created() {
@@ -103,15 +104,6 @@ export default {
       followeeList: [],
     };
   },
-  computed: {
-    // checkFollow() {
-    //   this.followeeList.some(function findFollowee(element) {
-    //     if (element.followeeID == this.writerID) {
-    //       return true;
-    //     }
-    //   });
-    // },
-  },
   methods: {
     async checkFollow() {
       try {
@@ -130,21 +122,16 @@ export default {
       } catch (error) {
         console.log(error);
       }
-      // includes()는 데이터 타입까지 비교
-      // const followArray = this.followeeList.includes(this.postData.writerID);
-      // console.log("writerID", String(this.postData.writerID));
-
-      // if (followArray == this.postData.writerID) {
-      //   this.follow = true;
-      // } else {
-      //   this.follow = false;
-      // }
     },
     // 게시글 상세 조회
     async fetchPost() {
       try {
+        // const { data } = axios.get(
+        //   `${process.env.VUE_APP_API_URL}post/posts/${this.$store.state.userID}`
+        // );
+
         const { data } = await fetchPost(this.postId);
-        console.log(data);
+        console.log("게시글 데이터", data);
         this.postData = data;
         this.writerID = data.writerID;
       } catch (error) {
