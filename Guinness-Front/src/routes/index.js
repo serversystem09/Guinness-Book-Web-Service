@@ -81,6 +81,13 @@ const router = new VueRouter({
       },
     },
     {
+      path: "/mylike",
+      component: () => import("@/Views/MyLikedList.vue"),
+      meta: {
+        auth: true,
+      },
+    },
+    {
       path: "/mycomment",
       component: () => import("@/Views/MyComment.vue"),
       meta: {
