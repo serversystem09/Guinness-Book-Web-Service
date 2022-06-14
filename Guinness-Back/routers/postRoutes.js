@@ -7,20 +7,14 @@ import db from "../config/dbConnection.js";
 import path from "path";
 
 // import function from controller
-<<<<<<< HEAD
 import {
   showPosts,
   showPostByNum,
   createPost,
-  reportPost,
-  likePost,
   updatePost,
   deletePost,
   showPostByCat,
 } from "../controllers/postsController.js";
-=======
-import {showPosts, showPostByNum, createPost, updatePost, deletePost, showPostByCat} from "../controllers/postsController.js";
->>>>>>> cd9c299a790b12a1a14ad4e6907095f0fea234f8
 
 var app = express();
 
@@ -41,7 +35,6 @@ PostRouter.post("/posts", createPost);
 // Update Post
 PostRouter.put("/posts/:id", updatePost);
 
-
 // Delete Post
 PostRouter.delete("/posts/:id", deletePost);
 
@@ -57,7 +50,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-PostRouter.post("/upload", upload.single("myImage"), (req, res) => {
+PostRouter.post("/upload", upload.single("file"), (req, res) => {
   if (!req.file) {
     console.log("No file upload");
   } else {

@@ -4,6 +4,16 @@
       <h1>게시글 작성</h1>
     </header>
 
+    <!-- 첨부 파일 -->
+
+    <form class="form" @submit.prevent="onUpload" enctype="multipart/form-data">
+      <div class="input__wrapper">
+        <label for="file">첨부파일</label>
+        <input id="file" type="file" @change="selectFile" ref="file" />
+        <button @click="onUpload">이미지 업로드</button>
+      </div>
+    </form>
+
     <form
       class="form"
       @submit.prevent="submitForm"
@@ -39,11 +49,10 @@
         <label for="content">소개</label>
         <textarea rows="5" id="content" v-model="content" />
       </div>
-      <!-- 첨부 파일 -->
       <div class="input__wrapper">
         <label for="file">첨부파일</label>
         <input id="file" type="file" @change="selectFile" ref="file" />
-        <button type="button" @click="onUpload">이미지 업로드</button>
+        <!-- <button @click="onUpload">이미지 업로드</button> -->
       </div>
 
       <button
@@ -59,8 +68,8 @@
 </template>
 
 <script>
-import { createPost, uploadImg } from "@/api/posts";
-// import axios from "axios";
+import { createPost } from "@/api/posts";
+import axios from "axios";
 
 export default {
   components: {},
@@ -87,20 +96,33 @@ export default {
   },
   methods: {
     async submitForm() {
+      // console.log("게시글 작성 폼 제출", file);
+      const { data } = await createPost({
+        postTitle: this.title,
+        eventName: this.eventName,
+        categoryNum: this.categoryNum,
+        content: this.content,
+        writerID: this.$store.state.userID,
+      });
+      console.log(data);
+      // 첨부파일
       const formData = new FormData();
-      formData.append("myImage", this.file);
+      formData.append("file", this.file);
       try {
-        await uploadImg(formData);
-        console.log("게시글 작성 폼 제출");
-        const { data } = await createPost({
-          postTitle: this.title,
-          eventName: this.eventName,
-          categoryNum: this.categoryNum,
-          content: this.content,
-          writerID: this.$store.state.userID,
-        });
-        console.log(data);
-        // 첨부파일
+        // const { file } = await uploadImg(formData);
+        const headers = {
+          "Content-type": "multipart/form-data",
+          Accept: "*/*",
+        };
+        axios.defaults.headers.post = null;
+        axios
+          .post(`${process.env.VUE_APP_API_URL}post/upload`, formData, {
+            headers,
+          })
+          .then((res) => {
+            // headers: {…} 로 들어감.
+            console.log("send ok", res.data);
+          });
       } catch (error) {
         console.log(error.message);
       } finally {
@@ -115,74 +137,28 @@ export default {
       (this.eventNameInput = ""), (this.content = "");
       this.userBirth = "";
     },
-    // upload(name, files) {
-    //   const formData = new FormData();
-    //   formData.append(name, files[0], files[0].name);
-    //   const url = "http://localhost:3000/post/upload";
-    //   axios.post(url, formData).then((response) => {
-    //     console.log(response);
-    //   });
-    // },
     // 이벤트 감지 - 인자로 선택된 파일 객체를 전달받음 -> 해당 객체를 image에 할당
     selectFile() {
       this.file = this.$refs.file.files[0];
     },
     async onUpload() {
       const formData = new FormData();
-      formData.append("myImage", this.file);
-      try {
-        const { data } = await uploadImg(formData, {
-          headers: {
-            "Content-Type": "multipart / form - data",
-          },
+      formData.append("file", this.file);
+      const headers = {
+        "Content-type": "multipart/form-data",
+        Accept: "*/*",
+      };
+      axios.defaults.headers.post = null;
+      axios
+        .post(`${process.env.VUE_APP_API_URL}post/upload`, formData, {
+          headers,
+        })
+        .then((res) => {
+          // headers: {…} 로 들어감.
+          console.log("send ok", res.data);
         });
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
     },
   },
-  // 첨부 파일
-  // onFileSelected() {
-  //   // this.seletedFile = event.target.files[0];
-  //   //  const event = this.$refs['image'].files[0]
-  //   let form = new FormData();
-  //   let image = this.$refs["image"].files[0];
-
-  //   form.append("image", image);
-
-  //   axios
-  //     .post(`${process.env.VUE_APP_API_URL}post/uploadphoto`, form, {
-  //       header: { "Content-Type": "multipart/form-data" },
-  //     })
-  //     .then(({ data }) => {
-  //       this.images = data;
-  //     })
-  //     .catch((err) => console.log(err));
-  // },
-  // onUpload() {
-  //   const fd = new FormData();
-  //   fd.append("image", this.selectedFile, this.selectedFile.name);
-  //   axios
-  //     .post(`${process.env.VUE_APP_API_URL}post/uploadphoto`, fd, {
-  //       header: { "Content-Type": "multipart/form-data" },
-  //     })
-  //     .then((res) => {
-  //       console.log(res);
-  //     });
-  // },
-  // onFileChange(e) {
-  //   console.log(e);
-  //   const file = e.target.files[0];
-  //   this.url = URL.createObjectURL(file);
-  //   var imagefile = document.querySelector("#imageUpload");
-  //   console.log(file);
-  //   console.log(imagefile.files[0]);
-  //   let formData = new FormData();
-
-  //   formData.append("image", file);
-  //   this.$store.dispatch("uploadImage", formData);
-  // },
 };
 </script>
 
