@@ -53,13 +53,18 @@
             <button
               type="button"
               class="btn-like"
-              :disabled="this.likedValue"
+              :disabled="this.likedValue == 1"
               @click="likePost"
             >
               좋아요&nbsp;{{ postData.likeNum }}&nbsp;
-              <!-- <i :class="['fa-heart', liked ? 'fas' : 'far']"></i> -->
+              <i :class="['fa-heart', likedValue == 1 ? 'fas' : 'far']"></i>
             </button>
-            <button type="button" class="btn-report" @click="reportPost">
+            <button
+              type="button"
+              class="btn-report"
+              :disabled="this.reportValue == 1"
+              @click="reportPost"
+            >
               신고하기&nbsp;{{ postData.reportCount }}&nbsp;
             </button>
           </div>
@@ -78,11 +83,12 @@
 </template>
 
 <script>
-import { fetchPost, deletePost, reportPost } from "@/api/posts";
+import { fetchPost, deletePost } from "@/api/posts";
 import { createComment, fetchComments, deleteComment } from "@/api/comment";
 import { createFollow, deleteFollow, getFollowee } from "@/api/follow";
 import { fetchIfUserLiked, createLike } from "@/api/like";
-// import { createFollow } from "@/api.follow";
+import { fetchReport, createReport } from "@/api/report";
+
 export default {
   async created() {
     await this.fetchPost();
@@ -90,6 +96,7 @@ export default {
     await this.fetchFollowee();
     await this.checkFollow();
     await this.fetchIfUserLiked();
+    await this.fetchReport();
   },
   mounted() {
     console.log("id:", this.$route.params.id);
@@ -103,12 +110,12 @@ export default {
       commentNum: "",
       postData: [],
       postId: this.$route.params.id,
-      liked: false,
       follow: false,
       username: "닉네임",
       writerID: "",
       followeeList: [],
       likedValue: 0,
+      reportValue: 0,
     };
   },
   computed: {},
@@ -178,12 +185,32 @@ export default {
         this.fetchPost();
       }
     },
+    // 사용자가 해당 게시글 신고 눌렀는지 카운트 값 리턴(눌렀으면 1)
+    async fetchReport() {
+      try {
+        const { data } = await fetchReport(
+          this.postId,
+          this.$store.state.userID
+        );
+        this.reportValue = data[0]["count(*)"];
+        console.log("신고 값 반환", this.reportValue);
+      } catch (error) {
+        console.log(error);
+      }
+    },
     // 게시글 신고
     async reportPost() {
       try {
-        const { data } = await reportPost(this.postId);
-        console.log("게시글 신고", data);
-        this.$router.go(this.$router.currentRoute);
+        if (this.reportValue == 0) {
+          const { data } = await createReport(
+            this.postId,
+            this.$store.state.userID
+          );
+
+          console.log("신고 누름", data);
+        } else {
+          return this.postId;
+        }
       } catch (error) {
         console.log(error);
       } finally {
@@ -417,6 +444,10 @@ h3 {
 button:disabled {
   cursor: not-allowed;
   pointer-events: all !important;
+}
+
+.btn-report:disabled {
+  background: rgba(194, 52, 81, 0.679);
 }
 
 .myPost {
