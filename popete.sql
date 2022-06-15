@@ -57,10 +57,8 @@ CREATE TABLE `post` (
 
 CREATE TABLE `attachment`(
 `id` INT(10) NOT NULL AUTO_INCREMENT,
- `postNum` INT(10),
 `file_src` TEXT, 
-PRIMARY KEY(id),
-CONSTRAINT `attachment_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`)
+PRIMARY KEY(id)
 );
 
 CREATE TABLE `likeTbl` (
@@ -157,17 +155,18 @@ INSERT INTO `post` (postNum, postTitle, content, eventName, categoryNum, writerI
 INSERT INTO `post` (postNum, postTitle, content, eventName, categoryNum, writerID, likeNum, writeDate,  reportCount) VALUES (10,'여기 롤 마스터 있냐?','ㅋ','#롤',7,9,500,'2020-05-27 09:10:52',default);
 INSERT INTO `post` (postNum, postTitle, content, eventName, categoryNum, writerID, likeNum, writeDate, reportCount) VALUES (11,'팔굽혀 펴기 한번에 백개','죽겠네요','#팔굽혀펴기',1,10,300,'2020-06-27 09:10:52',default);
 
-INSERT INTO `attachment` (id, postNum, file_src) VALUES(1, 1,'http://127.0.0.1:3000/post/images/pushup1.jpeg');
-INSERT INTO `attachment` (postNum, file_src) VALUES(2,'http://127.0.0.1:3000/post/images/2.jpg');
-INSERT INTO `attachment` (postNum, file_src) VALUES(3, 'http://127.0.0.1:3000/post/images/heymamajpg.jpg');
-INSERT INTO `attachment` (postNum, file_src) VALUES(4,'http://127.0.0.1:3000/post/images/tears.jpg');
-INSERT INTO `attachment` (postNum, file_src) VALUES(5,'http://127.0.0.1:3000/post/images/gundam.jpg');
-INSERT INTO `attachment` (postNum, file_src) VALUES(6, 'http://127.0.0.1:3000/post/images/eye.jpg');
-INSERT INTO `attachment` (postNum, file_src) VALUES(7, 'http://127.0.0.1:3000/post/images/trash1.jpg');
-INSERT INTO `attachment` (postNum, file_src) VALUES(8, 'http://127.0.0.1:3000/post/images/trash2.jpg');
-INSERT INTO `attachment` (postNum, file_src) VALUES(9, 'http://127.0.0.1:3000/post/images/trash3.jpg');
-INSERT INTO `attachment` (postNum, file_src) VALUES(10,'http://127.0.0.1:3000/post/images/lol.jpg');
-INSERT INTO `attachment` (postNum, file_src) VALUES(11,'http://127.0.0.1:3000/post/images/pushup2.jpg');
+
+INSERT INTO `attachment` (id, file_src) VALUES(1,'http://127.0.0.1:3000/post/images/pushup1.jpeg');
+INSERT INTO `attachment` (file_src) VALUES('http://127.0.0.1:3000/post/images/2.jpg');
+INSERT INTO `attachment` (file_src) VALUES( 'http://127.0.0.1:3000/post/images/heymamajpg.jpg');
+INSERT INTO `attachment` (file_src) VALUES('http://127.0.0.1:3000/post/images/tears.jpg');
+INSERT INTO `attachment` (file_src) VALUES('http://127.0.0.1:3000/post/images/gundam.jpg');
+INSERT INTO `attachment` (file_src) VALUES('http://127.0.0.1:3000/post/images/eye.jpg');
+INSERT INTO `attachment` (file_src) VALUES('http://127.0.0.1:3000/post/images/trash1.jpg');
+INSERT INTO `attachment` (file_src) VALUES('http://127.0.0.1:3000/post/images/trash2.jpg');
+INSERT INTO `attachment` (file_src) VALUES('http://127.0.0.1:3000/post/images/trash3.jpg');
+INSERT INTO `attachment` (file_src) VALUES('http://127.0.0.1:3000/post/images/lol.jpg');
+INSERT INTO `attachment` (file_src) VALUES('http://127.0.0.1:3000/post/images/pushup2.jpg');
 
 INSERT INTO `likeTbl` VALUES (1, 2);
 INSERT INTO `likeTbl` VALUES (2, 2);
