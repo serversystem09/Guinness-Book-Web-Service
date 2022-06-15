@@ -11,14 +11,14 @@
           placeholder="이메일"
           v-model="userEmail"
         />
-        <label for="floatingPassword">이메일</label>
-        <button
+        <label for="floatingPassword">이메일 <em>(필수)</em></label>
+        <!-- <button
           class="btnInActive"
           type="button"
           :class="{ btnPrimary: isEmailValid }"
         >
           중복확인
-        </button>
+        </button> -->
       </div>
       <p class="validation-text">
         <span class="warning" v-if="!this.isEmailValid && this.userEmail">
@@ -33,21 +33,9 @@
           placeholder="Password"
           v-model="userNickname"
         />
-        <label for="floatingPassword">닉네임</label>
-        <!-- <button>중복확인</button> -->
+        <label for="floatingPassword">닉네임 <em>(필수)</em></label>
       </div>
-      <!-- <div class="form-floating">
-        <input
-          type="text"
-          class="form-control"
-          id="floatingInput"
-          placeholder="아이디"
-          width="80%"
-          v-model="userId"
-        />
-        <label for="floatingInput">아이디</label>
-        <button>중복확인</button>
-      </div> -->
+
       <div class="form-floating">
         <input
           type="password"
@@ -56,8 +44,15 @@
           placeholder="비밀번호"
           v-model="userPw"
         />
-        <label for="floatingPassword">비밀번호</label>
+        <label for="floatingPassword"
+          >비밀번호 최소 6글자 <em>(필수)</em></label
+        >
       </div>
+      <!-- <p class="validation-text">
+        <span class="warning" v-if="!this.isPwValid && this.userPw">
+          비밀번호는 최소 6자리 이상이어야 합니다.
+        </span>
+      </p> -->
       <div class="form-floating">
         <input
           type="password"
@@ -66,7 +61,7 @@
           placeholder="비밀번호 재확인"
           v-model="userPwCheck"
         />
-        <label for="floatingPassword">비밀번호 재확인</label>
+        <label for="floatingPassword">비밀번호 재확인 <em>(필수)</em></label>
       </div>
       <p class="validation-text">
         <span class="warning" v-if="!this.isPwSame && userPw">
@@ -136,12 +131,9 @@ export default {
     isValid() {
       if (
         this.userEmail &&
-        // this.userId &&
         this.userPw &&
-        this.userPwCheck
-        // this.userPhone &&
-        // this.userBirth &&
-        // this.userRanking
+        this.userPwCheck &&
+        this.userNickname
       ) {
         return true;
       } else {
@@ -164,27 +156,30 @@ export default {
         const userData = {
           // userID: this.userId,
           password: this.userPw,
-          nickname: this.userNickname,
+          nickName: this.userNickname,
           email: this.userEmail,
           phone: this.userPhone,
           birth: this.userBirth,
         };
         const { data } = await registerUser(userData);
         console.log(data);
+        this.$router.push("/");
+        alert("회원가입이 완료되었습니다.");
       } catch (error) {
-        console.log(error.message);
+        alert(error.response.data.msg);
+        this.$router.push("/signup");
       } finally {
         this.initForm();
-        this.$router.push("/");
       }
     },
     initForm() {
-      this.userId = "";
       this.userPw = "";
+      this.userPwCheck = "";
+
       this.userNickname = "";
       this.userEmail = "";
-      // this.userPhone = "";
-      // this.userBirth = "";
+      this.userPhone = "";
+      this.userBirth = "";
     },
   },
 };
@@ -222,5 +217,9 @@ h1 {
   border-style: none;
   gap: 5px;
   margin-left: 10px;
+}
+
+em {
+  color: red;
 }
 </style>

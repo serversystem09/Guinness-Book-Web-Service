@@ -64,7 +64,7 @@ export default {
     async submitForm() {
       try {
         const { data } = await updateUser(this.$store.state.userID, {
-          nickname: this.nickname,
+          nickName: this.nickname,
           email: this.email,
           password: this.password,
           birth: this.birth,

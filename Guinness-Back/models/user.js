@@ -40,7 +40,7 @@ export const insertUser = (data, result) => {
 // Update User to Database
 export const updateUserById = (data, id, result) => {
   db.query(
-    "UPDATE user SET nickname = ?, phoneNumber = ?, email = ?, password = ?, birth = ?, phoneNumber = ? WHERE userID = ?",
+    "UPDATE user SET nickName = ?, phoneNumber = ?, email = ?, password = ?, birth = ?, phoneNumber = ? WHERE userID = ?",
     [
       data.nickname,
       data.phoneNumber,
