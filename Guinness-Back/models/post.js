@@ -73,12 +73,20 @@ export const updatePostByNum = (data, id, result) => {
 
 // Delete Product to Database
 export const deletePostByNum = (id, result) => {
-    db.query("DELETE FROM post WHERE postNum = ?", [id], (err, results) => {             
+    db.query("DELETE * FROM post WHERE postNum = ?", [id], (err, results) => {             
         if(err) {
             console.log(err);
             result(err, null);
         } else {
             result(null, results);
         }
-    });   
+    });
+    db.query("DELETE * FROM attachment WHERE id = ?", [id], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });    
 }

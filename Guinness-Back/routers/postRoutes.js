@@ -59,14 +59,14 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-PostRouter.post("/upload/:id", upload.single("file"), (req, res) => {
+PostRouter.post("/upload", upload.single("file"), (req, res) => {
   if (!req.file) {
     console.log("No file upload");
   } else {
     console.log(req.file.filename);
-    var id = req.params.id;
+
     var imgsrc = "http://127.0.0.1:3000/post/images/" + req.file.filename;
-    var insertData = "INSERT INTO attachment (file_src,postNum) VALUES(?,?);";
+    var insertData = "INSERT INTO attachment (file_src) VALUES(?);";
     //var insertData = "UPDATE post SET file_src = ? where postNum = ?;";
     db.query(insertData, [imgsrc, id], (err, result) => {
       if (err) throw err;
