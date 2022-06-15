@@ -55,7 +55,7 @@ CREATE TABLE `post` (
   CONSTRAINT `post_ibfk_1` FOREIGN KEY (`categoryNum`) REFERENCES `category` (`categoryNum`)
 );
 
-CREATE TABLE attachment(
+CREATE TABLE `attachment`(
 `id` INT(10) NOT NULL AUTO_INCREMENT,
  `postNum` INT(10),
 `file_src` TEXT, 
@@ -157,6 +157,18 @@ INSERT INTO `post` (postNum, postTitle, content, eventName, categoryNum, writerI
 INSERT INTO `post` (postNum, postTitle, content, eventName, categoryNum, writerID, likeNum, writeDate,  reportCount) VALUES (10,'여기 롤 마스터 있냐?','ㅋ','#롤',7,9,500,'2020-05-27 09:10:52',default);
 INSERT INTO `post` (postNum, postTitle, content, eventName, categoryNum, writerID, likeNum, writeDate, reportCount) VALUES (11,'팔굽혀 펴기 한번에 백개','죽겠네요','#팔굽혀펴기',1,10,300,'2020-06-27 09:10:52',default);
 
+INSERT INTO `attachment` (id, postNum, file_src) VALUES(1, 1,'http://127.0.0.1:3000/post/images/pushup1.jpeg');
+INSERT INTO `attachment` (postNum, file_src) VALUES(2,'http://127.0.0.1:3000/post/images/2.jpg');
+INSERT INTO `attachment` (postNum, file_src) VALUES(3, 'http://127.0.0.1:3000/post/images/heymamajpg.jpg');
+INSERT INTO `attachment` (postNum, file_src) VALUES(4,'http://127.0.0.1:3000/post/images/tears.jpg');
+INSERT INTO `attachment` (postNum, file_src) VALUES(5,'http://127.0.0.1:3000/post/images/gundam.jpg');
+INSERT INTO `attachment` (postNum, file_src) VALUES(6, 'http://127.0.0.1:3000/post/images/eye.jpg');
+INSERT INTO `attachment` (postNum, file_src) VALUES(7, 'http://127.0.0.1:3000/post/images/trash1.jpg');
+INSERT INTO `attachment` (postNum, file_src) VALUES(8, 'http://127.0.0.1:3000/post/images/trash2.jpg');
+INSERT INTO `attachment` (postNum, file_src) VALUES(9, 'http://127.0.0.1:3000/post/images/trash3.jpg');
+INSERT INTO `attachment` (postNum, file_src) VALUES(10,'http://127.0.0.1:3000/post/images/lol.jpg');
+INSERT INTO `attachment` (postNum, file_src) VALUES(11,'http://127.0.0.1:3000/post/images/pushup2.jpg');
+
 INSERT INTO `likeTbl` VALUES (1, 2);
 INSERT INTO `likeTbl` VALUES (2, 2);
 INSERT INTO `likeTbl` VALUES (3, 2);
@@ -189,4 +201,14 @@ INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (8,'2022
 INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (10,'2022-06-13 11:00:47',1,4,'ㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷ 마스터 ㄷㄷㄷ');
 INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (11,'2022-06-13 11:00:47',1,4,'와 팔근육 장난아니시네요');
 
-INSERT INTO `csboard` VALUES (1, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', '2', now());
+INSERT INTO `csboard` VALUES (1, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', 1, now());
+INSERT INTO `csboard` VALUES (2, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', 2, now());
+INSERT INTO `csboard` VALUES (3, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', 3, now());
+INSERT INTO `csboard` VALUES (4, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', 4, now());
+INSERT INTO `csboard` VALUES (5, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', 5, now());
+INSERT INTO `csboard` VALUES (6, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', 6, now());
+INSERT INTO `csboard` VALUES (7, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', 7, now());
+INSERT INTO `csboard` VALUES (8, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', 8, now());
+INSERT INTO `csboard` VALUES (9, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', 9, now());
+INSERT INTO `csboard` VALUES (10, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', 10, now());
+
