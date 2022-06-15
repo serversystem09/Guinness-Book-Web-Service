@@ -8,7 +8,7 @@ import {getRankingByLikes} from "../models/ranks.js";
 export const showRanks = (req, res) => {
     getRankingByLikes((err, results) => {
         if (err){
-            res.send(err);
+            console.log(err);
         }else{
             res.json(results);
         }

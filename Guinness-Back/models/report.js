@@ -17,7 +17,7 @@ export const createReport = (pNum, uID, result) => {
   db.query("INSERT INTO reportTbl (postNum, userID) VALUES (?,?)", [pNum, uID], (err, results) => {             
       if(err) {
           console.log(err);
-          result(err, null);
+         result(err, null);
       } else {
           result(null, results);
       }

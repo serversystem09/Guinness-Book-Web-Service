@@ -5,7 +5,7 @@ import { getUsers, getUserById, insertUser, updateUserById, deleteUserById } fro
 export const showUsers = (req, res) => {
     getUsers((err, results) => {
         if (err){
-            res.send(err);
+            console.log(err);
         }else{
             res.json(results);
         }
@@ -16,7 +16,7 @@ export const showUsers = (req, res) => {
 export const showUserById = (req, res) => {
     getUserById(req.params.id, (err, results) => {
         if (err){
-            res.send(err);
+            console.log(err);
         }else{
             res.json(results);
         }
@@ -28,7 +28,7 @@ export const createUser = (req, res) => {
     const data = req.body;
     insertUser(data, (err, results) => {
         if (err){
-            res.send(err);
+            console.log(err);
         }else{
             res.json(results);
         }

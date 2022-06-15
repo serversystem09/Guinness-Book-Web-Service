@@ -4,24 +4,22 @@ import {getIfUserReported, createReport} from "../models/report.js";
 
 
 export const showIfUserReported = (req, res) => {
-    const uID = req.params.uID;
-    const pNum = req.params.pNum;
-    getIfUserReported(pNum, uID, (err, results) => {
+
+    getIfUserReported(req.params.pNum, req.params.uID, (err, results) => {
         if (err){
-            res.send(err);
+            console.log(err);
         }else{
-            res.json(results);
+           res.json(results);
         }
     });
 }
 
 export const pushReport = (req, res) => {
-    const uID = req.params.uID;
-    const pNum = req.params.pNum;
-    createReport(pNum, uID, (err, results) => {
+    createReport(req.params.pNum, req.params.uID, (err, results) => {
         if (err){
-            res.send(err);
-        }else{
+            console.log(err);
+        }
+        else{
             res.json(results);
         }
     });
