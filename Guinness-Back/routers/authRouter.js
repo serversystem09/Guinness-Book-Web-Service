@@ -32,7 +32,7 @@ router.post('/register', [
             } else {
               // has hashed pw => add to database
               db.query(
-                `INSERT INTO user (nickName, email, pw) VALUES ('${req.body.name}', ${db.escape(
+                `INSERT INTO user (nickName, email, pw) VALUES ('${req.body.nickName}', ${db.escape(
                   req.body.email
                   )}, ${db.escape(hash)})`,
                   (err, result) => {

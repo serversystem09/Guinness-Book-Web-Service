@@ -67,10 +67,10 @@ PostRouter.post("/upload", upload.single("file"), (req, res) => {
 
     var imgsrc = "http://127.0.0.1:3000/post/images/" + req.file.filename;
     var insertData = "INSERT INTO attachment (file_src) VALUES(?);";
-    //var insertData = "UPDATE post SET file_src = ? where postNum = ?;";
-    db.query(insertData, [imgsrc, id], (err, result) => {
+    //var insertData = "UPDATE attachment SET file_src = ? where postNum = ?;";
+    db.query(insertData, [imgsrc], (err, result) => {
       if (err) throw err;
-      console.log("file uploaded");
+      console.log(imgsrc);
     });
     res.send("image uploaded");
   }
