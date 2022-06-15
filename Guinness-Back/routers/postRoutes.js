@@ -6,6 +6,7 @@ import fs from "file-system";
 import db from "../config/dbConnection.js";
 import path from "path";
 
+
 // import function from controller
 import {
   showPosts,
@@ -14,6 +15,7 @@ import {
   updatePost,
   deletePost,
   showPostByCat,
+  showImageSrc
 } from "../controllers/postsController.js";
 
 var app = express();
@@ -38,6 +40,12 @@ PostRouter.put("/posts/:id", updatePost);
 // Delete Post
 PostRouter.delete("/posts/:id", deletePost);
 
+//get Image
+PostRouter.get("/image/:id", showImageSrc);
+
+PostRouter.use('/images', express.static('uploads'));
+
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
@@ -51,20 +59,21 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-PostRouter.post("/upload", upload.single("file"), (req, res) => {
+PostRouter.post("/upload/:id", upload.single("file"), (req, res) => {
   if (!req.file) {
     console.log("No file upload");
   } else {
     console.log(req.file.filename);
-    var imgsrc = "http://127.0.0.1:3000/uploads/" + req.file.filename;
-    var insertData = "INSERT INTO post(file_src)VALUES(?)";
-    db.query(insertData, [imgsrc], (err, result) => {
+    var id = req.params.id;
+    var imgsrc = "http://127.0.0.1:3000/post/images/" + req.file.filename;
+    var insertData = "INSERT INTO attachment (file_src,postNum) VALUES(?,?);";
+    //var insertData = "UPDATE post SET file_src = ? where postNum = ?;";
+    db.query(insertData, [imgsrc, id], (err, result) => {
       if (err) throw err;
       console.log("file uploaded");
     });
     res.send("image uploaded");
   }
 });
-
 
 export default PostRouter;
