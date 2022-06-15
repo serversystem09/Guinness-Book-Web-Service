@@ -181,6 +181,7 @@ export default {
             this.$store.state.userID
           );
           console.log("좋아요 누름", data);
+          this.postData.likeNum += 1;
           // this.postData.likeNum -= 1;
         } else {
           return this.postId;
@@ -190,7 +191,7 @@ export default {
       } catch (error) {
         console.log(error);
       } finally {
-        this.fetchPost();
+        // this.fetchPost();
       }
     },
     // 사용자가 해당 게시글 신고 눌렀는지 카운트 값 리턴(눌렀으면 1)
@@ -216,13 +217,14 @@ export default {
           );
 
           console.log("신고 누름", data);
+          this.postData.reportCount += 1;
         } else {
           return this.postId;
         }
       } catch (error) {
         console.log(error);
       } finally {
-        this.fetchPost();
+        // this.fetchPost();
       }
     },
     // 나의 팔로위 목록 조회 -> 글 작성자를 이미 팔로우 중이면 true값 반환하여야 함
@@ -302,7 +304,7 @@ export default {
     },
 
     async deleteComment(index) {
-      if (this.comments.userID == this.$store.state.userID) {
+      if (this.comments[index].userID == this.$store.state.userID) {
         const result = confirm("정말 삭제하시겠습니까?");
         if (result == true) {
           try {
@@ -327,9 +329,9 @@ export default {
         .get(`${process.env.VUE_APP_API_URL}post/image/${postID}`)
         .then((res) => {
           // headers: {…} 로 들어감.ß
-          // const imgUrl = res.data[0].file_src;
-          // this.img = imgUrl;
-          console.log("이미지 조회", res.data);
+          const imgUrl = res.data[0].file_src;
+          this.img = imgUrl;
+          console.log("이미지 조회", res.data[0].file_src);
         });
     },
   },

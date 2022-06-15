@@ -3,7 +3,7 @@
     <header><h1>HOT 게시글</h1></header>
     <div class="card__wrapper">
       <div v-for="(post, index) in hotPosts" :key="index" class="card">
-        <div class="card__img">이미지 자리</div>
+        <!-- <div class="card__img">이미지 자리</div> -->
         <div class="card__content">
           <div>
             <h4>{{ index + 1 }}위</h4>
@@ -76,7 +76,7 @@ header h1 {
 
 .card {
   width: 350px;
-  height: 400px;
+  height: auto;
   background-color: white;
   border: 1px solid rgb(203, 203, 203);
   border-radius: 5px;
