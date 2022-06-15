@@ -11,7 +11,7 @@ import jwt from 'jsonwebtoken';
 router.post('/register', [
   check('nickName', 'nickName is requied').not().isEmpty(),
   check('email', 'Please include a valid email').isEmail().normalizeEmail({ gmail_remove_dots: true }),
-  check('password', 'Password must be 6 or more characters').isLength({ min: 6 })
+  check('pw', 'Password must be 6 or more characters').isLength({ min: 6 })
 ], (req, res, next) => {
   db.query(
     `SELECT * FROM user WHERE LOWER(email) = LOWER(${db.escape(
@@ -24,7 +24,7 @@ router.post('/register', [
           });
         } else {
           // username is available
-          bcrypt.hash(req.body.password, 10, (err, hash) => {
+          bcrypt.hash(req.body.pw, 10, (err, hash) => {
             if (err) {
               return res.status(500).send({
                 msg: err
@@ -32,7 +32,7 @@ router.post('/register', [
             } else {
               // has hashed pw => add to database
               db.query(
-                `INSERT INTO user (nickName, email, password) VALUES ('${req.body.name}', ${db.escape(
+                `INSERT INTO user (nickName, email, pw) VALUES ('${req.body.name}', ${db.escape(
                   req.body.email
                   )}, ${db.escape(hash)})`,
                   (err, result) => {
@@ -53,7 +53,7 @@ router.post('/register', [
 });
 
 router.post('/login',  [
-  check('password', 'Password must be 6 or more characters').isLength({ min: 6 })
+  check('pw', 'Password must be 6 or more characters').isLength({ min: 6 })
 ], (req, res, next) => {
   db.query(
     `SELECT * FROM user WHERE email = ${db.escape(req.body.email)};`,
@@ -72,8 +72,8 @@ router.post('/login',  [
       }
       // check password
       bcrypt.compare(
-        req.body.password,
-        result[0]['password'],
+        req.body.pw,
+        result[0]['pw'],
         (bErr, bResult) => {
           // wrong password
           if (bErr) {
@@ -103,7 +103,7 @@ router.post('/login',  [
 });
 
 router.post('/get-user',  [
-  check('password', 'Password must be 6 or more characters').isLength({ min: 6 })
+  check('pw', 'Password must be 6 or more characters').isLength({ min: 6 })
 ],  (req, res, next) => {
         if(
           !req.headers.authorization ||
