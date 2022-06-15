@@ -45,8 +45,9 @@ CREATE TABLE `post` (
  `eventName` varchar(30) DEFAULT NULL,
  `categoryNum` INT(10) DEFAULT NULL,
   `writerID` int DEFAULT NULL,
-  `likeNum` int DEFAULT 0,
+  `likeNum` int DEFAULT NULL,
   `writeDate` datetime DEFAULT now(),
+  `file_src` TEXT default NULL,
 `reportCount` int(10) DEFAULT 0,
   PRIMARY KEY (`postNum`),
   KEY `writerID` (`writerID`),
@@ -98,9 +99,6 @@ CREATE TABLE `comment` (
   CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`)
 ) ;
 
-
-CREATE TABLE attachment(id INT(10) NOT NULL AUTO_INCREMENT, file_src TEXT, PRIMARY KEY(id));
-
 -- insert DATA
 INSERT INTO `user` VALUES ('1111','johnDoe','johnho',01044444444,'johnDoe@gmail.com','gold','2001-04-04 00:00:00', default);
 INSERT INTO `user` VALUES ('20200975','waterjin','starstar',01082636230,'20200975@sungshin.ac.kr','baby','2001-03-26 00:00:00', default);
@@ -115,7 +113,7 @@ INSERT INTO `category` VALUES (5,'만들기', 52);
 INSERT INTO `category` VALUES (6,'캠페인', 3);
 INSERT INTO `category` VALUES (7,'게임', 2);
 
-INSERT INTO `post` VALUES (1011,'한번에 50개 완전 가능이지','쉽쥬?','팔굽혀펴기',1,20200975,123,'2022-05-27 09:10:52',0);
+INSERT INTO `post` VALUES (1011,'한번에 50개 완전 가능이지','쉽쥬?','팔굽혀펴기',1,20200975,123,'2022-05-27 09:10:52',default, 0);
 INSERT INTO `likeTbl` VALUES (1011, 1111);
 INSERT INTO `reportTbl` VALUES (1011, 20200975);
 INSERT INTO `comment` VALUES (1,1011,'2022-05-28 11:01:47',111,'1111','ㅋㅋㅋ우리 할아버지도 50개는 함ㅋ');
