@@ -1,5 +1,5 @@
 // Import function from Post Model
- import {getPosts, getPostByNum, getPostByCat, insertPost, updatePostByNum, deletePostByNum} from "../models/post.js";
+ import {getPosts, getPostByNum, getPostByCat, getImageSrc, insertPost, updatePostByNum, deletePostByNum} from "../models/post.js";
 // Get All Posts
 export const showPosts = (req, res) => {
     getPosts((err, results) => {
@@ -25,6 +25,16 @@ export const showPostByNum = (req, res) => {
 // Get Single Post
 export const showPostByCat = (req, res) => {
     getPostByCat(req.params.id, (err, results) => {
+        if (err){
+            res.send(err);
+        }else{
+            res.json(results);
+        }
+    });
+}
+
+export const showImageSrc = (req, res) => {
+    getImageSrc(req.params.id, (err, results) => {
         if (err){
             res.send(err);
         }else{

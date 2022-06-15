@@ -5,7 +5,7 @@ import db from "../config/dbConnection.js";
  //좋아요 기준 -> 게시글 3개 추출(hot 게시글) => 사진, 좋아요, 사용자명 카드로
  export const getByLikes = (result) => {
    db.query(
-     "SELECT user.nickName, post.postTitle, post.file_src, post.likeNum as likes     from post    join user    on  post.writerID = user.userID     GROUP BY writerID     ORDER BY likes DESC   LIMIT 3",
+     "SELECT user.nickName, post.postTitle, post.likeNum as likes     from post    join user    on  post.writerID = user.userID     GROUP BY writerID     ORDER BY likes DESC   LIMIT 3",
      (err, results) => {
         if (err) {
          console.log(err);

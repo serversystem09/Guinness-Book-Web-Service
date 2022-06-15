@@ -35,6 +35,17 @@ export const getPostByCat = (id, result) => {
     });   
 }
   
+export const getImageSrc = (id, result) => {
+    db.query("SELECT file_src FROM attachment WHERE postNum = ?", [id], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });   
+}
+
 // Insert Post to Database
 export const insertPost = (data, result) => {
     db.query("INSERT INTO post SET ?", [data], (err, results) => {             
@@ -68,5 +79,14 @@ export const deletePostByNum = (id, result) => {
         } else {
             result(null, results);
         }
-    });   
+    }); 
+
+    db.query("DELETE FROM attachment WHERE id = ?", [id], (err, results) => {             
+        if(err) {
+            console.log(err);
+            result(err, null);
+        } else {
+            result(null, results);
+        }
+    });  
 }

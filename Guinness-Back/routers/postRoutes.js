@@ -14,6 +14,7 @@ import {
   updatePost,
   deletePost,
   showPostByCat,
+  showImageSrc
 } from "../controllers/postsController.js";
 
 var app = express();
@@ -38,6 +39,13 @@ PostRouter.put("/posts/:id", updatePost);
 // Delete Post
 PostRouter.delete("/posts/:id", deletePost);
 
+
+//get Image
+PostRouter.get("/image/:id", showImageSrc);
+
+PostRouter.use('/images', express.static('uploads'));
+
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads");
@@ -56,8 +64,8 @@ PostRouter.post("/upload", upload.single("file"), (req, res) => {
     console.log("No file upload");
   } else {
     console.log(req.file.filename);
-    var imgsrc = "http://127.0.0.1:3000/uploads/" + req.file.filename;
-    var insertData = "INSERT INTO post(file_src)VALUES(?)";
+    var imgsrc = "http://127.0.0.1:3000/post/images/" + req.file.filename;
+    var insertData = "INSERT INTO attachment (file_src)VALUES(?)";
     db.query(insertData, [imgsrc], (err, result) => {
       if (err) throw err;
       console.log("file uploaded");
