@@ -8,6 +8,7 @@ export function setInterceptors(instance) {
       // console.log(config);
       console.log(config);
       config.headers.authorization = `Bearer${store.state.token}`;
+      config.headers["Content-Type"] = "multipart / form - data";
       return config;
     },
     function (error) {
