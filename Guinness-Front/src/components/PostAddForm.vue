@@ -5,14 +5,14 @@
     </header>
 
     <!-- 첨부 파일 -->
-
+    <!-- 
     <form class="form" @submit.prevent="onUpload" enctype="multipart/form-data">
       <div class="input__wrapper">
         <label for="file">첨부파일</label>
         <input id="file" type="file" @change="selectFile" ref="file" />
         <button @click="onUpload">이미지 업로드</button>
       </div>
-    </form>
+    </form> -->
 
     <form
       class="form"
@@ -29,13 +29,15 @@
           <div id="select-1">
             <select v-model="categoryNum">
               <option selected>대분류</option>
-              <option value="1">체육</option>
+              <option selected>대분류</option>
+              <option value="1">운동</option>
               <option value="2">음식</option>
               <option value="3">춤</option>
               <option value="4">노래</option>
-              <option value="5">공예</option>
-              <option value="6">사회 캠페인</option>
-              <option value="7">오락</option>
+              <option value="5">만들기</option>
+              <option value="6">캠페인</option>
+              <option value="7">게임</option>
+              <option value="8">기타</option>
             </select>
           </div>
         </div>

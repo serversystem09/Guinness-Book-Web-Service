@@ -95,7 +95,6 @@ export default {
   async created() {
     await this.fetchPost();
     await this.getImg();
-
     await this.fetchComments();
     await this.fetchFollowee();
     await this.checkFollow();
@@ -247,10 +246,12 @@ export default {
           const { data } = await createFollow(fwer, fwee);
           this.follow = true;
           console.log("팔로우", data);
+          alert("작성자를 팔로우하였습니다.");
         } else {
           await deleteFollow(fwer, fwee);
           this.follow = false;
           console.log("팔로우 취소");
+          alert("작성자를 언팔로우하였습니다.");
         }
       } catch (error) {
         console.log(error);
@@ -266,7 +267,6 @@ export default {
         } catch (error) {
           console.log(error);
         }
-        this.$router.push("/category");
       } else {
         console.log("삭제 취소");
       }

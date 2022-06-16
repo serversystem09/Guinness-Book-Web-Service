@@ -66,6 +66,7 @@ export default {
           writerID: this.$store.state.userID,
         });
         console.log(data);
+        alert("문의가 접수되었습니다.");
       } catch (error) {
         console.log(error.message);
       } finally {

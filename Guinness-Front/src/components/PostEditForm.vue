@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <header>
-      <h1>게시글 작성</h1>
+      <h1>게시글 수정</h1>
     </header>
 
     <form class="form" @submit.prevent="submitForm">
@@ -15,13 +15,14 @@
           <div id="select-1">
             <select v-model="selected1">
               <option selected>대분류</option>
-              <option value="1">체육</option>
+              <option value="1">운동</option>
               <option value="2">음식</option>
               <option value="3">춤</option>
               <option value="4">노래</option>
-              <option value="5">공예</option>
-              <option value="6">사회 캠페인</option>
-              <option value="7">오락</option>
+              <option value="5">만들기</option>
+              <option value="6">캠페인</option>
+              <option value="7">게임</option>
+              <option value="8">기타</option>
             </select>
           </div>
         </div>
@@ -52,15 +53,7 @@
           style="border: 2px solid black; margin-left: 100px"
         />
       </div>
-      <button
-        :disabled="!isValid"
-        type="submit"
-        class="btnInActive"
-        :class="{ btnPrimary: isValid }"
-        @click="submitForm"
-      >
-        수정
-      </button>
+      <button type="submit" class="btnPrimary" @click="submitForm">수정</button>
     </form>
   </div>
 </template>
@@ -80,20 +73,20 @@ export default {
       imagecnt: 0, // 업로드한 이미지 개수 => 제출버튼 클릭시 back서버와 axios 통신하게 되는데,
     };
   },
-  computed: {
-    isValid() {
-      if (
-        this.postData.postTitle &&
-        this.postData.content &&
-        this.selected1 &&
-        this.postData.eventName
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-  },
+  // computed: {
+  //   isValid() {
+  //     if (
+  //       this.postTitle &&
+  //       this.postData.content &&
+  //       this.selected1 &&
+  //       this.postData.eventName
+  //     ) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   },
+  // },
   methods: {
     async submitForm() {
       try {
@@ -105,10 +98,10 @@ export default {
           writerID: this.$store.state.userID,
         });
         console.log(data);
-        this.$router.push({
-          path: `/postview/${this.$route.params.id}`,
-          replace: true,
-        });
+        // this.$router.push({
+        //   path: `/postview/${this.$route.params.id}`,
+        //   replace: true,
+        // });
       } catch (error) {
         console.log(error);
       }
@@ -135,4 +128,13 @@ export default {
 
 <style>
 @import "@/assets/css/common.css";
+.btnPrimary {
+  padding: 10px 20px;
+  background-color: rgb(255, 210, 98);
+  border-radius: 5px;
+  border-style: none;
+  font-size: 20px;
+  font-weight: 400;
+  color: white;
+}
 </style>
