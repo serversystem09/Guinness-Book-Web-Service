@@ -1,5 +1,6 @@
 // import connection
 import db from "../config/dbConnection.js";
+import bcrypt from 'bcryptjs';
 
 // Get All Posts
 export const getUsers = (result) => {
@@ -39,25 +40,32 @@ export const insertUser = (data, result) => {
 
 // Update User to Database
 export const updateUserById = (data, id, result) => {
-  db.query(
-    "UPDATE user SET nickName = ?, phoneNumber = ?, email = ?, password = ?, birth = ? WHERE userID = ?",
-    [
-      data.nickName,
-      data.phoneNumber,
-      data.email,
-      data.password,
-      data.birth,
-      id,
-    ],
-    (err, results) => {
-      if (err) {
-        console.log(err);
-        result(err, null);
-      } else {
-        result(null, results);
-      }
-    }
-  );
+  bcrypt.hash(data.password, 10, (err, hash) => {
+    if (err) {
+      return res.status(500).send({
+        msg: err
+      });
+    } else {
+      db.query(
+        "UPDATE user SET nickName = ?, phoneNumber = ?, email = ?, password = ?, birth = ? WHERE userID = ?",
+        [
+          data.nickName,
+          data.phoneNumber,
+          data.email,
+          hash,
+          data.birth,
+          id,
+        ],
+        (err, results) => {
+          if (err) {
+            console.log(err);
+            result(err, null);
+          } else {
+            result(null, results);
+          }
+        }
+      );
+    }});
 };
 
 // Delete User to Database
