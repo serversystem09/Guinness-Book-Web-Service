@@ -65,8 +65,8 @@ CREATE TABLE `likeTbl` (
   `postNum` INT(10) NOT NULL,
   `userID` INT(10) NOT NULL,
   PRIMARY KEY (`postNum`,`userID`),
-CONSTRAINT `like_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
-  CONSTRAINT `like_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`)
+CONSTRAINT `like_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE,
+  CONSTRAINT `like_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`) ON DELETE CASCADE
 ) ;
 
 
@@ -75,7 +75,7 @@ CREATE TABLE `reportTbl` (
   `userID` INT(10) NOT NULL,
   PRIMARY KEY (`postNum`,`userID`),
 CONSTRAINT `report_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
-  CONSTRAINT `report_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`)
+  CONSTRAINT `report_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`) ON DELETE CASCADE
 ) ;
 
 CREATE TABLE `csboard` (
