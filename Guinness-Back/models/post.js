@@ -77,16 +77,14 @@ export const deletePostByNum = (id, result) => {
             console.log(err);
             result(err, null);
         } else {
-            result(null, results);
+            db.query("DELETE FROM attachment WHERE id = ?", [id], (err, results) => {             
+            if(err) {
+                console.log(err);
+                result(err, null);
+            } else {
+                result(null, results);
+            }
+        });  
         }
     }); 
-
-    db.query("DELETE FROM attachment WHERE id = ?", [id], (err, results) => {             
-        if(err) {
-            console.log(err);
-            result(err, null);
-        } else {
-            result(null, results);
-        }
-    });  
 }

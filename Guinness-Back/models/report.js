@@ -19,17 +19,15 @@ export const createReport = (pNum, uID, result) => {
           console.log(err);
           result(err, null);
       } else {
-          result(null, results);
+        db.query("UPDATE post SET reportCount = reportCount + 1 WHERE postNum = ?", [pNum], (err, results) => {             
+            if(err) {
+                console.log(err);
+                result(err, null);
+            } else {
+                result(null, results);
+            }
+        }); 
       }
   });   
-
-  db.query("UPDATE post SET reportCount = reportCount + 1 WHERE postNum = ?", [pNum], (err, results) => {             
-    if(err) {
-        console.log(err);
-        result(err, null);
-    } else {
-        result(null, results);
-    }
-}); 
 
 }
