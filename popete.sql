@@ -13,7 +13,7 @@ use popeteDB;
 CREATE TABLE `user` (
   `userID` int(10) NOT NULL AUTO_INCREMENT,
   `nickName` varchar(50) DEFAULT NULL,
-  `pw` varchar(200) NOT NULL,
+  `password` varchar(200) NOT NULL,
   `phoneNumber` int DEFAULT NULL,
   `email` varchar(50) NOT NULL UNIQUE,
   `ranking` varchar(10) DEFAULT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE `post` (
 
 CREATE TABLE `attachment`(
 `id` INT(10) NOT NULL AUTO_INCREMENT,
-`file_src` TEXT, 
+`file_src` varchar(40), 
 PRIMARY KEY(id)
 );
 
@@ -65,8 +65,8 @@ CREATE TABLE `likeTbl` (
   `postNum` INT(10) NOT NULL,
   `userID` INT(10) NOT NULL,
   PRIMARY KEY (`postNum`,`userID`),
-CONSTRAINT `like_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
-  CONSTRAINT `like_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`)
+CONSTRAINT `like_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE,
+  CONSTRAINT `like_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`) ON DELETE CASCADE
 ) ;
 
 
@@ -75,7 +75,7 @@ CREATE TABLE `reportTbl` (
   `userID` INT(10) NOT NULL,
   PRIMARY KEY (`postNum`,`userID`),
 CONSTRAINT `report_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
-  CONSTRAINT `report_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`)
+  CONSTRAINT `report_ibfk_1` FOREIGN KEY (`postNum`) REFERENCES `post` (`postNum`) ON DELETE CASCADE
 ) ;
 
 CREATE TABLE `csboard` (
@@ -107,16 +107,16 @@ CREATE TABLE `comment` (
 SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 
 -- insert DATA
-INSERT INTO `user` (userID, nickName, pw, phoneNumber, email, ranking, birth, last_login) VALUES (1,'johnDoe','johnho',01044444444,'johnDoe@gmail.com','gold','2001-04-04 00:00:00', default);
-INSERT INTO `user` (userID, nickName, pw, phoneNumber, email, ranking, birth, last_login) VALUES (2,'waterjin','starstar',01082636230,'20200975@sungshin.ac.kr','baby','2001-03-26 00:00:00', default);
-INSERT INTO `user` (userID, nickName, pw, phoneNumber, email, ranking, birth, last_login) VALUES (3,'수룡','suryoung',01011111111,'suy@sungshin.ac.kr','silver','2000-11-11 00:00:00', default);
-INSERT INTO `user` (userID, nickName, pw, phoneNumber, email, ranking, birth, last_login) VALUES (4,'수정','sujung',01011113333,'sujung@sungshin.ac.kr','baby','2003-11-11 00:00:00', default);
-INSERT INTO `user` (userID, nickName, pw, phoneNumber, email, ranking, birth, last_login) VALUES (5,'떡볶이먹고싶다','teokbokki',01011112351,'deok@sungshin.ac.kr','silver','1988-11-11 00:00:00', default);
-INSERT INTO `user` (userID, nickName, pw, phoneNumber, email, ranking, birth, last_login) VALUES (6,'종강내놔','jonggang',01022221111,'jong@gmail.com','gold','1999-11-11 00:00:00', default);
-INSERT INTO `user` (userID, nickName, pw, phoneNumber, email, ranking, birth, last_login) VALUES (7,'시험보이콧','test',01013231111,'test@gmail.com','silver','2000-11-11 00:00:00', default);
-INSERT INTO `user` (userID, nickName, pw, phoneNumber, email, ranking, birth, last_login) VALUES (8,'노는게제일좋아','play',01099991111,'olay@gmail.com','baby','2017-11-11 00:00:00', default);
-INSERT INTO `user` (userID, nickName, pw, phoneNumber, email, ranking, birth, last_login) VALUES (9,'뿌','bbuu',01044441111,'bbu@gmail.com','gold','1997-11-11 00:00:00', default);
-INSERT INTO `user` (userID, nickName, pw, phoneNumber, email, ranking, birth, last_login) VALUES (10, '덤벼라세상아','world',01077771111,'world@gmail.com','silver','1996-11-11 00:00:00', default);
+INSERT INTO `user`  VALUES (1,'johnDoe','$2a$10$BOu.ed3JQ/qh91dCpAeRQOwzRavz/8hithSD6AqSHb7PYkAUDb5Z.',01044444444,'johnDoe@gmail.com','gold','2001-04-04 00:00:00', default); /*pw : johnho*/
+INSERT INTO `user` VALUES (2,'waterjin','$2a$10$/YEsGoEAAJMJJT4TKK//6eq0oLRhw5grM.dH.gnbJODKCh8KUnPVy',01082636230,'20200975@sungshin.ac.kr','baby','2001-03-26 00:00:00', default); /*pw : starstar*/
+INSERT INTO `user`  VALUES (3,'수룡','$2a$10$/NcZBB5ZfxrQ4FDcztnK7uK43gdKQinP1QfIUbWTBZDBUc1eIfa1W',01011111111,'suy@sungshin.ac.kr','silver','2000-11-11 00:00:00', default); /*pw : suryoung*/
+INSERT INTO `user` VALUES (4,'수정','$2a$10$A7lmvA8G03x84zylgs2/yel7r9JagASmdG2FBrp0vcAjVdAG4Ghsu',01011113333,'sujung@sungshin.ac.kr','baby','2003-11-11 00:00:00', default); /*pw : sujung*/
+INSERT INTO `user` VALUES (5,'떡볶이먹고싶다','$2a$10$BFDDH7bDjvEJ1mbFpMusjeUxQaXJk3N6MTBfprVJnWzga0hrlym6y',01011112351,'deok@sungshin.ac.kr','silver','1988-11-11 00:00:00', default); /*pw : teokbokki*/
+INSERT INTO `user`  VALUES (6,'종강내놔','$2a$10$dfOxlQJMqDJddR846DsMcOfn01Y1H48KgD1qXBo0DspOHG.4IB/Ta',01022221111,'jong@gmail.com','gold','1999-11-11 00:00:00', default); /*pw : jonggang*/
+INSERT INTO `user`  VALUES (7,'시험보이콧','$2a$10$9fJS/X4QwiY.O6Jhff6sUeTt/w.1Wm9RdDoheJXZ2ywjjcyyVM73a',01013231111,'test@gmail.com','silver','2000-11-11 00:00:00', default); /*pw : test*/
+INSERT INTO `user`  VALUES (8,'노는게제일좋아','$2a$10$sdeXENBV0HtI7486z/S.fOgG4z5FjnebsRcnMF0Jk9n0pXGAoA6je',01099991111,'olay@gmail.com','baby','2017-11-11 00:00:00', default); /*pw : play*/
+INSERT INTO `user` VALUES (9,'뿌','$2a$10$LjGParALQQ81lmwvq5a3A.xN.HdS9efhqXw.W3cn4pujR0SDGZLbC',01044441111,'bbu@gmail.com','gold','1997-11-11 00:00:00', default); /*pw : bbuu*/
+INSERT INTO `user` VALUES (10, '덤벼라세상아','$2a$10$BStgg7WHlwFa3PVNf47fdOPHC7T2gq/8Oba8HKVnbad8aqPZdu/Gi',01077771111,'world@gmail.com','silver','1996-11-11 00:00:00', default); /*pw : world*/
 
 INSERT INTO `follow` VALUES (2,1);
 INSERT INTO `follow` VALUES (2,3);
