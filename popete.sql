@@ -94,7 +94,6 @@ CREATE TABLE `comment` (
   `commentNum` INT(10) NOT NULL AUTO_INCREMENT,
   `postNum` INT,
   `createDate` datetime DEFAULT NULL,
-  `likeNum` int DEFAULT NULL,
   `userID` int DEFAULT NULL,
   `content` varchar(400) DEFAULT NULL,
   PRIMARY KEY (`commentNum`),
@@ -189,16 +188,16 @@ INSERT INTO `reportTbl` VALUES (2, 8);
 INSERT INTO `reportTbl` VALUES (2, 9);
 
 
-INSERT INTO `comment`(commentNum,postNum,createDate,likeNum,userID,content) VALUES (1,1,'2022-05-28 11:01:47',111,1,'ㅋㅋㅋ우리 할아버지도 10개는 함ㅋ');
-INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (2,'2022-06-15 11:00:47',500,2,'어 인증못하죠?');
-INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (2,'2022-06-14 11:00:47',1,3,'개웃기네');
-INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (2,'2022-06-13 11:00:47',1,4,'사진 올려봐');
-INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (3,'2022-06-12 11:01:47',11,2,'와 진짜 잘추시네요...! 너무 멋져요');
-INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (4,'2022-06-15 11:00:47',50,2,'아니 가수세요?');
-INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (7,'2022-06-14 11:00:47',1,3,'오 취지 좋네요 괜찮은듯');
-INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (8,'2022-06-13 11:00:47',1,4,'ㄹㅇ 특히 담배꽁초 진짜 ㅡㅡ 길에 쓰레기 작작버리세요');
-INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (10,'2022-06-13 11:00:47',1,4,'ㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷ 마스터 ㄷㄷㄷ');
-INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (11,'2022-06-13 11:00:47',1,4,'와 팔근육 장난아니시네요');
+INSERT INTO `comment`(commentNum,postNum,createDate,likeNum,userID,content) VALUES (1,1,'2022-05-28 11:01:47',1,'ㅋㅋㅋ우리 할아버지도 10개는 함ㅋ');
+INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (2,'2022-06-15 11:00:47',2,'어 인증못하죠?');
+INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (2,'2022-06-14 11:00:47',3,'개웃기네');
+INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (2,'2022-06-13 11:00:47',4,'사진 올려봐');
+INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (3,'2022-06-12 11:01:47',2,'와 진짜 잘추시네요...! 너무 멋져요');
+INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (4,'2022-06-15 11:00:47',2,'아니 가수세요?');
+INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (7,'2022-06-14 11:00:47',3,'오 취지 좋네요 괜찮은듯');
+INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (8,'2022-06-13 11:00:47',4,'ㄹㅇ 특히 담배꽁초 진짜 ㅡㅡ 길에 쓰레기 작작버리세요');
+INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (10,'2022-06-13 11:00:47',4,'ㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷㄷ 마스터 ㄷㄷㄷ');
+INSERT INTO `comment`(postNum,createDate,likeNum,userID,content) VALUES (11,'2022-06-13 11:00:47',4,'와 팔근육 장난아니시네요');
 
 INSERT INTO `csboard` VALUES (1, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', 1, now());
 INSERT INTO `csboard` VALUES (2, '생일빠른 사람 우선순위', '생일빠른 사람은 동점이라도 더 높은 순위로 쳐주나요?', '네. 동점자일경우 생일 빠르신분이 더 높은 순위로 책정됩니다.', 2, now());
