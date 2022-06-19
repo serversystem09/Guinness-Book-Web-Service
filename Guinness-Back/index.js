@@ -16,7 +16,7 @@ import catRouter from "./routers/categoryRoutes.js";
 import commRouter from "./routers/commentRoutes.js";
 import followRouter from "./routers/followRoutes.js";
 import CSRouter from "./routers/csBoardRouter.js";
-
+import commLikeRouter from "./routers/commLikeRouter.js";
 
 import MPRouter from "./routers/myPageRouter.js";
 import indexRouter from "./routers/indexRoutes.js";
@@ -56,6 +56,7 @@ app.use("/rank", rankRouter);
 app.use("/mypage", MPRouter);
 app.use("/like", likeRouter);
 app.use("/report", reportRouter);
+app.use("/commLike", commLikeRouter);
 
 // Handling Errors
 app.use((err, req, res, next) => {
