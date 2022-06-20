@@ -60,6 +60,7 @@
 
 <script>
 import { fetchPost, editPost } from "@/api/posts";
+import axios from "axios";
 
 export default {
   created() {
@@ -94,6 +95,8 @@ export default {
           postTitle: this.postData.postTitle,
           content: this.postData.content,
           eventName: this.postData.eventName,
+          categoryNum: this.category,
+
           // selected2: this.selected2,
           writerID: this.$store.state.userID,
         });
@@ -105,6 +108,7 @@ export default {
       } catch (error) {
         console.log(error);
       }
+      this.$router.pusth("/");
     },
     async fetchPostData() {
       try {
@@ -121,6 +125,26 @@ export default {
       this.selected2 = "";
       this.content = "";
       this.userBirth = "";
+    },
+    selectFile() {
+      this.file = this.$refs.file.files[0];
+    },
+    async onUpload() {
+      const formData = new FormData();
+      formData.append("file", this.file);
+      const headers = {
+        "Content-type": "multipart/form-data",
+        Accept: "*/*",
+      };
+      axios.defaults.headers.post = null;
+      axios
+        .post(`${process.env.VUE_APP_API_URL}post/upload`, formData, {
+          headers,
+        })
+        .then((res) => {
+          // headers: {…} 로 들어감.
+          console.log("send ok", res.data);
+        });
     },
   },
 };

@@ -128,8 +128,8 @@ export default {
       likeValue: 0,
       reportValue: 0,
       // 좋아요가 가능한지
-      likeAble: false,
-      reportAble: false,
+      likeAble: true,
+      reportAble: true,
       img: "",
     };
   },
@@ -187,6 +187,7 @@ export default {
     // 게시글 좋아요
     async likePost() {
       // this.likeValue = 1;
+      this.likeAble = false;
       this.postData.likeNum += 1;
       // console.log("좋아요");
       try {
@@ -196,7 +197,6 @@ export default {
             this.postId,
             this.$store.state.userID
           );
-          this.likeAble = false;
 
           console.log("좋아요 누름", data);
           // this.postData.likedValue += 1;
@@ -234,6 +234,7 @@ export default {
     // 게시글 신고
     async reportPost() {
       this.postData.reportCount += 1;
+      this.reportAble = false;
 
       try {
         if (this.reportValue == 0) {
@@ -243,7 +244,6 @@ export default {
           );
           console.log("신고 누름", data);
           // this.postData.reportCount = this.postData.reportCount + 1;
-          this.reportAble = false;
         } else {
           return this.postId;
         }
