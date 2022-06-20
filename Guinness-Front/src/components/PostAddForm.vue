@@ -27,7 +27,7 @@
         <label>분류</label>
         <div class="select__wrapper">
           <div id="select-1">
-            <select v-model="categoryNum">
+            <select v-model="category">
               <option selected>대분류</option>
               <option selected>대분류</option>
               <option value="1">운동</option>
@@ -78,7 +78,7 @@ export default {
   data() {
     return {
       title: "",
-      categoryNum: "",
+      category: "",
       eventName: "",
       // eventNameInput: "",
       content: "",
