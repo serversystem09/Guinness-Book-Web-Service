@@ -89,7 +89,7 @@ export default {
   },
   computed: {
     isValid() {
-      if (this.title && this.content && this.categoryNum && this.eventName) {
+      if (this.title && this.content && this.category && this.eventName) {
         return true;
       } else {
         return false;
@@ -102,7 +102,7 @@ export default {
       const { data } = await createPost({
         postTitle: this.title,
         eventName: this.eventName,
-        categoryNum: this.categoryNum,
+        categoryNum: this.category,
         content: this.content,
         writerID: this.$store.state.userID,
       });
@@ -134,7 +134,7 @@ export default {
     },
     initForm() {
       this.title = "";
-      this.categoryNum = "";
+      this.category = "";
       this.eventName = "";
       (this.eventNameInput = ""), (this.content = "");
       this.userBirth = "";
