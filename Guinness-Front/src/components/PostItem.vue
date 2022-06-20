@@ -9,7 +9,7 @@
         <div>
           <div class="post-card__follow">
             <div>
-              <span>{{ postData.writerID }}</span>
+              <span>작성자 ID: {{ postData.writerID }}</span>
               <button
                 v-if="this.$store.state.userID != this.postData.writerID"
                 type="button"
@@ -45,25 +45,28 @@
               class="text__comments"
             >
               <span> {{ data.content }}</span>
-              <span> {{ data.userID }}</span>
-
-              <button @click="deleteComment(index)" class="btn_del-comment">
-                삭제
-              </button>
+              <div>
+                <span>ID: {{ data.userID }}</span>
+                <button @click="deleteComment(index)" class="btn_del-comment">
+                  삭제
+                </button>
+              </div>
             </div>
             <button
               type="button"
               class="btn-like"
-              :disabled="this.likedValue == 1"
+              :disabled="!this.likeAble"
               @click="likePost"
             >
-              좋아요&nbsp;{{ postData.likeNum }}&nbsp;
-              <i :class="['fa-heart', likedValue == 1 ? 'fas' : 'far']"></i>
+              좋아요&nbsp;{{ this.postData.likeNum }}&nbsp;
+              <i
+                :class="['fa-heart', this.likeAble == false ? 'fas' : 'far']"
+              ></i>
             </button>
             <button
               type="button"
               class="btn-report"
-              :disabled="this.reportValue == 1"
+              :disabled="!this.reportAble"
               @click="reportPost"
             >
               신고하기&nbsp;{{ postData.reportCount }}&nbsp;
@@ -111,17 +114,22 @@ export default {
       comments: [],
       comment: "",
       commentNum: "",
-      postData: [],
+      postData: [
+        {
+          likeNum: 0,
+          reportCount: 0,
+        },
+      ],
       postId: this.$route.params.id,
-      myID: {
-        id: this.$store.state.userID,
-      },
       follow: false,
       username: "닉네임",
       writerID: "",
       followeeList: [],
-      likedValue: 0,
+      likeValue: 0,
       reportValue: 0,
+      // 좋아요가 가능한지
+      likeAble: false,
+      reportAble: false,
       img: "",
     };
   },
@@ -163,24 +171,36 @@ export default {
           this.postId,
           this.$store.state.userID
         );
-        this.likedValue = data[0]["count(*)"];
-        console.log("좋아요 값 반환", this.likedValue);
+        console.log("좋아요 여부", data[0]["count(*)"]);
+        // this.likeAble = data[0]["count(*)"];
+        if (data[0]["count(*)"] == 0) {
+          this.likeAble = true;
+        } else {
+          this.likeAble = false;
+        }
+        // this.likedValue = data[0]["count(*)"];
+        // console.log("좋아요 값 반환", this.likedValue);
       } catch (error) {
         console.log(error);
       }
     },
     // 게시글 좋아요
     async likePost() {
+      // this.likeValue = 1;
+      this.postData.likeNum += 1;
       // console.log("좋아요");
       try {
-        if (this.likedValue == 0) {
+        if (this.likeAble == true) {
           // this.liked = !this.liked;
           const { data } = await createLike(
             this.postId,
             this.$store.state.userID
           );
+          this.likeAble = false;
+
           console.log("좋아요 누름", data);
-          this.postData.likeNum += 1;
+          // this.postData.likedValue += 1;
+
           // this.postData.likeNum -= 1;
         } else {
           return this.postId;
@@ -190,7 +210,7 @@ export default {
       } catch (error) {
         console.log(error);
       } finally {
-        // this.fetchPost();
+        this.fetchPost();
       }
     },
     // 사용자가 해당 게시글 신고 눌렀는지 카운트 값 리턴(눌렀으면 1)
@@ -200,30 +220,37 @@ export default {
           this.postId,
           this.$store.state.userID
         );
-        this.reportValue = data[0]["count(*)"];
-        console.log("신고 값 반환", this.reportValue);
+        // this.reportAble = data[0]["count(*)"];
+        if (data[0]["count(*)"] == 0) {
+          this.reportAble = true;
+        } else {
+          this.reportAble = false;
+        }
+        console.log("신고 값 반환", this.reportAble);
       } catch (error) {
         console.log(error);
       }
     },
     // 게시글 신고
     async reportPost() {
+      this.postData.reportCount += 1;
+
       try {
         if (this.reportValue == 0) {
           const { data } = await createReport(
             this.postId,
             this.$store.state.userID
           );
-
           console.log("신고 누름", data);
-          this.postData.reportCount += 1;
+          // this.postData.reportCount = this.postData.reportCount + 1;
+          this.reportAble = false;
         } else {
           return this.postId;
         }
       } catch (error) {
         console.log(error);
       } finally {
-        // this.fetchPost();
+        this.fetchReport();
       }
     },
     // 나의 팔로위 목록 조회 -> 글 작성자를 이미 팔로우 중이면 true값 반환하여야 함
@@ -264,6 +291,7 @@ export default {
         try {
           const { data } = await deletePost(this.postId);
           console.log(data);
+          this.$router.push("category");
         } catch (error) {
           console.log(error);
         }
@@ -351,7 +379,7 @@ export default {
 
 .post-card__img {
   width: 500px;
-  height: 500px;
+  height: auto;
   background-color: #f9f9f9;
   border: 1px solid rgb(226, 225, 225);
   border-radius: 5px;
@@ -433,7 +461,7 @@ h3 {
   border-radius: 5px;
   border: 1px solid rgb(180, 179, 179);
   background-color: transparent;
-  margin: 0;
+  margin: 0 0 0 10px;
   padding: 3px 3px;
 }
 
